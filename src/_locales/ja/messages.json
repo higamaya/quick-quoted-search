@@ -1,0 +1,182 @@
+{
+  "msg_extension_name": {
+    "message": "Quick Quoted Search"
+  },
+  "msg_extension_description": {
+    "message": "完全一致検索を簡単に！"
+  },
+  "msg_command_description_do_quoted_search": {
+    "message": "選択したテキストを完全一致で検索する"
+  },
+  "msg_command_description_put_quotes": {
+    "message": "選択したテキストを引用符で囲む"
+  },
+  "msg_action_h2_keyboad_shortcuts": {
+    "message": "キーボード ショートカット"
+  },
+  "msg_action_link_customize_keyboad_shortcuts": {
+    "message": "カスタマイズ"
+  },
+  "msg_action_shortcut_key_not_set": {
+    "message": "未設定"
+  },
+  "msg_context_menu_title_do_quoted_search": {
+    "message": "完全一致で検索"
+  },
+  "msg_context_menu_title_put_quotes": {
+    "message": "引用符で囲む"
+  },
+  "msg_context_menu_title_put_quotes_supplement": {
+    "message": " ➡ すぐ検索"
+  },
+  "msg_options_title": {
+    "message": "Quick Quoted Search 拡張機能のオプション"
+  },
+  "msg_options_h2_extension_options": {
+    "message": "拡張機能のオプション"
+  },
+  "msg_options_h2_browser_settings": {
+    "message": "ブラウザの設定"
+  },
+  "msg_options_label_popup_icon": {
+    "message": "ポップアップ アイコン"
+  },
+  "msg_options_label_icon_size": {
+    "message": "アイコン サイズ"
+  },
+  "msg_options_label_avoid_selection": {
+    "message": "選択範囲を回避"
+  },
+  "msg_options_label_options_button": {
+    "message": "オプション ボタン"
+  },
+  "msg_options_label_context_menu": {
+    "message": "コンテキスト メニュー"
+  },
+  "msg_options_label_disposition": {
+    "message": "検索結果を表示する場所"
+  },
+  "msg_options_label_auto_copy": {
+    "message": "検索時にコピー"
+  },
+  "msg_options_label_auto_enter": {
+    "message": "囲ったらすぐ検索"
+  },
+  "msg_options_label_auto_surround": {
+    "message": "引用符入力で囲む"
+  },
+  "msg_options_label_select_search_engine": {
+    "message": "検索エンジンを選択"
+  },
+  "msg_options_label_customize_keyboard_shortcuts": {
+    "message": "キーボード ショートカットをカスタマイズ"
+  },
+  "msg_options_description_content_popup_icon_1": {
+    "message": "テキスト選択時にマウス ポインタの近くにポップアップ アイコン $1 を表示します。このポップアップ アイコンをクリックすることで、完全一致検索を素早く行えます。"
+  },
+  "msg_options_description_content_popup_icon_2": {
+    "message": "ポップアップ アイコンは、ドラッグして動かすことができます。他の拡張機能が表示したポップアップと重なったりして邪魔なときは、ドラッグしてください。"
+  },
+  "msg_options_description_content_icon_size": {
+    "message": "ポップアップ アイコン $1 のサイズを選択します。"
+  },
+  "msg_options_description_content_avoid_selection_1": {
+    "message": "テキストの選択範囲を避けてポップアップ アイコン $1 を表示します。"
+  },
+  "msg_options_description_content_avoid_selection_2": {
+    "message": "このオプションを有効にすると、Web ページの構造によっては、マウス ポインタから遠く離れた位置にポップアップ アイコンが表示される場合があります。"
+  },
+  "msg_options_description_content_options_button": {
+    "message": "ポップアップ アイコン $2 にマウス ポインタを重ねたときに、オプション ボタン $1 を隣に表示します。"
+  },
+  "msg_options_description_content_context_menu": {
+    "message": "マウスの右ボタンをクリックすると表示されるコンテキスト メニューに、Quick Quoted Search の機能を呼び出すための項目を表示します。"
+  },
+  "msg_options_description_content_disposition_1": {
+    "message": "完全一致検索の結果を表示する場所を選択します。"
+  },
+  "msg_options_description_content_disposition_2": {
+    "message": "ポップアップ アイコン $1 をクリックして検索するとき、以下のキーを押すことで、この動作を変更できます。"
+  },
+  "msg_options_description_content_disposition_3": {
+    "message": "ポップアップ アイコンのクリックではなく、キーボード ショートカットやコンテキスト メニューから検索を行った場合は、上記のキーは無視されます。"
+  },
+  "msg_options_description_content_click": {
+    "message": "クリック"
+  },
+  "msg_options_description_content_new_tab": {
+    "message": "➡ 新しいタブ"
+  },
+  "msg_options_description_content_new_tab_background": {
+    "message": "➡ 新しいタブ（バックグラウンド）"
+  },
+  "msg_options_description_content_new_window": {
+    "message": "➡ 新しいウィンドウ"
+  },
+  "msg_options_description_content_auto_copy": {
+    "message": "完全一致検索を行ったときに、引用符で囲んだテキストをクリップボードへ自動的にコピーします。これにより、$1 + $2 → $1 + $3 で Web ページ内の検索キーワードを素早く見つけることができます。"
+  },
+  "msg_options_description_content_auto_enter_1": {
+    "message": "入力欄の選択テキストを引用符で囲んだ後、自動的に $1 キーを入力して検索を行います。"
+  },
+  "msg_options_description_content_auto_enter_2": {
+    "message": "この機能は、以下の検索サイトの検索キーワード入力欄でのみ有効です。"
+  },
+  "msg_options_description_content_auto_surround": {
+    "message": "$1 キーを入力したとき、入力欄のテキストを選択中の場合は引用符で囲みます。"
+  },
+  "msg_options_description_content_select_search_engine_1": {
+    "message": "Quick Quoted Search はブラウザに設定されている既定の検索エンジンを使用します。"
+  },
+  "msg_options_description_content_select_search_engine_2": {
+    "message": "自分が使いたい検索エンジンをブラウザの既定の検索エンジンとして指定できます。"
+  },
+  "msg_options_description_content_customize_keyboard_shortcuts": {
+    "message": "Quick Quoted Search の機能を呼び出すキーボード ショートカットをカスタマイズできます。"
+  },
+  "msg_options_description_button_dismiss": {
+    "message": "閉じる"
+  },
+  "msg_options_button_restore_defaults": {
+    "message": "デフォルトに戻す"
+  },
+  "msg_options_restore_defaults_dialog_title": {
+    "message": "デフォルトに戻す"
+  },
+  "msg_options_restore_defaults_dialog_content_1": {
+    "message": "すべてのオプションをデフォルトに戻します。"
+  },
+  "msg_options_restore_defaults_dialog_content_2": {
+    "message": "よろしいですか？"
+  },
+  "msg_options_restore_defaults_dialog_button_ok": {
+    "message": "実行"
+  },
+  "msg_options_restore_defaults_dialog_button_cancel": {
+    "message": "いいえ"
+  },
+  "msg_options_disposition_value_new_tab": {
+    "message": "新しいタブ"
+  },
+  "msg_options_disposition_value_new_window": {
+    "message": "新しいウィンドウ"
+  },
+  "msg_options_disposition_value_current_tab": {
+    "message": "現在のタブ"
+  },
+  "msg_options_icon_size_value_text_1": {
+    "message": "極小"
+  },
+  "msg_options_icon_size_value_text_2": {
+    "message": "小"
+  },
+  "msg_options_icon_size_value_text_3": {
+    "message": "中"
+  },
+  "msg_options_icon_size_value_text_4": {
+    "message": "大"
+  },
+  "msg_options_icon_size_value_text_5": {
+    "message": "極大"
+  }
+}

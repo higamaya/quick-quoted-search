@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_msg_extension_name__",
+  "description": "__MSG_msg_extension_description__",
+  "version": "1.0.0",
+  "author": "Higama-ya",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/search16.png",
+    "32": "icons/search32.png",
+    "48": "icons/search48.png",
+    "64": "icons/search64.png",
+    "128": "icons/search128.png"
+  },
+  "permissions": ["activeTab", "contextMenus", "scripting", "search", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background_bundle.js"
+  },
+  "action": {
+    "default_title": "__MSG_msg_extension_name__",
+    "default_popup": "action.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "run_at": "document_end",
+      "css": ["content_bundle.css"],
+      "js": ["content_bundle.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["icons/*.png", "icons/*.svg", "fonts/*.ttf"]
+    }
+  ],
+  "commands": {
+    "do_quoted_search": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "MacCtrl+Command+S"
+      },
+      "description": "__MSG_msg_command_description_do_quoted_search__",
+      "global": false
+    },
+    "put_quotes": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "MacCtrl+Command+Q"
+      },
+      "description": "__MSG_msg_command_description_put_quotes__",
+      "global": false
+    }
+  },
+  "options_page": "options.html"
+}

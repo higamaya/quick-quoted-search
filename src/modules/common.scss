@@ -1,0 +1,246 @@
+$extension-root: "chrome-extension://__MSG_@@extension_id__";
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  src: url(#{$extension-root}/fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  src: url(#{$extension-root}/fonts/Roboto-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  src: url(#{$extension-root}/fonts/Roboto-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url(#{$extension-root}/fonts/RobotoMono-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 500;
+  src: url(#{$extension-root}/fonts/RobotoMono-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: url(#{$extension-root}/fonts/RobotoMono-Bold.ttf) format("truetype");
+}
+
+// Basic color settings
+$primary-color: #309786;
+$secondary-color: #f29333;
+$on-primary-color: #fafafa;
+$on-secondary-color: #fafafa;
+
+// Additional color settings
+$outline-color-focus: #f29333;
+$border-color: #e0e0e0;
+$shadow-color: rgba(128 128 128 / 20%);
+$background-color: #fff;
+$font-color: #101010;
+$font-family: Roboto, "Segoe UI", Arial, Meiryo, sans-serif;
+$font-family-mono: "Roboto Mono", monospace;
+
+.qqs-root {
+  &,
+  * {
+    outline-offset: 0.2em;
+    text-underline-offset: 0.2em;
+    font-size: inherit;
+    font-weight: 400;
+  }
+
+  :focus {
+    outline-color: $outline-color-focus;
+  }
+
+  :any-link {
+    color: inherit;
+  }
+
+  body {
+    color: $font-color;
+    font-family: $font-family;
+  }
+
+  %top-level-component {
+    margin: 1.3em 0;
+    padding: 0 1.3em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  header {
+    @extend %top-level-component;
+
+    border-top: 0.5em solid $primary-color;
+    padding-top: 0.8em;
+  }
+
+  main {
+    @extend %top-level-component;
+  }
+
+  footer {
+    @extend %top-level-component;
+
+    background-color: $primary-color;
+    color: $on-primary-color;
+  }
+
+  h1 {
+    margin: 0 0 0.7em;
+    font-size: 2em;
+    font-weight: 700;
+  }
+
+  h2 {
+    margin: 0 0 0.5em;
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+
+  h3 {
+    margin: 0 0 0.3em;
+    font-size: 1.1em;
+    font-weight: 500;
+  }
+
+  p {
+    margin-block: 1em;
+
+    &:first-child {
+      margin-block-start: 0;
+    }
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  ul {
+    margin-block: 1em;
+    padding-inline-start: 2em;
+
+    &:first-child {
+      margin-block-start: 0;
+    }
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  :is(h1, h2, h3) + :is(p, ul) {
+    margin-block-start: 0;
+  }
+
+  hr {
+    border: 1px solid $border-color;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp,
+  var {
+    font-family: $font-family-mono;
+    font-size: 0.9em;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
+
+  .main {
+    background-color: $background-color;
+  }
+
+  %icon {
+    display: inline-block;
+    background-size: cover;
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+  }
+
+  .search-icon {
+    @extend %icon;
+
+    background-image: url(#{$extension-root}/icons/search.svg);
+  }
+
+  .quote-icon {
+    @extend %icon;
+
+    background-image: url(#{$extension-root}/icons/quote.svg);
+  }
+
+  .options-icon {
+    @extend %icon;
+
+    background-image: url(#{$extension-root}/icons/options.svg);
+  }
+
+  .question-icon {
+    @extend %icon;
+
+    background-image: url(#{$extension-root}/icons/question.svg);
+  }
+
+  .private-icon {
+    @extend %icon;
+
+    background-image: url(#{$extension-root}/icons/private.svg);
+  }
+
+  .content {
+    margin: 1.3em 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .tips {
+    border: 1px solid $border-color;
+    padding: 0.7em;
+    font-size: 0.9em;
+  }
+
+  .copyright {
+    padding: 0.8em 0;
+    text-align: center;
+
+    .copyright__separator {
+      margin: 0 0.5em;
+    }
+  }
+}

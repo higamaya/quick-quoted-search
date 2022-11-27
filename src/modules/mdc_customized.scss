@@ -1,0 +1,279 @@
+@use "common" as qqs;
+
+// Customize MDC theme (colors and fonts)
+@use "@material/theme" with (
+  $primary: qqs.$primary-color,
+  $secondary: qqs.$secondary-color,
+  $on-primary: qqs.$on-primary-color,
+  $on-secondary: qqs.$on-secondary-color
+);
+@use "@material/typography" with (
+  $font-family: qqs.$font-family
+);
+
+// Use MDC Switch component
+@use "@material/switch/styles" as switch-styles;
+
+// Use MDC Select component
+@use "@material/list/mdc-list";
+@use "@material/menu-surface/mdc-menu-surface";
+@use "@material/menu/mdc-menu";
+@use "@material/select/styles" as select-styles;
+
+// Use MDC Slider component
+@use "@material/slider/styles" as slider-styles;
+
+// Use MDC Tooltip component
+@use "@material/tooltip/styles" as tooltip-styles;
+
+// Use MDC Button component
+@use "@material/button/styles" as button-styles;
+
+// Uset MDC Icon Button component
+@use "@material/icon-button/styles" as icon-button-styles;
+
+// Use MDC Dialog component
+@use "@material/dialog";
+@include dialog.core-styles;
+
+.qqs-root {
+  .mdc-switch {
+    --mdc-switch-track-width: 2.25em;
+    --mdc-switch-track-height: 0.875em;
+    --mdc-switch-track-shape: calc(var(--mdc-switch-track-height) / 2);
+    --mdc-switch-handle-width: 1.25em;
+    --mdc-switch-handle-height: 1.25em;
+    --mdc-switch-handle-shape: calc(var(--mdc-switch-handle-height) / 2);
+    --mdc-switch-selected-icon-size: 1em;
+    --mdc-switch-unselected-icon-size: 1em;
+    --mdc-switch-state-layer-size: 3em;
+
+    vertical-align: middle;
+  }
+
+  .mdc-select {
+    .mdc-select__anchor {
+      border-radius: 0.25em;
+      padding-left: 1em;
+      box-sizing: content-box;
+      width: max-content;
+      height: 2em;
+    }
+
+    .mdc-select__dropdown-icon {
+      box-sizing: content-box;
+      width: 1.5em;
+      height: 1.5em;
+    }
+
+    .mdc-select__selected-text {
+      font-size: inherit;
+      line-height: 1.5;
+    }
+
+    .mdc-select__menu {
+      border-radius: 0.25em;
+    }
+
+    .mdc-deprecated-list {
+      padding-inline-start: 0;
+      font-size: inherit;
+    }
+
+    .mdc-deprecated-list-item {
+      padding: 0 1em;
+      box-sizing: content-box;
+      height: 2em;
+      line-height: 1.5;
+    }
+  }
+
+  .mdc-slider {
+    $slider-height: 3em;
+    $track-height: calc($slider-height / 12);
+    $tick-marks-padding: $track-height * 0.25;
+    $tick-mark-size: $track-height * 0.5;
+    $track-width-expansion: $tick-mark-size + $tick-marks-padding * 2;
+    $thumb-knob-size: 1.25em;
+
+    margin: 0 calc($thumb-knob-size / 2);
+    box-sizing: content-box;
+    height: $slider-height;
+
+    .mdc-slider__track {
+      box-sizing: border-box;
+      width: calc(100% + $track-width-expansion);
+      height: $track-height;
+      left: calc($track-width-expansion * -0.5);
+    }
+
+    .mdc-slider__track--active {
+      border-radius: 0.3em;
+      box-sizing: border-box;
+      height: calc($track-height * 1.5);
+      top: calc($track-height * -0.25);
+    }
+
+    .mdc-slider__track--active_fill {
+      border-top-width: calc($track-height * 1.5);
+      transform-origin: left center;
+    }
+
+    .mdc-slider__track--inactive {
+      border-radius: 0.2em;
+      box-sizing: border-box;
+      height: $track-height;
+    }
+
+    .mdc-slider__tick-marks {
+      padding: 0 $tick-marks-padding;
+    }
+
+    .mdc-slider__tick-mark--active,
+    .mdc-slider__tick-mark--inactive {
+      box-sizing: border-box;
+      width: $tick-mark-size;
+      height: $tick-mark-size;
+    }
+
+    .mdc-slider__thumb {
+      box-sizing: border-box;
+      width: $slider-height;
+      height: $slider-height;
+      left: calc($slider-height * -0.5);
+    }
+
+    .mdc-slider__value-indicator-container {
+      bottom: calc($thumb-knob-size * 2.2);
+    }
+
+    .mdc-slider__value-indicator {
+      border-radius: 0.25em;
+      padding: 0 0.75em;
+      box-sizing: content-box;
+      width: max-content;
+      height: 2em;
+
+      &::before {
+        $caret-size: 0.35em;
+
+        border-top-width: $caret-size;
+        border-left-width: $caret-size;
+        border-right-width: $caret-size;
+        bottom: -$caret-size;
+      }
+    }
+
+    .mdc-slider__thumb-knob {
+      border-width: 0.625em;
+      box-sizing: border-box;
+      width: $thumb-knob-size;
+      height: $thumb-knob-size;
+    }
+  }
+
+  .mdc-tooltip-wrapper--rich {
+    display: inline-block;
+  }
+
+  .mdc-tooltip {
+    $tooltip-width: 28em;
+
+    box-sizing: border-box;
+    width: $tooltip-width;
+
+    .mdc-tooltip__surface {
+      display: block;
+      border: 1px solid qqs.$border-color;
+      border-radius: 0.25em;
+      padding: 1em;
+      box-sizing: border-box;
+      min-width: 10em;
+      max-width: calc(100vw - 2em);
+      min-height: 5em;
+      max-height: calc(100vh - 2em);
+      width: $tooltip-width;
+      font-size: inherit;
+      text-align: initial;
+    }
+
+    .mdc-tooltip__title {
+      margin: 0 0 1em;
+      font-size: 1.3em;
+      line-height: 1.5;
+    }
+
+    .mdc-tooltip__title::before {
+      height: 0;
+    }
+
+    .mdc-tooltip__content {
+      margin: 1em 0;
+      max-width: initial;
+      font-size: inherit;
+      line-height: 1.5;
+    }
+
+    .mdc-tooltip--rich-actions {
+      display: flex;
+      margin: 1.5em 0 0;
+      justify-content: flex-end;
+    }
+  }
+
+  .mdc-button {
+    --mdc-outlined-button-container-shape: 0.25em;
+    --mdc-outlined-button-container-height: 2.25em;
+    --mdc-text-button-container-shape: 0.25em;
+    --mdc-text-button-container-height: 2.25em;
+
+    padding: 0 0.5em;
+    box-sizing: content-box;
+    min-width: 4em;
+    font-size: inherit;
+  }
+
+  .mdc-icon-button {
+    padding: 0.75em;
+    box-sizing: content-box;
+    width: max-content;
+    height: max-content;
+    font-size: inherit;
+  }
+
+  .mdc-dialog {
+    .mdc-dialog__surface {
+      display: block;
+      border-radius: 0.25em;
+      padding: 1.25em 1.5em;
+      box-sizing: border-box;
+      max-width: calc(100vw - 2em);
+      max-height: calc(100vh - 2em);
+    }
+
+    .mdc-dialog__title {
+      display: block;
+      margin: 0 0 1em;
+      padding: 0;
+      line-height: 1.5;
+    }
+
+    .mdc-dialog__title::before {
+      height: 0;
+    }
+
+    .mdc-dialog__content {
+      margin: 1em 0;
+      padding: 0;
+      font-size: inherit;
+      line-height: 1.5;
+    }
+
+    .mdc-dialog__actions {
+      margin: 1.5em 0 0;
+      padding: 0;
+      box-sizing: border-box;
+      min-height: 3.5em;
+    }
+  }
+}

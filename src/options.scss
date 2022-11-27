@@ -1,0 +1,100 @@
+@use "modules/common" as qqs;
+@use "modules/mdc_customized";
+
+.qqs-root {
+  body {
+    margin: 0;
+    padding: 1em;
+    box-sizing: border-box;
+    min-width: 100%;
+    width: max-content;
+    min-height: 100vh;
+    height: max-content;
+  }
+
+  main {
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+  }
+
+  li:not(:first-child) {
+    margin-top: 0.25em;
+  }
+
+  kbd {
+    border-radius: 0.4em;
+    background-color: rgba(175 184 193 / 20%);
+    padding: 0.2em 0.4em;
+    color: #24292f;
+    font-size: 0.85em;
+  }
+
+  .main {
+    margin: 2em auto;
+    box-shadow: 0 0.2em 0.35em 0.1em qqs.$shadow-color;
+    width: max-content;
+    animation: fade-in 0.7s ease-in;
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
+  .content {
+    &.content--title {
+      h1,
+      h2 {
+        text-align: center;
+      }
+    }
+
+    &.content--option {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      gap: 0.8em;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+    }
+  }
+
+  .grid-item {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 2em;
+
+    &.grid-item--input {
+      justify-content: flex-end;
+    }
+  }
+
+  .option-label {
+    margin-right: 0.2em;
+  }
+
+  .private-icon {
+    margin-left: 0.3em;
+    margin-right: 0.2em;
+  }
+
+  .option-tooltip-open-button {
+    font-size: 1.1em;
+  }
+
+  #qqs-option-iconSize {
+    box-sizing: content-box;
+    width: 10em;
+  }
+
+  #qqs-option-disposition {
+    min-width: max-content;
+    width: 100%;
+  }
+}

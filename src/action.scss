@@ -1,0 +1,102 @@
+@use "sass:color";
+@use "modules/common" as qqs;
+@use "modules/mdc_customized";
+
+.qqs-root {
+  body {
+    margin: 0;
+    box-sizing: border-box;
+    max-width: 800px;
+    max-height: 600px;
+    width: max-content;
+  }
+
+  .content {
+    &.content--title {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+
+      h1 {
+        margin-right: 1em;
+        margin-bottom: 0;
+      }
+    }
+
+    &.content--search {
+      margin-bottom: 1.6em;
+    }
+  }
+
+  #qqs-options-page {
+    margin-left: auto;
+    margin-right: -0.75em;
+    font-size: 1.2em;
+
+    .options-icon {
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      .options-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .search-bar {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid qqs.$border-color;
+    border-radius: 100vh;
+    box-shadow: 0 0.2em 0.35em 0.1em qqs.$shadow-color;
+    padding: 0.5em 1em;
+
+    &:hover {
+      box-shadow: 0 0.2em 0.4em 0.2em color.scale(qqs.$shadow-color, $lightness: -25%);
+    }
+
+    .search-bar__text {
+      outline: initial;
+      border: initial;
+      background: initial;
+      flex-basis: 100%;
+      line-height: 1.5;
+    }
+
+    .search-bar__button {
+      margin: auto 0 auto 0.5em;
+      flex-basis: content;
+      box-sizing: content-box;
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  .shortcuts {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 0.5em;
+
+    .shortcuts__key {
+      border: 1px solid qqs.$font-color;
+      border-radius: 0.25em;
+      padding: 0.3em 0.5em;
+      font-weight: 500;
+
+      &.shortcuts__key--notset {
+        color: color.scale(qqs.$font-color, $lightness: 25%);
+      }
+    }
+
+    .shortcuts__key,
+    .shortcuts__description {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .shortcuts-settings {
+    margin-top: 0.7em;
+  }
+}

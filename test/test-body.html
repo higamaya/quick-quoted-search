@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 2em;
+        border: 6em solid black;
+        padding: 12em;
+        width: max-content;
+      }
+      .container {
+        margin: 0;
+        border: none;
+        padding: 0;
+        background-color: blue;
+        width: 30em;
+      }
+    </style>
+    <script>
+      function showBodyPosition() {
+        document.getElementById("position").innerText = getComputedStyle(document.body).getPropertyValue("position");
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("content").innerText = "quoted search ".repeat(100);
+        document.getElementById("static").addEventListener("click", (e) => {
+          document.body.style.position = "static";
+          showBodyPosition();
+        });
+        document.getElementById("relative").addEventListener("click", (e) => {
+          document.body.style.position = "relative";
+          showBodyPosition();
+        });
+        showBodyPosition();
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <p>
+        <button id="static">position: static</button>
+        <button id="relative">position: relative</button>
+      </p>
+      <p>document.body.style.position = <span id="position"></span></p>
+    </div>
+    <div class="container">
+      <p id="content"></p>
+    </div>
+  </body>
+</html>

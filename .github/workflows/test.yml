@@ -1,0 +1,45 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  cypress:
+    strategy:
+      matrix:
+        mode: [development, production]
+        os: [windows-latest, macos-latest]
+        browser: [chrome, edge]
+        include:
+          - test_search_site: off
+          - test_search_site: on
+            mode: production
+            os: windows-latest
+            browser: chrome
+    name: "Run cypress with matrix {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}}"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+      - name: Run cypress
+        uses: cypress-io/github-action@v4.2.1
+        with:
+          build: npx webpack build --mode=${{ matrix.mode }}
+          browser: ${{ matrix.browser }}
+          record: true
+          tag: ci,${{ matrix.mode }},${{ matrix.os }},${{ matrix.browser }}
+        env:
+          CYPRESS_mode: ${{ matrix.mode }}
+          CYPRESS_test_on: ci
+          CYPRESS_test_search_site: ${{ matrix.test_search_site }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Save videos as artifacts if failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos-${{ matrix.mode }}-${{ matrix.os }}-${{ matrix.browser }}
+          path: cypress/videos

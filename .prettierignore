@@ -1,0 +1,11 @@
+.git/
+.husky/
+.nyc_output/
+.vscode/
+coverage/
+cypress/downloads
+cypress/screenshots/
+cypress/videos/
+debug/
+dist/
+node_modules/

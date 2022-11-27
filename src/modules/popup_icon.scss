@@ -1,0 +1,139 @@
+@use "sass:color";
+@use "common" as qqs;
+
+.qqs-root {
+  $popup-icon-padding-size: 0.15em;
+  $button-padding-size: 0.25em;
+  $button-content-size: 1em;
+  $button-size: ($button-padding-size * 2) + $button-content-size;
+
+  &.qqs-popup-icon {
+    display: block;
+    position: absolute;
+    z-index: 2147483647;
+    margin: 0;
+    border: 1px solid qqs.$border-color;
+    border-radius: 100vh;
+    box-shadow: 0.15em 0.15em 0.2em 0 qqs.$shadow-color;
+    background-color: qqs.$background-color;
+    padding: $popup-icon-padding-size;
+    width: max-content;
+    height: max-content;
+    overflow: hidden;
+    font-size: max(1em, 16px);
+
+    .qqs-search-icon {
+      // Adds the prefix `qqs-` since this CSS will be injected into any document.
+      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+      @extend .search-icon;
+    }
+
+    .qqs-quote-icon {
+      // Adds the prefix `qqs-` since this CSS will be injected into any document.
+      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+      @extend .quote-icon;
+    }
+
+    .qqs-options-icon {
+      // Adds the prefix `qqs-` since this CSS will be injected into any document.
+      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+      @extend .options-icon;
+    }
+
+    .qqs-search-icon,
+    .qqs-quote-icon,
+    .qqs-options-icon {
+      display: block;
+      box-sizing: border-box;
+      width: $button-content-size;
+      height: $button-content-size;
+    }
+
+    %button {
+      border-radius: 100vh;
+      background-color: qqs.$background-color;
+      padding: $button-padding-size;
+      box-sizing: content-box;
+      width: $button-content-size;
+      height: $button-content-size;
+      cursor: pointer;
+
+      &:hover {
+        background-color: color.scale(qqs.$background-color, $lightness: -5%);
+      }
+    }
+
+    %animation-button {
+      opacity: 0;
+      transform: rotate(-180deg);
+      transition: all 0.3s;
+    }
+
+    .qqs-search-button {
+      @extend %button;
+
+      position: absolute;
+      left: $popup-icon-padding-size;
+      top: $popup-icon-padding-size;
+      z-index: 2;
+    }
+
+    .qqs-quote-button {
+      @extend %button;
+      @extend %animation-button;
+
+      position: absolute;
+      left: $popup-icon-padding-size;
+      top: $popup-icon-padding-size;
+      z-index: 1;
+    }
+
+    .qqs-options-button {
+      @extend %button;
+      @extend %animation-button;
+
+      .qqs-options-icon {
+        transition: all 0.3s;
+      }
+
+      &:hover {
+        .qqs-options-icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &.qqs-popup-icon:hover {
+    %animation-button {
+      opacity: 1;
+      transform: rotate(0);
+    }
+
+    &:not(.qqs-editable) {
+      &.qqs-show-options-button {
+        .qqs-options-button {
+          margin-left: $button-size;
+        }
+      }
+    }
+
+    &.qqs-editable {
+      .qqs-quote-button {
+        left: calc($popup-icon-padding-size + $button-size);
+      }
+
+      &.qqs-show-options-button {
+        .qqs-options-button {
+          margin-left: calc($button-size * 2);
+        }
+      }
+
+      &:not(.qqs-show-options-button) {
+        .qqs-options-button {
+          margin-left: $button-size;
+        }
+      }
+    }
+  }
+}

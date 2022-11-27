@@ -1,0 +1,10 @@
+.nyc_output/
+coverage/
+cypress/downloads
+cypress/screenshots/
+cypress/videos/
+debug/
+dist/
+node_modules/
+
+cypress.record.key.*

@@ -1,0 +1,182 @@
+{
+  "msg_extension_name": {
+    "message": "Quick Quoted Search"
+  },
+  "msg_extension_description": {
+    "message": "Eliminate the hassle of search for exact match!"
+  },
+  "msg_command_description_do_quoted_search": {
+    "message": "Do \"Quoted Search\" for the selected text"
+  },
+  "msg_command_description_put_quotes": {
+    "message": "Put quotes around the selected text"
+  },
+  "msg_action_h2_keyboad_shortcuts": {
+    "message": "Keyboard shortcuts"
+  },
+  "msg_action_link_customize_keyboad_shortcuts": {
+    "message": "Customize keyboard shortcuts"
+  },
+  "msg_action_shortcut_key_not_set": {
+    "message": "Not set"
+  },
+  "msg_context_menu_title_do_quoted_search": {
+    "message": "Do \"Quoted Search\" for the selected text"
+  },
+  "msg_context_menu_title_put_quotes": {
+    "message": "Put quotes around the selected text"
+  },
+  "msg_context_menu_title_put_quotes_supplement": {
+    "message": ", and search immediately"
+  },
+  "msg_options_title": {
+    "message": "Quick Quoted Search - Extension Options"
+  },
+  "msg_options_h2_extension_options": {
+    "message": "Extension Options"
+  },
+  "msg_options_h2_browser_settings": {
+    "message": "Browser Settings"
+  },
+  "msg_options_label_popup_icon": {
+    "message": "Popup Icon"
+  },
+  "msg_options_label_icon_size": {
+    "message": "Icon Size"
+  },
+  "msg_options_label_avoid_selection": {
+    "message": "Avoid Selection"
+  },
+  "msg_options_label_options_button": {
+    "message": "Options Button"
+  },
+  "msg_options_label_context_menu": {
+    "message": "Context Menu"
+  },
+  "msg_options_label_disposition": {
+    "message": "Disposition"
+  },
+  "msg_options_label_auto_copy": {
+    "message": "Auto Copy"
+  },
+  "msg_options_label_auto_enter": {
+    "message": "Auto Enter"
+  },
+  "msg_options_label_auto_surround": {
+    "message": "Auto Surround"
+  },
+  "msg_options_label_select_search_engine": {
+    "message": "Select search engine"
+  },
+  "msg_options_label_customize_keyboard_shortcuts": {
+    "message": "Customize keyboard shortcuts"
+  },
+  "msg_options_description_content_popup_icon_1": {
+    "message": "Popup icon $1 appears right next to the mouse pointer when selecting text. Clicking popup icon helps you quickly do \"Quoted Search\"."
+  },
+  "msg_options_description_content_popup_icon_2": {
+    "message": "You can drag popup icon to move it. Drag it when it is in the way, such as overlapping popups displayed by other extensions."
+  },
+  "msg_options_description_content_icon_size": {
+    "message": "Choose the size of popup icon $1."
+  },
+  "msg_options_description_content_avoid_selection_1": {
+    "message": "Popup icon $1 appears avoiding selected text range."
+  },
+  "msg_options_description_content_avoid_selection_2": {
+    "message": "If this option is enabled, depending on the structure of the page, popup icon may appear far away from the mouse pointer."
+  },
+  "msg_options_description_content_options_button": {
+    "message": "Options button $1 appears next to popup icon $2 when you hover the mouse pointer over it."
+  },
+  "msg_options_description_content_context_menu": {
+    "message": "Items to invoke functions of Quick Quoted Search appear in context menu displayed upon a right-click mouse operation."
+  },
+  "msg_options_description_content_disposition_1": {
+    "message": "Choose where you want the results of \"Quoted Search\" to appear."
+  },
+  "msg_options_description_content_disposition_2": {
+    "message": "Only when you click popup icon $1 to search, you can override this choice by pressing the following keys:"
+  },
+  "msg_options_description_content_disposition_3": {
+    "message": "Pressing above keys has no effect when search is invoked from keyboard shortcuts or context menus instead of clicking popup icon."
+  },
+  "msg_options_description_content_click": {
+    "message": "click"
+  },
+  "msg_options_description_content_new_tab": {
+    "message": "➡ New tab"
+  },
+  "msg_options_description_content_new_tab_background": {
+    "message": "➡ New tab (background)"
+  },
+  "msg_options_description_content_new_window": {
+    "message": "➡ New window"
+  },
+  "msg_options_description_content_auto_copy": {
+    "message": "Automatically copy quoted words to the system clipboard when doing \"Quoted Search\". This allows you to quickly find the search words in web pages with $1 + $2 → $1 + $3."
+  },
+  "msg_options_description_content_auto_enter_1": {
+    "message": "Automatically press $1 key to do search immediately after putting quotes around the selected text in an input field."
+  },
+  "msg_options_description_content_auto_enter_2": {
+    "message": "This feature only works for the input field of the following search engine sites:"
+  },
+  "msg_options_description_content_auto_surround": {
+    "message": "Automatically surround the selected text in an input field with quotes when typing double quotation mark ($1)."
+  },
+  "msg_options_description_content_select_search_engine_1": {
+    "message": "Quick Quoted Search uses the default search engine configured in your browser."
+  },
+  "msg_options_description_content_select_search_engine_2": {
+    "message": "You can specify your favorite search engine as the default."
+  },
+  "msg_options_description_content_customize_keyboard_shortcuts": {
+    "message": "You can customize keyboard shortcuts invoking functions of Quick Quoted Search."
+  },
+  "msg_options_description_button_dismiss": {
+    "message": "Dismiss"
+  },
+  "msg_options_button_restore_defaults": {
+    "message": "Restore defaults"
+  },
+  "msg_options_restore_defaults_dialog_title": {
+    "message": "Restore defaults"
+  },
+  "msg_options_restore_defaults_dialog_content_1": {
+    "message": "Restores all options to their default values."
+  },
+  "msg_options_restore_defaults_dialog_content_2": {
+    "message": "Are you sure?"
+  },
+  "msg_options_restore_defaults_dialog_button_ok": {
+    "message": "OK"
+  },
+  "msg_options_restore_defaults_dialog_button_cancel": {
+    "message": "Cancel"
+  },
+  "msg_options_disposition_value_new_tab": {
+    "message": "New tab"
+  },
+  "msg_options_disposition_value_new_window": {
+    "message": "New window"
+  },
+  "msg_options_disposition_value_current_tab": {
+    "message": "Current tab"
+  },
+  "msg_options_icon_size_value_text_1": {
+    "message": "Very small"
+  },
+  "msg_options_icon_size_value_text_2": {
+    "message": "Small"
+  },
+  "msg_options_icon_size_value_text_3": {
+    "message": "Medium"
+  },
+  "msg_options_icon_size_value_text_4": {
+    "message": "Large"
+  },
+  "msg_options_icon_size_value_text_5": {
+    "message": "Very large"
+  }
+}

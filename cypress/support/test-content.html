@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<!-- Invoked by Cypress -->
+
+<html>
+  <head>
+    <title>Test Content</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/dist/content_bundle.css" />
+    <script defer src="/dist/content_bundle.js"></script>
+    <style>
+      body {
+        display: flex;
+        font-size: 16px;
+      }
+      div {
+        display: grid;
+        grid-template-columns: max-content max-content;
+        gap: 0.5em;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <label for="input_text">text</label>
+      <input id="input_text" type="text" size="32" />
+      <label for="input_email" size="32">email</label>
+      <input id="input_email" type="email" />
+      <label for="textarea">textarea</label>
+      <textarea id="textarea" rows="10" cols="32"></textarea>
+    </div>
+  </body>
+</html>
