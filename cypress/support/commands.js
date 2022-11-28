@@ -172,6 +172,13 @@ Cypress.Commands.add("visitAndSetup", function (url, options, skipIfSameParamete
           expect(win.qqs).to.be.undefined;
           win.qqs = { options };
           win.chrome = Object.assign({}, win.chrome, this.qqs.crxApiMock.chromeForWin);
+
+          // `__coverage__` is needed to make sure that @cypress/code-coverage
+          // collect coverage information even if loading the scripts under test
+          // is deferred.
+          if (Cypress.env("coverage") && !win.__coverage__) {
+            win.__coverage__ = {};
+          }
         },
         onLoad(win) {
           if (options.convertCssUrl) {
