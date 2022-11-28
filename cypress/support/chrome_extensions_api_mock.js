@@ -163,7 +163,7 @@ class Commands extends AbstractCrxApiMock {
   }
 
   _invoke(command, tab) {
-    this._hub._invoke(command, { ...this._root._sender.tab, ...tab });
+    this._hub._invoke(command, tab === false ? undefined : { ...this._root._sender.tab, ...tab });
   }
 
   _detach() {
@@ -419,7 +419,11 @@ class Scripting extends AbstractCrxApiMock {
     super(parent, hub);
   }
 
-  async executeScript(_injection) {}
+  async executeScript(injection) {
+    if (typeof injection?.func === "function") {
+      setTimeout(() => injection.func(...injection.args));
+    }
+  }
 
   _detach() {
     super._detach();

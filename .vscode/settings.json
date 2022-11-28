@@ -18,5 +18,8 @@
   "stylelint.validate": [
     "css",
     "scss"
-  ]
+  ],
+  "search.exclude": {
+    "**/coverage-main": true
+  }
 }

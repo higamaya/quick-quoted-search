@@ -14,7 +14,7 @@ jobs:
         os: [windows-latest, macos-latest]
         browser: [chrome, edge]
         test_search_site: [off]
-    name: "Run cypress with matrix {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
+    name: "Run cypress with {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Clone repo
@@ -27,9 +27,10 @@ jobs:
           record: true
           tag: ci,${{ matrix.mode }},${{ matrix.os }},${{ matrix.browser }}
         env:
-          CYPRESS_mode: ${{ matrix.mode }}
+          CYPRESS_coverage: false
           CYPRESS_test_on: ci
           CYPRESS_test_search_site: ${{ matrix.test_search_site }}
+          CYPRESS_mode: ${{ matrix.mode }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save videos as artifacts if failure
