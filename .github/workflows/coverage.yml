@@ -1,24 +1,25 @@
-name: Test
+name: Code Coverage
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 jobs:
-  test:
+  coverage:
     strategy:
       matrix:
-        mode: [production]
-        os: [windows-latest, macos-latest]
-        browser: [chrome, edge]
+        mode: [development]
+        os: [windows-latest]
+        browser: [chrome]
         test_search_site: [off]
     name: "Run cypress with matrix {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
+      - name: Setup code coverage
+        run: npm run coverage-setup
+      - name: Change disposition of code coverage report
+        run: node -e "require('fs').copyFileSync('.nycrc.main.json', '.nycrc.json')"
       - name: Run cypress
         uses: cypress-io/github-action@v4.2.1
         with:
@@ -38,3 +39,10 @@ jobs:
         with:
           name: cypress-videos-${{ matrix.mode }}-${{ matrix.os }}-${{ matrix.browser }}
           path: cypress/videos
+      - name: Save code coverage to repo
+        run: |
+          git config --local user.name "${{ github.actor }}"
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git add coverage-main
+          git commit -m "chore: update code coverage"
+          git push

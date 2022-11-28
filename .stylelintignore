@@ -3,6 +3,7 @@
 .nyc_output/
 .vscode/
 coverage/
+coverage-main/
 cypress/downloads
 cypress/screenshots/
 cypress/videos/
