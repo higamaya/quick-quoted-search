@@ -37,20 +37,27 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
   function visitAndSetup(options, skipIfSameParameters = false) {
     options = { isMac: false, initialOptions: undefined, ...options };
 
-    return cy.visitAndSetup(
-      "cypress/support/test-background.html",
-      {
-        isMac: options.isMac,
-        initialOptions: options.initialOptions,
+    return cy
+      .visitAndSetup(
+        "cypress/support/test-background.html",
+        {
+          isMac: options.isMac,
+          initialOptions: options.initialOptions,
 
-        onCrxApiMockReady(crxApiMock) {
-          setSpiesOnChromeForWin(crxApiMock.chromeForWin);
+          onCrxApiMockReady(crxApiMock) {
+            setSpiesOnChromeForWin(crxApiMock.chromeForWin);
 
-          this.qqs.portToContent = undefined;
+            this.qqs.portToContent = undefined;
+          },
         },
-      },
-      skipIfSameParameters
-    );
+        skipIfSameParameters
+      )
+      .then(function (win) {
+        // Prevent tests from overwriting the clipboard and interfering with other work.
+        win.navigator.clipboard.writeText = () => {};
+
+        return cy.wrap(win);
+      });
   }
 
   function visitAndSetup_own(options) {
@@ -819,22 +826,77 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
     });
 
-    context("when tab id is different from the current selection", function () {
+    context("when tab is undefined", function () {
+      it("should get active tab, and execute the command", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        sendNotifySelectionUpdated.call(this);
+        // --- conditions ---
+        const tab = false;
+        // --- actions ---
+        cy.getCrxApiMock().then(function (crxApiMock) {
+          crxApiMock.chromeForCypress.commands._invoke("do_quoted_search", tab);
+        });
+        // --- results ---
+        assertSearchQuery.call(this);
+      });
+    });
+
+    context("when tab is undefined and active tab is also undefined", function () {
       it("should NOT execute the command", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         sendNotifySelectionUpdated.call(this);
         // --- conditions ---
-        const tabId = 999;
+        const tab = false;
+        cy.getCrxApiMock().then(function (crxApiMock) {
+          crxApiMock.chromeForCypress._hub.tabs._currentTab = undefined;
+        });
         // --- actions ---
         cy.getCrxApiMock().then(function (crxApiMock) {
-          crxApiMock.chromeForCypress.commands._invoke("do_quoted_search", {
-            ...crxApiMock.chromeForCypress._sender._tab,
-            id: tabId,
-          });
+          crxApiMock.chromeForCypress.commands._invoke("do_quoted_search", tab);
         });
         // --- results ---
         assertSearchQuery.call(this, false /* have not been called */);
+        // *** restore ***
+        cy.getCrxApiMock().then(function (crxApiMock) {
+          crxApiMock.chromeForCypress._hub.tabs._currentTab = crxApiMock.chromeForCypress._tab;
+        });
+      });
+
+      context("when tab id is different from the current selection", function () {
+        it("should NOT execute the command", function () {
+          // --- preparation ---
+          visitAndSetup_own.call(this);
+          sendNotifySelectionUpdated.call(this);
+          // --- conditions ---
+          const tabId = 999;
+          // --- actions ---
+          cy.getCrxApiMock().then(function (crxApiMock) {
+            crxApiMock.chromeForCypress.commands._invoke("do_quoted_search", {
+              ...crxApiMock.chromeForCypress._sender._tab,
+              id: tabId,
+            });
+          });
+          // --- results ---
+          assertSearchQuery.call(this, false /* have not been called */);
+        });
+      });
+
+      context("when the current selection blur", function () {
+        it("should NOT execute the command", function () {
+          // --- preparation ---
+          visitAndSetup_own.call(this);
+          sendNotifySelectionUpdated.call(this);
+          // --- conditions ---
+          sendNotifySelectionUpdated.call(this, { blur: true });
+          // --- actions ---
+          cy.getCrxApiMock().then(function (crxApiMock) {
+            crxApiMock.chromeForCypress.commands._invoke("do_quoted_search");
+          });
+          // --- results ---
+          assertSearchQuery.call(this, false /* have not been called */);
+        });
       });
     });
   });

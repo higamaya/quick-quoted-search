@@ -24,16 +24,6 @@ describe("Content scripts on search engine site", function () {
     });
   }
 
-  function skipTestOnSearchSiteIfInstructed() {
-    if (Cypress.env("test_search_site") !== "on") {
-      Cypress.qqs.log(
-        "I",
-        "Skip the test case because reCAPTCHA may be presented by accessing a search site many times in a short time"
-      );
-      this.skip();
-    }
-  }
-
   before(function () {
     cy.setupCrxApiMock(Cypress.qqs.CrxApiMockFactory.Types.CONTENT);
 
@@ -51,7 +41,6 @@ describe("Content scripts on search engine site", function () {
     context("when the extension's options are { Auto Enter: On, Auto Copy: On }", function () {
       it("should press `Enter` key, and should copy the selected text to the clipboard", function () {
         // --- preparation ---
-        skipTestOnSearchSiteIfInstructed.call(this);
         visitSearchSiteAndSetup.call(this);
         // --- conditions ---
         cy.setOptions({ autoEnter: true, autoCopy: true });
@@ -66,7 +55,6 @@ describe("Content scripts on search engine site", function () {
     context("when the extension's options are { Auto Enter: On, Auto Copy: Off }", function () {
       it("should press `Enter` key, and should NOT copy the selected text to the clipboard", function () {
         // --- preparation ---
-        skipTestOnSearchSiteIfInstructed.call(this);
         visitSearchSiteAndSetup.call(this);
         // --- conditions ---
         cy.setOptions({ autoEnter: true, autoCopy: false });
@@ -83,7 +71,6 @@ describe("Content scripts on search engine site", function () {
     context("when the extension's options are { Auto Enter: Off, Auto Copy: On }", function () {
       it("should NOT press `Enter` key, and should NOT copy the selected text to the clipboard", function () {
         // --- preparation ---
-        skipTestOnSearchSiteIfInstructed.call(this);
         visitSearchSiteAndSetup.call(this);
         // --- conditions ---
         cy.setOptions({ autoEnter: false, autoCopy: true });
@@ -131,6 +118,7 @@ describe("Content scripts on search engine site", function () {
           inputPattern: "input[name=q]",
           searchPhrase: "bar",
           resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22bar%22(&.+)?$/,
+          skipOnCi: true, // Skip this test on CI because reCAPTCHA interferes with it.
         },
         {
           name: "Bing - Top page",
@@ -145,7 +133,7 @@ describe("Content scripts on search engine site", function () {
           inputPattern: "input[name=q]",
           searchPhrase: "bar",
           resultUrlPattern: /^https:\/\/www\.bing\.com\/search\?q=%22bar%22(&.+)?$/,
-          skipOnCi: true, // Skip this test because it fails due to unexpected redirection
+          skipOnCi: true, // Skip this test on CI because it fails due to unexpected redirection
         },
         {
           name: "Yahoo - Top page",
@@ -194,7 +182,10 @@ describe("Content scripts on search engine site", function () {
         context(`on ${name}`, function () {
           it("should press `Enter` key and show search results", function () {
             // --- preparation ---
-            skipTestOnSearchSiteIfInstructed.call(this);
+            if (Cypress.env("test_search_site") !== "on") {
+              Cypress.qqs.log("I", "Skip the test case because `test_search_site` is not `on`");
+              this.skip();
+            }
             if (skipOnCi && Cypress.env("test_on") === "ci") {
               Cypress.qqs.log("I", "Skip the test case because it does not work as expected in CI");
               this.skip();

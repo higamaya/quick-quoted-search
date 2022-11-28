@@ -1262,5 +1262,29 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         cy.get("#input_lazy").should("have.value", '"foo"').and("be.selected", 1, 4);
       });
     });
+
+    context("when selecting text in an editable node rendered lazy, and the node is deeper", function () {
+      it("should recognize the input field as `editable node` (can do `Put Quotes`)", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        // --- conditions ---
+        cy.document().then(function (doc) {
+          const container = doc.getElementById("container");
+          const label = container.appendChild(doc.createElement("label"));
+          const parentOfInput = container.appendChild(doc.createElement("div"));
+          const input = parentOfInput.appendChild(doc.createElement("input"));
+          input.id = "input_lazy";
+          input.type = "text";
+          input.size = 32;
+          label.hemlFor = input.id;
+          label.innerText = "lazy";
+        });
+        // --- actions ---
+        cy.get("#input_lazy").setValue("foo").selectText().mouseUpLeft();
+        // --- results ---
+        cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+        cy.get("#input_lazy").should("have.value", '"foo"').and("be.selected", 1, 4);
+      });
+    });
   });
 });

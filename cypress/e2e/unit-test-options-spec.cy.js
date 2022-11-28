@@ -1,4 +1,4 @@
-describe("Options class", function () {
+describe("[Unit Test] Options class", function () {
   const defaultValues = Cypress.qqs.defaultOptionValues;
 
   const nonDefaultValues = {
@@ -120,7 +120,7 @@ describe("Options class", function () {
   });
 
   describe("init()", function () {
-    context(`when the storage is empty`, function () {
+    context("when the storage is empty", function () {
       it("should have default values for their properties", async function () {
         // --- preparation ---
         // --- conditions ---
@@ -134,7 +134,7 @@ describe("Options class", function () {
       });
     });
 
-    context(`when the storage contains values that differ from default values`, function () {
+    context("when the storage contains values that differ from default values", function () {
       it("should have the values retrieved from the storage in each property", async function () {
         // --- preparation ---
         // --- conditions ---
@@ -148,7 +148,7 @@ describe("Options class", function () {
       });
     });
 
-    context(`when the storage contains unexpected values`, function () {
+    context("when the storage contains unexpected values", function () {
       it("should return default values for each property which value retrieved from the storage is unexpected", async function () {
         // --- preparation ---
         // --- conditions ---
@@ -261,7 +261,7 @@ describe("Options class", function () {
     });
 
     describe("reset()", function () {
-      context(`when calling reset()`, function () {
+      context("when calling reset()", function () {
         it("should update the option values with default values", async function () {
           // --- preparation ---
           await setOptionValues.call(this, nonDefaultValues);
@@ -282,7 +282,7 @@ describe("Options class", function () {
     });
 
     describe("Synchronization", function () {
-      context(`when the options are changed by others`, function () {
+      context("when the options are changed by others", function () {
         it("should update the option values with the values retrieved from the storage.", async function () {
           // --- preparation ---
           await clearOptionValues.call(this);
@@ -300,7 +300,7 @@ describe("Options class", function () {
         });
       });
 
-      context(`when the options are changed by others, but timestamp is old`, function () {
+      context("when the options are changed by others, but timestamp is old", function () {
         it("should NOT update the option values with the values retrieved from the storage.", async function () {
           // --- preparation ---
           await setOptionValues.call(this, nonDefaultValues);
@@ -318,7 +318,26 @@ describe("Options class", function () {
         });
       });
 
-      context(`when the storage is cleared`, function () {
+      context("when any value other than `options` in the storage is changed", function () {
+        it("should NOT update any option values", async function () {
+          // --- preparation ---
+          await setOptionValues.call(this, nonDefaultValues);
+          const options = await newOptions.call(this);
+          // --- conditions ---
+          for (const [name, nonDefaultValue] of Object.entries(nonDefaultValues)) {
+            expect(options[name], name).to.equal(nonDefaultValue);
+          }
+          // --- actions ---
+          const storage = this.qqs.crxApiMock.chromeForCypress.storage.sync;
+          await waitForSyncStorageChangedEvent.call(this, storage, () => storage.set({ foo: "bar" }));
+          // --- results ---
+          for (const [name, nonDefaultValue] of Object.entries(nonDefaultValues)) {
+            expect(options[name], name).to.equal(nonDefaultValue);
+          }
+        });
+      });
+
+      context("when the storage is cleared", function () {
         it("should update the option values with default values", async function () {
           // --- preparation ---
           await setOptionValues.call(this, nonDefaultValues);

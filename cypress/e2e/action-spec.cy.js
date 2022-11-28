@@ -194,6 +194,21 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
           });
       });
     });
+
+    context("when the port is closed", function () {
+      it("should be able to do Quoted Search", function () {
+        // --- preparation ---
+        visitAndSetup.call(this);
+        cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+        // --- conditions ---
+        cy.get("@portToAction").invoke("disconnect");
+        // --- actions ---
+        cy.get("#qqs-search-bar-text").setValue("foo");
+        cy.get("#qqs-search-bar-text").type("{enter}");
+        // --- results ---
+        assertSearchQuery.call(this);
+      });
+    });
   });
 
   describe("Initial rendering", function () {

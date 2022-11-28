@@ -5,14 +5,8 @@ on:
       - main
 jobs:
   coverage:
-    strategy:
-      matrix:
-        mode: [development]
-        os: [windows-latest]
-        browser: [chrome]
-        test_search_site: [off]
-    name: "Run cypress with matrix {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
-    runs-on: ${{ matrix.os }}
+    name: "Run cypress with {mode: development, os: windows-latest, browser: chrome, test_search_site: off, coverage: on}"
+    runs-on: windows-latest
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
@@ -23,21 +17,22 @@ jobs:
       - name: Run cypress
         uses: cypress-io/github-action@v4.2.1
         with:
-          build: npx webpack build --mode=${{ matrix.mode }}
-          browser: ${{ matrix.browser }}
+          build: npx webpack build --mode=development
+          browser: chrome
           record: true
-          tag: ci,${{ matrix.mode }},${{ matrix.os }},${{ matrix.browser }}
+          tag: ci,development,windows-latest,chrome,coverage
         env:
-          CYPRESS_mode: ${{ matrix.mode }}
+          CYPRESS_coverage: true
           CYPRESS_test_on: ci
-          CYPRESS_test_search_site: ${{ matrix.test_search_site }}
+          CYPRESS_test_search_site: off
+          CYPRESS_mode: development
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save videos as artifacts if failure
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-${{ matrix.mode }}-${{ matrix.os }}-${{ matrix.browser }}
+          name: cypress-videos-development-windows-latest-chrome
           path: cypress/videos
       - name: Save code coverage to repo
         run: |
