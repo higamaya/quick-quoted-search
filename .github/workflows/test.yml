@@ -25,7 +25,7 @@ jobs:
           build: npx webpack build --mode=${{ matrix.mode }}
           browser: ${{ matrix.browser }}
           record: true
-          tag: ci,${{ matrix.mode }},${{ matrix.os }},${{ matrix.browser }}
+          tag: ci,${{ matrix.mode }},${{ runner.os }},${{ matrix.browser }}
         env:
           CYPRESS_coverage: false
           CYPRESS_test_on: ci
@@ -37,5 +37,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-${{ matrix.mode }}-${{ matrix.os }}-${{ matrix.browser }}
+          name: cypress-videos-${{ matrix.mode }}-${{ runner.os }}-${{ matrix.browser }}
           path: cypress/videos

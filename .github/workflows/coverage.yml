@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/**/*.js"
+      - "cypress/**/*.js"
 jobs:
   coverage:
     name: "Run cypress with {mode: development, os: windows-latest, browser: chrome, test_search_site: off, coverage: on}"
@@ -20,7 +23,7 @@ jobs:
           build: npx webpack build --mode=development
           browser: chrome
           record: true
-          tag: ci,development,windows-latest,chrome,coverage
+          tag: ci,development,Windows,chrome,coverage
         env:
           CYPRESS_coverage: true
           CYPRESS_test_on: ci
@@ -32,12 +35,12 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-development-windows-latest-chrome
+          name: cypress-videos-development-Windows-chrome
           path: cypress/videos
       - name: Save code coverage to repo
         run: |
-          git config --local user.name "${{ github.actor }}"
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --local user.name "${{ github.event.pusher.username }}"
+          git config --local user.email "${{ github.event.pusher.email }}"
           git add coverage-main
           git commit -m "chore: update code coverage"
           git push
