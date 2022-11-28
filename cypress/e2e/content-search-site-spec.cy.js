@@ -1,4 +1,4 @@
-describe("Content scripts on search engine site", function () {
+describe("Content scripts on search engine site", { retries: 2 }, function () {
   // Note: It is expected that the image of the buttons within Popup Icon does
   // not show in this test. The reason is that the image path cannot be resolved
   // because CSS and JS are injected into the external sites by brute force way.
@@ -86,130 +86,126 @@ describe("Content scripts on search engine site", function () {
     });
   });
 
-  describe(
-    "Auto Enter on all supported search engine sites (Note: This test is flaky due to focus-related matter. So rerun it if failed.)",
-    { retries: 2 },
-    function () {
-      const SEARCH_ENGINES = [
-        {
-          name: "Google - Top page",
-          url: "https://www.google.com/",
-          inputPattern: "input[name=q]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/www\.google\.com\/search\?q=%22foo%22(&.+)?$/,
-        },
-        {
-          name: "Google - Search result page",
-          url: "https://www.google.com/search?q=foo",
-          inputPattern: "input[name=q]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/www\.google\.com\/search\?q=%22bar%22(&.+)?$/,
-        },
-        {
-          name: "Google Scholar - Top page",
-          url: "https://scholar.google.com/",
-          inputPattern: "input[name=q]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22foo%22(&.+)?$/,
-        },
-        {
-          name: "Google Scholar - Search result page",
-          url: "https://scholar.google.com/scholar?q=foo",
-          inputPattern: "input[name=q]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22bar%22(&.+)?$/,
-          skipOnCi: true, // Skip this test on CI because reCAPTCHA interferes with it.
-        },
-        {
-          name: "Bing - Top page",
-          url: "https://www.bing.com/",
-          inputPattern: "input[name=q]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/www\.bing\.com\/search\?q=%22foo%22(&.+)?$/,
-        },
-        {
-          name: "Bing - Search result page",
-          url: "https://www.bing.com/search?q=foo",
-          inputPattern: "input[name=q]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/www\.bing\.com\/search\?q=%22bar%22(&.+)?$/,
-          skipOnCi: true, // Skip this test on CI because it fails due to unexpected redirection
-        },
-        {
-          name: "Yahoo - Top page",
-          url: "https://www.yahoo.com/",
-          inputPattern: "input[name=p]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search\?p=%22foo%22(&.+)?$/,
-        },
-        {
-          name: "Yahoo - Search result page",
-          url: "https://search.yahoo.com/search?p=foo",
-          inputPattern: "input[name=p]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search(;.+=.+)*\?p=%22bar%22(&.+)?$/,
-        },
-        {
-          name: "Yahoo Japan - Top page",
-          url: "https://www.yahoo.co.jp/",
-          inputPattern: "input[name=p]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/search\.yahoo\.co\.jp\/search\?p=%22foo%22$/,
-        },
-        {
-          name: "Yahoo Japan - Search result page",
-          url: "https://search.yahoo.co.jp/search?p=foo",
-          inputPattern: "input[name=p]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/search\.yahoo\.co\.jp\/search\?p=%22bar%22(&.+)?$/,
-        },
-        {
-          name: "DuckDuckGo - Top page",
-          url: "https://duckduckgo.com/",
-          inputPattern: "input[name=q]",
-          searchPhrase: "foo",
-          resultUrlPattern: /^https:\/\/duckduckgo\.com\/\?q=%22foo%22(&.+)?$/,
-        },
-        {
-          name: "DuckDuckGo - Search result page",
-          url: "https://duckduckgo.com/?q=foo",
-          inputPattern: "input[name=q]",
-          searchPhrase: "bar",
-          resultUrlPattern: /^https:\/\/duckduckgo\.com\/\?q=%22bar%22(&.+)?$/,
-        },
-      ];
-      for (const { name, url, inputPattern, searchPhrase, resultUrlPattern, skipOnCi } of SEARCH_ENGINES) {
-        context(`on ${name}`, function () {
-          it("should press `Enter` key and show search results", function () {
-            // --- preparation ---
-            if (Cypress.env("test_search_site") !== "on") {
-              Cypress.qqs.log("I", "Skip the test case because `test_search_site` is not `on`");
-              this.skip();
-            }
-            if (skipOnCi && Cypress.env("test_on") === "ci") {
-              Cypress.qqs.log("I", "Skip the test case because it does not work as expected in CI");
-              this.skip();
-            }
-            // --- conditions ---
-            visitAndSetup.call(this, url);
-            // --- actions ---
-            // eslint-disable-next-line cypress/no-unnecessary-waiting
-            cy.get(inputPattern)
-              .first()
-              .focus()
-              .wait(100)
-              .selectText()
-              .type(searchPhrase)
-              .should("have.value", searchPhrase)
-              .selectText()
-              .should("be.selected")
-              .mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
-            // --- results ---
-            cy.url().should("match", resultUrlPattern);
-          });
+  describe("Auto Enter on all supported search engine sites", function () {
+    const SEARCH_ENGINES = [
+      {
+        name: "Google - Top page",
+        url: "https://www.google.com/",
+        inputPattern: "input[name=q]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/www\.google\.com\/search\?q=%22foo%22(&.+)?$/,
+      },
+      {
+        name: "Google - Search result page",
+        url: "https://www.google.com/search?q=foo",
+        inputPattern: "input[name=q]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/www\.google\.com\/search\?q=%22bar%22(&.+)?$/,
+      },
+      {
+        name: "Google Scholar - Top page",
+        url: "https://scholar.google.com/",
+        inputPattern: "input[name=q]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22foo%22(&.+)?$/,
+      },
+      {
+        name: "Google Scholar - Search result page",
+        url: "https://scholar.google.com/scholar?q=foo",
+        inputPattern: "input[name=q]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22bar%22(&.+)?$/,
+        skipOnCi: true, // Skip this test on CI because reCAPTCHA interferes with it.
+      },
+      {
+        name: "Bing - Top page",
+        url: "https://www.bing.com/",
+        inputPattern: "input[name=q]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/www\.bing\.com\/search\?q=%22foo%22(&.+)?$/,
+      },
+      {
+        name: "Bing - Search result page",
+        url: "https://www.bing.com/search?q=foo",
+        inputPattern: "input[name=q]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/www\.bing\.com\/search\?q=%22bar%22(&.+)?$/,
+        skipOnCi: true, // Skip this test on CI because it fails due to unexpected redirection
+      },
+      {
+        name: "Yahoo - Top page",
+        url: "https://www.yahoo.com/",
+        inputPattern: "input[name=p]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search\?p=%22foo%22(&.+)?$/,
+      },
+      {
+        name: "Yahoo - Search result page",
+        url: "https://search.yahoo.com/search?p=foo",
+        inputPattern: "input[name=p]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search(;.+=.+)*\?p=%22bar%22(&.+)?$/,
+      },
+      {
+        name: "Yahoo Japan - Top page",
+        url: "https://www.yahoo.co.jp/",
+        inputPattern: "input[name=p]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/search\.yahoo\.co\.jp\/search\?p=%22foo%22$/,
+      },
+      {
+        name: "Yahoo Japan - Search result page",
+        url: "https://search.yahoo.co.jp/search?p=foo",
+        inputPattern: "input[name=p]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/search\.yahoo\.co\.jp\/search\?p=%22bar%22(&.+)?$/,
+      },
+      {
+        name: "DuckDuckGo - Top page",
+        url: "https://duckduckgo.com/",
+        inputPattern: "input[name=q]",
+        searchPhrase: "foo",
+        resultUrlPattern: /^https:\/\/duckduckgo\.com\/\?q=%22foo%22(&.+)?$/,
+      },
+      {
+        name: "DuckDuckGo - Search result page",
+        url: "https://duckduckgo.com/?q=foo",
+        inputPattern: "input[name=q]",
+        searchPhrase: "bar",
+        resultUrlPattern: /^https:\/\/duckduckgo\.com\/\?q=%22bar%22(&.+)?$/,
+      },
+    ];
+    for (const { name, url, inputPattern, searchPhrase, resultUrlPattern, skipOnCi } of SEARCH_ENGINES) {
+      context(`on ${name}`, function () {
+        it("should press `Enter` key and show search results", function () {
+          // --- preparation ---
+          if (Cypress.env("test_search_site") !== "on") {
+            Cypress.qqs.log("I", "Skip the test case because `test_search_site` is not `on`");
+            this.skip();
+          }
+          if (skipOnCi && Cypress.env("test_on") === "ci") {
+            Cypress.qqs.log("I", "Skip the test case because it does not work as expected in CI");
+            this.skip();
+          }
+          // --- conditions ---
+          visitAndSetup.call(this, url);
+          // --- actions ---
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.get(inputPattern)
+            .first()
+            .focus()
+            .wait(100)
+            .selectText()
+            .type(searchPhrase)
+            .should("have.value", searchPhrase)
+            .selectText()
+            .should("be.selected")
+            .mouseUpLeft();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          // --- results ---
+          cy.url().should("match", resultUrlPattern);
         });
-      }
+      });
     }
-  );
+  });
 });
