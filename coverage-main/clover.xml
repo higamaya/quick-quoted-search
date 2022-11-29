@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1669711587028" clover="3.2.0">
-  <project timestamp="1669711587028" name="All files">
+<coverage generated="1669714905517" clover="3.2.0">
+  <project timestamp="1669714905517" name="All files">
     <metrics statements="758" coveredstatements="725" conditionals="308" coveredconditionals="277" methods="217" coveredmethods="205" elements="1283" coveredelements="1207" complexity="0" loc="758" ncloc="758" packages="2" files="14" classes="14"/>
     <package name="src">
       <metrics statements="394" coveredstatements="384" conditionals="174" coveredconditionals="161" methods="100" coveredmethods="100"/>
@@ -203,14 +203,14 @@
         <line num="126" count="2" type="stmt"/>
         <line num="130" count="9" type="stmt"/>
         <line num="134" count="4037" type="stmt"/>
-        <line num="138" count="3418" type="stmt"/>
-        <line num="139" count="5666" type="cond" truecount="1" falsecount="1"/>
-        <line num="140" count="5666" type="stmt"/>
-        <line num="141" count="2901" type="cond" truecount="4" falsecount="0"/>
-        <line num="142" count="672" type="cond" truecount="2" falsecount="0"/>
+        <line num="138" count="3356" type="stmt"/>
+        <line num="139" count="5566" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="5566" type="stmt"/>
+        <line num="141" count="2825" type="cond" truecount="4" falsecount="0"/>
+        <line num="142" count="634" type="cond" truecount="2" falsecount="0"/>
         <line num="143" count="3" type="stmt"/>
         <line num="144" count="3" type="stmt"/>
-        <line num="146" count="672" type="stmt"/>
+        <line num="146" count="634" type="stmt"/>
         <line num="147" count="1" type="stmt"/>
         <line num="148" count="1" type="stmt"/>
         <line num="157" count="229" type="cond" truecount="2" falsecount="0"/>
@@ -256,9 +256,9 @@
         <line num="285" count="0" type="stmt"/>
         <line num="288" count="8756" type="stmt"/>
         <line num="289" count="8756" type="cond" truecount="5" falsecount="0"/>
-        <line num="290" count="8566" type="stmt"/>
-        <line num="300" count="8566" type="stmt"/>
-        <line num="301" count="8566" type="stmt"/>
+        <line num="290" count="8572" type="stmt"/>
+        <line num="300" count="8572" type="stmt"/>
+        <line num="301" count="8572" type="stmt"/>
         <line num="306" count="425" type="stmt"/>
         <line num="309" count="425" type="stmt"/>
         <line num="310" count="425" type="cond" truecount="2" falsecount="0"/>
@@ -293,8 +293,8 @@
         <line num="371" count="395" type="stmt"/>
         <line num="378" count="395" type="stmt"/>
         <line num="380" count="395" type="stmt"/>
-        <line num="384" count="8948" type="cond" truecount="2" falsecount="0"/>
-        <line num="385" count="1948" type="stmt"/>
+        <line num="384" count="8954" type="cond" truecount="2" falsecount="0"/>
+        <line num="385" count="1954" type="stmt"/>
         <line num="387" count="7000" type="stmt"/>
         <line num="388" count="7000" type="cond" truecount="2" falsecount="0"/>
         <line num="389" count="133" type="stmt"/>
@@ -428,8 +428,8 @@
       </file>
       <file name="__functions.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__functions.js">
         <metrics statements="71" coveredstatements="69" conditionals="41" coveredconditionals="33" methods="21" coveredmethods="21"/>
-        <line num="15" count="18417" type="stmt"/>
-        <line num="16" count="18417" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="18423" type="stmt"/>
+        <line num="16" count="18423" type="cond" truecount="2" falsecount="0"/>
         <line num="32" count="5039" type="stmt"/>
         <line num="33" count="5039" type="cond" truecount="2" falsecount="0"/>
         <line num="45" count="5039" type="stmt"/>
@@ -459,21 +459,21 @@
         <line num="134" count="6434" type="stmt"/>
         <line num="135" count="6434" type="stmt"/>
         <line num="136" count="6434" type="stmt"/>
-        <line num="151" count="16833" type="cond" truecount="2" falsecount="0"/>
-        <line num="152" count="16805" type="stmt"/>
-        <line num="153" count="16805" type="cond" truecount="1" falsecount="1"/>
-        <line num="154" count="16805" type="stmt"/>
-        <line num="155" count="16805" type="cond" truecount="2" falsecount="0"/>
+        <line num="151" count="16839" type="cond" truecount="2" falsecount="0"/>
+        <line num="152" count="16800" type="stmt"/>
+        <line num="153" count="16800" type="cond" truecount="1" falsecount="1"/>
+        <line num="154" count="16800" type="stmt"/>
+        <line num="155" count="16800" type="cond" truecount="2" falsecount="0"/>
         <line num="156" count="16561" type="cond" truecount="1" falsecount="1"/>
         <line num="157" count="0" type="stmt"/>
         <line num="159" count="16561" type="stmt"/>
         <line num="161" count="99232" type="stmt"/>
         <line num="163" count="16561" type="cond" truecount="1" falsecount="1"/>
         <line num="164" count="0" type="stmt"/>
-        <line num="170" count="16833" type="stmt"/>
-        <line num="173" count="16833" type="stmt"/>
-        <line num="195" count="8888" type="stmt"/>
-        <line num="196" count="8888" type="stmt"/>
+        <line num="170" count="16839" type="stmt"/>
+        <line num="173" count="16839" type="stmt"/>
+        <line num="195" count="8894" type="stmt"/>
+        <line num="196" count="8894" type="stmt"/>
         <line num="198" count="1" type="stmt"/>
         <line num="214" count="75" type="stmt"/>
         <line num="215" count="75" type="stmt"/>
@@ -541,20 +541,20 @@
         <metrics statements="16" coveredstatements="16" conditionals="9" coveredconditionals="9" methods="8" coveredmethods="8"/>
         <line num="15" count="330" type="stmt"/>
         <line num="22" count="71" type="stmt"/>
-        <line num="34" count="11203" type="stmt"/>
+        <line num="34" count="11209" type="stmt"/>
         <line num="46" count="23926" type="stmt"/>
         <line num="58" count="17288" type="stmt"/>
         <line num="70" count="6" type="stmt"/>
         <line num="82" count="5" type="stmt"/>
         <line num="95" count="7875" type="stmt"/>
-        <line num="108" count="60303" type="cond" truecount="2" falsecount="0"/>
+        <line num="108" count="60309" type="cond" truecount="2" falsecount="0"/>
         <line num="109" count="6" type="stmt"/>
-        <line num="112" count="60297" type="stmt"/>
-        <line num="113" count="60297" type="cond" truecount="5" falsecount="0"/>
-        <line num="114" count="59042" type="stmt"/>
-        <line num="115" count="109103" type="stmt"/>
-        <line num="116" count="109103" type="stmt"/>
-        <line num="120" count="60297" type="stmt"/>
+        <line num="112" count="60303" type="stmt"/>
+        <line num="113" count="60303" type="cond" truecount="5" falsecount="0"/>
+        <line num="114" count="59048" type="stmt"/>
+        <line num="115" count="109109" type="stmt"/>
+        <line num="116" count="109109" type="stmt"/>
+        <line num="120" count="60303" type="stmt"/>
       </file>
       <file name="__options.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__options.js">
         <metrics statements="58" coveredstatements="58" conditionals="17" coveredconditionals="16" methods="17" coveredmethods="17"/>
@@ -625,7 +625,7 @@
         <line num="19" count="810" type="stmt"/>
         <line num="22" count="810" type="stmt"/>
         <line num="23" count="810" type="stmt"/>
-        <line num="31" count="121196" type="stmt"/>
+        <line num="31" count="120810" type="stmt"/>
         <line num="39" count="90" type="stmt"/>
         <line num="46" count="35505" type="stmt"/>
         <line num="47" count="35505" type="stmt"/>
@@ -651,8 +651,8 @@
         <line num="164" count="35581" type="stmt"/>
         <line num="172" count="0" type="stmt"/>
         <line num="178" count="630" type="stmt"/>
-        <line num="179" count="5453" type="stmt"/>
-        <line num="180" count="17927" type="cond" truecount="2" falsecount="0"/>
+        <line num="179" count="5217" type="stmt"/>
+        <line num="180" count="17541" type="cond" truecount="2" falsecount="0"/>
         <line num="185" count="2189" type="stmt"/>
         <line num="189" count="630" type="stmt"/>
         <line num="198" count="90" type="stmt"/>
