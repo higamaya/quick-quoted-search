@@ -226,16 +226,7 @@
 <a name='L161'></a><a href='#L161'>161</a>
 <a name='L162'></a><a href='#L162'>162</a>
 <a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a>
-<a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a>
-<a name='L168'></a><a href='#L168'>168</a>
-<a name='L169'></a><a href='#L169'>169</a>
-<a name='L170'></a><a href='#L170'>170</a>
-<a name='L171'></a><a href='#L171'>171</a>
-<a name='L172'></a><a href='#L172'>172</a>
-<a name='L173'></a><a href='#L173'>173</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L164'></a><a href='#L164'>164</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -377,9 +368,6 @@
 <span class="cline-any cline-yes">1224x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1224x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -392,14 +380,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3453x</span>
 <span class="cline-any cline-yes">3453x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -518,7 +500,7 @@ export class Options {
     // Merge rather than assign to ensure completeness of options in case of
     // missing data in the storage.
     Object.assign(this.#cache, values[Options.#STORAGE_KEY]);
-    this.#logger.debug("[STATE]", "Options: Initialized", "\nthis.#cache=", this.#cache);
+    this.#logger.state("Options: Initialized", { ["this.#cache"]: this.#cache });
   }
 &nbsp;
   /**
@@ -532,12 +514,12 @@ export class Options {
   async #updateStorage() {
     this.#cache[Options.#UPDATED_AT_KEY] = Date.now();
     const values = { [Options.#STORAGE_KEY]: this.#cache };
-    this.#logger.debug("[STATE]", "Options: Update storage", "\nvalues=", values);
+    this.#logger.state("Options: Update storage", { values });
     await Options.#storage.set(values);
   }
 &nbsp;
   #onChangedListener(changes, areaName) {
-    this.#logger.debug("[CALLBACK]", "Options: onChangedListener()", "\nchanges=", changes, "\nareaName=", areaName);
+    this.#logger.callback("Options: onChangedListener()", { changes, areaName });
 &nbsp;
     if (!Object.hasOwn(changes, Options.#STORAGE_KEY)) {
       return;
@@ -546,34 +528,25 @@ export class Options {
     if (Object.hasOwn(changes[Options.#STORAGE_KEY], "newValue")) {
       const newValue = changes[Options.#STORAGE_KEY].newValue;
       if (newValue[Options.#UPDATED_AT_KEY] &lt;= this.#cache[Options.#UPDATED_AT_KEY]) {
-        this.#logger.debug(
-          "[INFO]",
-          "Options: Cache was not overwritten because it is up to date",
-          "\nthis.#cache=",
-          this.#cache
-        );
+        this.#logger.info("Options: Cache was not overwritten because it is up to date", {
+          ["this.#cache"]: this.#cache,
+        });
         return;
       }
 &nbsp;
       // Merge rather than assign to ensure completeness of options in case of
       // missing data in the storage.
       Object.assign(this.#cache, newValue);
-      this.#logger.debug(
-        "[STATE]",
-        "Options: Cache was overwritten by values in storage updated by other",
-        "\nthis.#cache=",
-        this.#cache
-      );
+      this.#logger.state("Options: Cache was overwritten by values in storage updated by other", {
+        ["this.#cache"]: this.#cache,
+      });
     } else {
       // The storage has been cleared.
 &nbsp;
       this.#cache = Object.assign({}, Options.#DEFAULT_VALUES);
-      this.#logger.debug(
-        "[STATE]",
-        "Options: Cache was reset to default values because the storage has been cleared",
-        "\nthis.#cache=",
-        this.#cache
-      );
+      this.#logger.state("Options: Cache was reset to default values because the storage has been cleared", {
+        ["this.#cache"]: this.#cache,
+      });
     }
 &nbsp;
     this.onChanged._fire(this);
@@ -586,7 +559,7 @@ export class Options {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-29T01:41:58.618Z
+                at 2022-11-29T08:46:26.998Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

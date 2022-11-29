@@ -417,13 +417,7 @@
 <a name='L352'></a><a href='#L352'>352</a>
 <a name='L353'></a><a href='#L353'>353</a>
 <a name='L354'></a><a href='#L354'>354</a>
-<a name='L355'></a><a href='#L355'>355</a>
-<a name='L356'></a><a href='#L356'>356</a>
-<a name='L357'></a><a href='#L357'>357</a>
-<a name='L358'></a><a href='#L358'>358</a>
-<a name='L359'></a><a href='#L359'>359</a>
-<a name='L360'></a><a href='#L360'>360</a>
-<a name='L361'></a><a href='#L361'>361</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L355'></a><a href='#L355'>355</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -437,8 +431,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18389x</span>
-<span class="cline-any cline-yes">18389x</span>
+<span class="cline-any cline-yes">18417x</span>
+<span class="cline-any cline-yes">18417x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -573,11 +567,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16833x</span>
 <span class="cline-any cline-yes">16805x</span>
-<span class="cline-any cline-yes">16794x</span>
-<span class="cline-any cline-yes">16794x</span>
-<span class="cline-any cline-yes">16794x</span>
-<span class="cline-any cline-yes">16794x</span>
+<span class="cline-any cline-yes">16805x</span>
+<span class="cline-any cline-yes">16805x</span>
+<span class="cline-any cline-yes">16805x</span>
 <span class="cline-any cline-yes">16561x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -592,13 +586,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16805x</span>
+<span class="cline-any cline-yes">16833x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16805x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16833x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -617,16 +608,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8860x</span>
-<span class="cline-any cline-yes">8860x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8888x</span>
+<span class="cline-any cline-yes">8888x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -911,13 +899,13 @@ export function injectI18NMessagesInHtml(doc) {
       for (const id of ids) {
         const argElement = doc.getElementById(id);
         const argTarget = argElement.dataset.i18nTarget;
-        logger.assert(I18N_TARGETS.includes(argTarget), "[ERROR]", "Unexpected target", "\nargTarget=", argTarget);
+        logger.assert(I18N_TARGETS.includes(argTarget), "Unexpected target", { argTarget, argElement });
         result.push(argElement[argTarget]);
       }
       return result;
     })();
     const target = element.dataset.i18nTarget;
-    logger.assert(I18N_TARGETS.includes(target), "[ERROR]", "Unexpected target", "\ntarget=", target);
+    logger.assert(I18N_TARGETS.includes(target), "Unexpected target", { target, element });
     element[target] = chrome.i18n.getMessage(element.dataset.i18nName, substitutions);
   }
 }
@@ -981,14 +969,8 @@ export function postMessage(port, message) {
     port.postMessage(message);
   } catch (error) {
     logger.warn(
-      "[WARN]",
       "It seems that the message could not be sent because the other side of the port has already been closed.",
-      "\nerror=",
-      error,
-      "\nport=",
-      port,
-      "\nmessage=",
-      message
+      { error, port, message }
     );
   }
 }
@@ -1150,7 +1132,7 @@ export async function openShortcutsSettings(tab, keyState, defaultHowToOpenLink)
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-29T01:41:58.618Z
+                at 2022-11-29T08:46:26.998Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
