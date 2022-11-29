@@ -33,10 +33,10 @@ import { MDCRipple } from "@material/ripple";
   //////////////////////////////////////////////////////////////////////////////
 
   parentTab = await qqs.getActiveTab();
-  qqs.logger.debug("[INFO]", "Get active tab as the parent one", "\nparentTab=", parentTab);
+  qqs.logger.info("Get active tab as the parent one", { parentTab });
 
   portToBackground = chrome.runtime.connect(undefined, { name: document.URL });
-  qqs.logger.debug("[STATE]", "Connected to background service worker", "\nportToBackground=", portToBackground);
+  qqs.logger.state("Connected to background service worker", { portToBackground });
 
   portToBackground.onDisconnect.addListener(onDisconnect);
   portToBackground.onMessage.addListener(onMessage);
@@ -48,15 +48,15 @@ import { MDCRipple } from "@material/ripple";
   //////////////////////////////////////////////////////////////////////////////
 
   function onDisconnect(port) {
-    qqs.logger.debug("[CALLBACK]", "onDisconnect()", "\nport=", port);
+    qqs.logger.callback("onDisconnect()", { port });
     if (port === portToBackground) {
       portToBackground = undefined;
-      qqs.logger.debug("[STATE]", "Port to background service worker has been closed by the other end");
+      qqs.logger.state("Port to background service worker has been closed by the other end");
     }
   }
 
   function onMessage(message, port) {
-    qqs.logger.debug("[CALLBACK]", "onMessage()", "\nmessage=", message, "\nport=", port);
+    qqs.logger.callback("onMessage()", { message, port });
     MESSAGE_HANDLERS[message.type](message, port);
   }
 

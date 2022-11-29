@@ -109,7 +109,7 @@ export class Options {
     // Merge rather than assign to ensure completeness of options in case of
     // missing data in the storage.
     Object.assign(this.#cache, values[Options.#STORAGE_KEY]);
-    this.#logger.debug("[STATE]", "Options: Initialized", "\nthis.#cache=", this.#cache);
+    this.#logger.state("Options: Initialized", { ["this.#cache"]: this.#cache });
   }
 
   /**
@@ -123,12 +123,12 @@ export class Options {
   async #updateStorage() {
     this.#cache[Options.#UPDATED_AT_KEY] = Date.now();
     const values = { [Options.#STORAGE_KEY]: this.#cache };
-    this.#logger.debug("[STATE]", "Options: Update storage", "\nvalues=", values);
+    this.#logger.state("Options: Update storage", { values });
     await Options.#storage.set(values);
   }
 
   #onChangedListener(changes, areaName) {
-    this.#logger.debug("[CALLBACK]", "Options: onChangedListener()", "\nchanges=", changes, "\nareaName=", areaName);
+    this.#logger.callback("Options: onChangedListener()", { changes, areaName });
 
     if (!Object.hasOwn(changes, Options.#STORAGE_KEY)) {
       return;
@@ -137,34 +137,25 @@ export class Options {
     if (Object.hasOwn(changes[Options.#STORAGE_KEY], "newValue")) {
       const newValue = changes[Options.#STORAGE_KEY].newValue;
       if (newValue[Options.#UPDATED_AT_KEY] <= this.#cache[Options.#UPDATED_AT_KEY]) {
-        this.#logger.debug(
-          "[INFO]",
-          "Options: Cache was not overwritten because it is up to date",
-          "\nthis.#cache=",
-          this.#cache
-        );
+        this.#logger.info("Options: Cache was not overwritten because it is up to date", {
+          ["this.#cache"]: this.#cache,
+        });
         return;
       }
 
       // Merge rather than assign to ensure completeness of options in case of
       // missing data in the storage.
       Object.assign(this.#cache, newValue);
-      this.#logger.debug(
-        "[STATE]",
-        "Options: Cache was overwritten by values in storage updated by other",
-        "\nthis.#cache=",
-        this.#cache
-      );
+      this.#logger.state("Options: Cache was overwritten by values in storage updated by other", {
+        ["this.#cache"]: this.#cache,
+      });
     } else {
       // The storage has been cleared.
 
       this.#cache = Object.assign({}, Options.#DEFAULT_VALUES);
-      this.#logger.debug(
-        "[STATE]",
-        "Options: Cache was reset to default values because the storage has been cleared",
-        "\nthis.#cache=",
-        this.#cache
-      );
+      this.#logger.state("Options: Cache was reset to default values because the storage has been cleared", {
+        ["this.#cache"]: this.#cache,
+      });
     }
 
     this.onChanged._fire(this);

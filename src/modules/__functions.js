@@ -126,13 +126,13 @@ export function injectI18NMessagesInHtml(doc) {
       for (const id of ids) {
         const argElement = doc.getElementById(id);
         const argTarget = argElement.dataset.i18nTarget;
-        logger.assert(I18N_TARGETS.includes(argTarget), "[ERROR]", "Unexpected target", "\nargTarget=", argTarget);
+        logger.assert(I18N_TARGETS.includes(argTarget), "Unexpected target", { argTarget, argElement });
         result.push(argElement[argTarget]);
       }
       return result;
     })();
     const target = element.dataset.i18nTarget;
-    logger.assert(I18N_TARGETS.includes(target), "[ERROR]", "Unexpected target", "\ntarget=", target);
+    logger.assert(I18N_TARGETS.includes(target), "Unexpected target", { target, element });
     element[target] = chrome.i18n.getMessage(element.dataset.i18nName, substitutions);
   }
 }
@@ -196,14 +196,8 @@ export function postMessage(port, message) {
     port.postMessage(message);
   } catch (error) {
     logger.warn(
-      "[WARN]",
       "It seems that the message could not be sent because the other side of the port has already been closed.",
-      "\nerror=",
-      error,
-      "\nport=",
-      port,
-      "\nmessage=",
-      message
+      { error, port, message }
     );
   }
 }
