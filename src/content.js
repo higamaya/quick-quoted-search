@@ -10,6 +10,15 @@ import { PopupIcon } from "./modules/popup_icon.js";
 
   await qqs.init(qqs.ScriptId.CONTENT);
 
+  if (document.contentType !== "text/html" || !document.body) {
+    // Content scripts may be injected into non-HTML content. (e.g. image/svg+xml)
+    qqs.logger.info("Exit the content scripts because this document is not HTML", {
+      contentType: document.contentType,
+      body: document.body,
+    });
+    return;
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Constants
   //////////////////////////////////////////////////////////////////////////////
