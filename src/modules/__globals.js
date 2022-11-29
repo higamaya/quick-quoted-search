@@ -32,7 +32,7 @@ export let options;
  */
 export async function init(scriptId) {
   logger = new Logger(scriptId);
-  logger.debug("[STATE]", "Initialize script", "\nscriptId=", scriptId);
+  logger.state("Initialize script", { scriptId });
 
   options = new Options(logger);
   await options.init();
@@ -49,5 +49,5 @@ async function checkOsIsMac(scriptId) {
   } else {
     config.isMac = !!(await storage.get(STORAGE_KEY))[STORAGE_KEY];
   }
-  logger.debug("[INFO]", "Updated `isMac` in config", "\nconfig.isMac=", config.isMac);
+  logger.state("Updated `isMac` in config", { ["config.isMac"]: config.isMac });
 }

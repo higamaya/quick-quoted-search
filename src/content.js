@@ -80,36 +80,36 @@ import { PopupIcon } from "./modules/popup_icon.js";
   //////////////////////////////////////////////////////////////////////////////
 
   function onConnect(port) {
-    qqs.logger.debug("[CALLBACK]", "onConnect()", "\nport=", port);
+    qqs.logger.callback("onConnect()", { port });
     port.onMessage.addListener(onMessage);
   }
 
   function onDisconnect(port) {
-    qqs.logger.debug("[CALLBACK]", "onDisconnect()", "\nport=", port);
+    qqs.logger.callback("onDisconnect()", { port });
     if (port === portToBackground) {
       portToBackground = undefined;
       disconnectedByTheOtherEnd = true;
-      qqs.logger.debug("[STATE]", "Port to background service worker has been closed by the other end");
+      qqs.logger.state("Port to background service worker has been closed by the other end");
 
       popupIcon.disable();
     }
   }
 
   function onMessage(message, port) {
-    qqs.logger.debug("[CALLBACK]", "onMessage()", "\nmessage=", message, "\nport=", port);
+    qqs.logger.callback("onMessage()", { message, port });
     MESSAGE_HANDLERS[message.type](message, port);
   }
 
   function onWelcome(message, _port) {
     contentId.initialize(message.identity.tab.id, message.identity.frameId);
     qqs.logger.setId(contentId.toString());
-    qqs.logger.debug("[STATE] Update content identifier", "\ncontentId=", contentId);
+    qqs.logger.state("Update content identifier", { contentId });
     notifySelectionUpdated("contentId.initialize");
   }
 
   function onPutQuotes(_message, _port) {
     if (!editableNodeWithSelection) {
-      qqs.logger.debug("[INFO]", `Ignore ${qqs.CommandType.PUT_QUOTES} command due to no editable node selected `);
+      qqs.logger.info(`Ignore ${qqs.CommandType.PUT_QUOTES} command due to no editable node selected `);
       return;
     }
     putQuotesAroundSelectionText(editableNodeWithSelection);
@@ -140,11 +140,11 @@ import { PopupIcon } from "./modules/popup_icon.js";
         for (const node of mutation.addedNodes) {
           if (node.isConnected && node instanceof Element) {
             if (node.matches(EDITABLE_NODE_SELECTOR)) {
-              qqs.logger.debug("[INFO]", "Editable node has been added", "\nnode=", node);
+              qqs.logger.info("Editable node has been added", { node });
               addEventListenerToEditableNode(node);
             }
             for (const descendantNode of node.querySelectorAll(EDITABLE_NODE_SELECTOR)) {
-              qqs.logger.debug("[INFO]", "Editable node has been added", "\ndescendantNode=", descendantNode);
+              qqs.logger.info("Editable node has been added", { descendantNode });
               addEventListenerToEditableNode(descendantNode);
             }
           }
@@ -242,13 +242,13 @@ import { PopupIcon } from "./modules/popup_icon.js";
     }
 
     if (portToBackground) {
-      qqs.logger.debug("[STATE]", "Reconnect to background service worker");
+      qqs.logger.state("Reconnect to background service worker");
       portToBackground.disconnect();
     }
     portToBackground = chrome.runtime.connect(undefined, {
       name: (window === window.parent ? "" : "(in frame) ") + document.URL,
     });
-    qqs.logger.debug("[STATE]", "Connected to background service worker", "\nportToBackground=", portToBackground);
+    qqs.logger.state("Connected to background service worker", { portToBackground });
 
     portToBackground.onDisconnect.addListener(onDisconnect);
     portToBackground.onMessage.addListener(onMessage);
@@ -266,24 +266,14 @@ import { PopupIcon } from "./modules/popup_icon.js";
         ? editableNode
         : undefined;
 
-    qqs.logger.debug(
-      "[STATE]",
-      "Update editableNodeWithSelection",
-      "\nreason=",
+    qqs.logger.state("Update editableNodeWithSelection", {
       reason,
-      "\neditable=",
-      !!editableNodeWithSelection,
-      "\ntext=",
-      editableNodeWithSelection ? qqs.filterSelectionText(editableNodeWithSelection.value) : "N/A",
-      "\nselectionStart=",
-      editableNodeWithSelection ? editableNodeWithSelection.selectionStart : "N/A",
-      "\nselectionEnd=",
-      editableNodeWithSelection ? editableNodeWithSelection.selectionEnd : "N/A",
-      "\nselectionDirection=",
-      editableNodeWithSelection ? editableNodeWithSelection.selectionDirection : "N/A",
-      "\neditableNodeWithSelection=",
-      editableNodeWithSelection
-    );
+      editable: !!editableNodeWithSelection,
+      text: editableNodeWithSelection ? qqs.filterSelectionText(editableNodeWithSelection.value) : "N/A",
+      selectionStart: editableNodeWithSelection ? editableNodeWithSelection.selectionStart : "N/A",
+      selectionDirection: editableNodeWithSelection ? editableNodeWithSelection.selectionDirection : "N/A",
+      editableNodeWithSelection,
+    });
 
     popupIcon.setEditableNode(editableNodeWithSelection);
 
@@ -308,7 +298,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
         },
       };
       qqs.postMessage(portToBackground, message);
-      qqs.logger.debug("[INFO]", `Send '${message.type}' message to background service worker`, "\nmessage=", message);
+      qqs.logger.info(`Send '${message.type}' message to background service worker`, { message });
     }
   }
 
@@ -318,12 +308,9 @@ import { PopupIcon } from "./modules/popup_icon.js";
     );
     const normalizedSelectionText = qqs.normalizeSelectionText(selectionText);
     if (!qqs.isNormalizedSelectionTextValid(normalizedSelectionText)) {
-      qqs.logger.debug(
-        "[INFO]",
-        `Ignore ${qqs.CommandType.PUT_QUOTES} command due to unexpected selection text`,
-        "\nselectionText=",
-        selectionText
-      );
+      qqs.logger.info(`Ignore ${qqs.CommandType.PUT_QUOTES} command due to unexpected selection text`, {
+        selectionText,
+      });
       return false;
     }
 
@@ -342,10 +329,8 @@ import { PopupIcon } from "./modules/popup_icon.js";
   function replaceSelectionText(editableNode, replacement) {
     qqs.logger.assert(
       replacement.length >= 3 && replacement.charAt(0) === '"' && replacement.charAt(replacement.length - 1) === '"',
-      "[ERROR]",
       "Replacement for selection text is unexpected",
-      "\replacement=",
-      replacement
+      { replacement }
     );
 
     const spacePattern = /\s/;

@@ -101,7 +101,7 @@ import { MDCDialog } from "@material/dialog";
 
   function addEventListenerToOptions() {
     qqs.options.onChanged.addListener((options) => {
-      qqs.logger.debug("[CALLBACK]", "Options have been changed externally", "\noptions=", options);
+      qqs.logger.callback("Options have been changed externally", { options });
       updateOptionInputsAll();
     });
   }
@@ -170,24 +170,20 @@ import { MDCDialog } from "@material/dialog";
   //////////////////////////////////////////////////////////////////////////////
 
   function updateOptionValue(name, qqsInputComponent) {
-    qqs.logger.debug(
-      "[INFO]",
-      `Option '${name}' is about to be changed`,
-      `\nqqs.options['${name}']=`,
-      qqs.options[name],
-      `\nqqsInputComponent.value=`,
-      qqsInputComponent.value
-    );
+    qqs.logger.info(`Option '${name}' is about to be changed`, {
+      [`qqs.options['${name}']`]: qqs.options[name],
+      ["qqsInputComponent.value"]: qqsInputComponent.value,
+    });
     try {
       const newValue = qqsInputComponent.value;
       if (newValue !== qqs.options[name]) {
         qqs.options[name] = newValue;
-        qqs.logger.debug("[STATE]", `Option '${name}' has been changed`);
+        qqs.logger.state(`Option '${name}' has been changed`);
       } else {
-        qqs.logger.debug("[INFO]", `Option '${name}' was not changed because same as old value`);
+        qqs.logger.info(`Option '${name}' was not changed because same as old value`);
       }
     } catch (error) {
-      qqs.logger.error("[ERROR]", `Option '${name}' was not changed due to exception`, "\nerror=", error);
+      qqs.logger.error(`Option '${name}' was not changed due to exception`, { error });
       qqsInputComponent.value = qqs.options[name];
     }
 
@@ -275,6 +271,6 @@ import { MDCDialog } from "@material/dialog";
   function restoreDefaults() {
     qqs.options.reset();
     updateOptionInputsAll();
-    qqs.logger.debug("[STATE]", "Restored all options to default value", "\nqqs.options=", qqs.options);
+    qqs.logger.state("Restored all options to default value", { ["qqs.options"]: qqs.options });
   }
 })();

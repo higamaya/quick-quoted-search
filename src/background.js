@@ -89,75 +89,54 @@ import * as qqs from "./modules/common.js";
   //////////////////////////////////////////////////////////////////////////////
 
   function onContextMenuClicked(info, tab) {
-    qqs.logger.debug("[CALLBACK]", "onContextMenuClicked()", "\ninfo=", info, "\ntab=", tab);
+    qqs.logger.callback("onContextMenuClicked()", { info, tab });
 
     if (!isOwnerOfCurrentSelection(tab?.id, info.frameId)) {
-      qqs.logger.debug(
-        "[INFO]",
-        "Ignore context menu clicked event due to sent from unknown content",
-        "\ninfo=",
+      qqs.logger.info("Ignore context menu clicked event due to sent from unknown content", {
         info,
-        "\ntab=",
         tab,
-        "\ncurrentSelection=",
-        currentSelection
-      );
+        currentSelection,
+      });
       return;
     }
 
-    qqs.logger.assert(
-      Commands[info.menuItemId].contextMenu.registered,
-      "[ERROR]",
-      "Unregistered context menu was invoked",
-      "\nid=",
-      info.menuItemId,
-      "\ninfo=",
+    qqs.logger.assert(!Commands[info.menuItemId].contextMenu.registered, "Unregistered context menu was invoked", {
+      ["info.menuItemId"]: info.menuItemId,
       info,
-      "\ntab=",
-      tab
-    );
+      tab,
+    });
 
     Commands[info.menuItemId].onContextMenuClicked(info, tab);
   }
 
   async function onCommand(command, tab) {
-    qqs.logger.debug("[CALLBACK]", "onCommand()", "\ncommand=", command, "\ntab=", tab);
+    qqs.logger.callback("onCommand()", { command, tab });
 
     // tab is null if the shortcut key is set to global.
     if (!tab) {
       tab = await qqs.getActiveTab();
-      qqs.logger.debug("[INFO]", "Got active tab because null was passed on onCommand event", "\ntab=", tab);
+      qqs.logger.info("Got active tab because null was passed on onCommand event", { command, tab });
       if (!tab) {
-        qqs.logger.debug("[INFO]", "Ignore keyboard shortcut event because active tab could not be obtained");
+        qqs.logger.info("Ignore keyboard shortcut event because active tab could not be obtained", { command });
         return;
       }
     }
 
     if (!isOwnerOfCurrentSelection(tab.id)) {
-      qqs.logger.debug(
-        "[INFO]",
-        "Ignore keyboard shortcut event due to sent from unknown content",
-        "\ncommand=",
+      qqs.logger.info("Ignore keyboard shortcut event due to sent from unknown content", {
         command,
-        "\ntab=",
         tab,
-        "\ncurrentSelection=",
-        currentSelection
-      );
+        currentSelection,
+      });
       return;
     }
 
     if (currentSelection.blur) {
-      qqs.logger.debug(
-        "[INFO]",
-        "Ignore keyboard shortcut event due to current selection blurred",
-        "\ncommand=",
+      qqs.logger.info("Ignore keyboard shortcut event due to current selection blurred", {
         command,
-        "\ntab=",
         tab,
-        "\ncurrentSelection=",
-        currentSelection
-      );
+        currentSelection,
+      });
       return;
     }
 
@@ -169,13 +148,13 @@ import * as qqs from "./modules/common.js";
   //////////////////////////////////////////////////////////////////////////////
 
   async function onConnect(port) {
-    qqs.logger.debug("[CALLBACK]", "onConnect()", "\nport=", port);
+    qqs.logger.callback("onConnect()", { port });
     port.onMessage.addListener(onMessage);
     await updateCommandShortcuts();
   }
 
   function onMessage(message, port) {
-    qqs.logger.debug("[CALLBACK]", "onMessage()", "\nmessage=", message, "\nport=", port);
+    qqs.logger.callback("onMessage()", { message, port });
     MESSAGE_HANDLERS[message.type](message, port);
   }
 
@@ -189,9 +168,8 @@ import * as qqs from "./modules/common.js";
   function onNotifySelectionUpdated(message, port) {
     if (message.selection.blur) {
       if (!isOwnerOfCurrentSelection(port.sender.tab.id, port.sender.frameId)) {
-        qqs.logger.debug(
-          "[INFO]",
-          "Ingore message from blurred content because selection state has already been updated by newly focused content"
+        qqs.logger.info(
+          "Ignore message from blurred content because selection state has already been updated by newly focused content"
         );
         return;
       }
@@ -231,7 +209,7 @@ import * as qqs from "./modules/common.js";
   function updateCurrentSelection(selection, sender) {
     Object.assign(currentSelection, selection);
     currentSelection.sender = qqs.cloneDto(sender);
-    qqs.logger.debug("[STATE]", "Update current selection", "\ncurrentSelection=", currentSelection);
+    qqs.logger.state("Update current selection", { currentSelection });
   }
 
   function isOwnerOfCurrentSelection(tabId, frameId) {
@@ -260,7 +238,7 @@ import * as qqs from "./modules/common.js";
         !selection.blur &&
         isSelectionTextValid &&
         (!contextMenu.onlyEditable || selection.editable);
-      qqs.logger.debug("[STATE]", "Update context menu visivility", "\nid=", id, "\nvisible=", visible);
+      qqs.logger.state("Update context menu visibility", { id, visible });
 
       if (visible) {
         let titleSupplement = "";
@@ -294,12 +272,9 @@ import * as qqs from "./modules/common.js";
   async function doQuotedSearchForSelectionText(tab, selectionText, keyState) {
     const normalizedSelectionText = qqs.normalizeSelectionText(selectionText);
     if (!qqs.isNormalizedSelectionTextValid(normalizedSelectionText)) {
-      qqs.logger.debug(
-        "[INFO]",
-        `Ignore ${qqs.CommandType.DO_QUOTED_SEARCH} command due to unexpected selection text`,
-        "\nselectionText=",
-        selectionText
-      );
+      qqs.logger.info(`Ignore ${qqs.CommandType.DO_QUOTED_SEARCH} command due to unexpected selection text`, {
+        selectionText,
+      });
       return;
     }
 
