@@ -11,10 +11,10 @@
   "msg_command_description_put_quotes": {
     "message": "選択したテキストを引用符で囲む"
   },
-  "msg_action_h2_keyboad_shortcuts": {
+  "msg_action_h2_keyboard_shortcuts": {
     "message": "キーボード ショートカット"
   },
-  "msg_action_link_customize_keyboad_shortcuts": {
+  "msg_action_link_customize_keyboard_shortcuts": {
     "message": "カスタマイズ"
   },
   "msg_action_shortcut_key_not_set": {

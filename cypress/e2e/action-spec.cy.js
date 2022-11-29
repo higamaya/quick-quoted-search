@@ -228,7 +228,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         });
       });
 
-      context("when the selected text contains consecutive whitespaces and quotation marks", function () {
+      context("when the selected text contains consecutive whitespace characters and quotation marks", function () {
         it("should normalize the selected text", function () {
           // --- preparation ---
           visitAndSetup.call(this);
@@ -243,7 +243,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         });
       });
 
-      context("when the selected text contains only whitespaces or quotation marks", function () {
+      context("when the selected text contains only whitespace characters or quotation marks", function () {
         it("should NOT display the selected text (search bar remains empty)", function () {
           // --- preparation ---
           visitAndSetup.call(this);
@@ -275,7 +275,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
     });
 
     describe("Display keyboard shortcuts", function () {
-      context("when keyboard shortcutes exist", function () {
+      context("when keyboard shortcuts exist", function () {
         it("should display them", function () {
           // --- preparation ---
           // --- conditions ---
@@ -297,7 +297,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       });
 
       context("when shortcut is not set", function () {
-        it("should have `shortcuts__key--notset` class", function () {
+        it("should have `shortcuts__key--not-set` class", function () {
           // --- preparation ---
           // --- conditions ---
           const commands = [
@@ -313,10 +313,10 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
             const selectorForDescription = `[data-shortcut-name="${command.name}"].shortcuts__description`;
             if (command.shortcut.length === 0) {
               cy.get(selectorForKey).invoke("text").should("equal", "msg_action_shortcut_key_not_set");
-              cy.get(selectorForKey).should("have.class", "shortcuts__key--notset");
+              cy.get(selectorForKey).should("have.class", "shortcuts__key--not-set");
             } else {
               cy.get(selectorForKey).invoke("text").should("equal", expectedShortcutKeys[index]);
-              cy.get(selectorForKey).should("not.have.class", "shortcuts__key--notset");
+              cy.get(selectorForKey).should("not.have.class", "shortcuts__key--not-set");
             }
             cy.get(selectorForDescription).invoke("text").should("equal", command.description);
           });
@@ -597,7 +597,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         });
       });
 
-      context("when the input text contains consecutive whitespaces and quotation marks", function () {
+      context("when the input text contains consecutive whitespace characters and quotation marks", function () {
         it("should normalize the input text", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -612,7 +612,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         });
       });
 
-      context("when the input text contains only whitespaces or quotation marks", function () {
+      context("when the input text contains only whitespace characters or quotation marks", function () {
         it("should NOT do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);

@@ -417,7 +417,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
     describe("onOpenOptionsPage()", function () {
       describe("Modifier keys", function () {
         context(
-          "when receiving `Do Quoted Search` message with modifier keys { ctrlKey: false, shiftKey: false }, and default as NEW_TAB (avtive)",
+          "when receiving `Do Quoted Search` message with modifier keys { ctrlKey: false, shiftKey: false }, and default as NEW_TAB (active)",
           function () {
             it("should open Options page at the disposition specified by `defaultHowToOpenLink`", function () {
               // --- preparation ---
@@ -536,7 +536,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         );
 
         context(
-          "when receiving `Do Quoted Search` message without modifier keys, and default as NEW_TAB (avtive)",
+          "when receiving `Do Quoted Search` message without modifier keys, and default as NEW_TAB (active)",
           function () {
             it("should open Options page at the disposition specified by `defaultHowToOpenLink`", function () {
               // --- preparation ---
@@ -553,7 +553,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         );
 
         context(
-          "when receiving `Do Quoted Search` message without modifier keys, and default as NEW_TAB (inavtive)",
+          "when receiving `Do Quoted Search` message without modifier keys, and default as NEW_TAB (inactive)",
           function () {
             it("should open Options page at the disposition specified by `defaultHowToOpenLink`", function () {
               // --- preparation ---
@@ -724,7 +724,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
     });
 
-    context("when the selected text contains consecutive whitespaces and quotation marks", function () {
+    context("when the selected text contains consecutive whitespace characters and quotation marks", function () {
       it("should normalize the input text", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
@@ -809,7 +809,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
     });
 
-    context("when the selected text contains consecutive whitespaces and quotation marks", function () {
+    context("when the selected text contains consecutive whitespace characters and quotation marks", function () {
       it("should normalize the input text", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
@@ -1037,7 +1037,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         });
       });
 
-      context("when the selected text contains only whitespaces or quotation marks", function () {
+      context("when the selected text contains only whitespace characters or quotation marks", function () {
         it("should NOT show any items in the context menus", function () {
           // --- preparation ---
           visitAndSetup.call(this);
@@ -1053,7 +1053,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
 
     describe("Title", function () {
       context("when keyboard shortcuts are available", function () {
-        it("should show keyboard shortcutes in each title", function () {
+        it("should show keyboard shortcuts in each title", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           sendNotifySelectionUpdated.call(this, { text: "" });
@@ -1074,7 +1074,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
 
       context("when keyboard shortcut for `Do Quoted Search` is not available", function () {
-        it("should NOT show the keyboard shortcute in its title", function () {
+        it("should NOT show the keyboard shortcut in its title", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           sendNotifySelectionUpdated.call(this, { text: "" });
@@ -1095,7 +1095,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
 
       context("when keyboard shortcut for `Put Quotes` is not available", function () {
-        it("should show keyboard shortcutes in each title", function () {
+        it("should show keyboard shortcuts in each title", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           sendNotifySelectionUpdated.call(this, { text: "" });
@@ -1409,7 +1409,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         });
       });
 
-      context("when the selected text contains consecutive whitespaces and quotation marks", function () {
+      context("when the selected text contains consecutive whitespace characters and quotation marks", function () {
         it("should normalize the input text", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -1424,7 +1424,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         });
       });
 
-      context("when the selected text contains only whitespaces or quotation marks", function () {
+      context("when the selected text contains only whitespace characters or quotation marks", function () {
         it("should NOT do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);

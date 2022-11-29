@@ -11,10 +11,10 @@
   "msg_command_description_put_quotes": {
     "message": "Put quotes around the selected text"
   },
-  "msg_action_h2_keyboad_shortcuts": {
+  "msg_action_h2_keyboard_shortcuts": {
     "message": "Keyboard shortcuts"
   },
-  "msg_action_link_customize_keyboad_shortcuts": {
+  "msg_action_link_customize_keyboard_shortcuts": {
     "message": "Customize keyboard shortcuts"
   },
   "msg_action_shortcut_key_not_set": {

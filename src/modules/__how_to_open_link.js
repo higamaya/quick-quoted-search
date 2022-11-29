@@ -6,7 +6,7 @@ import { config } from "./__config.js";
  */
 export class HowToOpenLink {
   /**
-   * Location where a link should be opend.
+   * Location where a link should be opened.
    *
    * The values of this enum are same as
    * [chrome.search.Disposition](https://developer.chrome.com/docs/extensions/reference/search/#type-Disposition).
@@ -26,7 +26,7 @@ export class HowToOpenLink {
     /**
      * @param {!boolean} ctrlKey
      * @param {!boolean} shiftKey
-     * @param {!boolean=} metaKey If speficied, `metaKey` is used instead of
+     * @param {!boolean=} metaKey If specified, `metaKey` is used instead of
      *    `ctrlKey` when running on MAC.
      */
     constructor(ctrlKey, shiftKey, metaKey = ctrlKey) {
@@ -71,7 +71,7 @@ export class HowToOpenLink {
   static NEW_WINDOW = new HowToOpenLink(HowToOpenLink.Disposition.NEW_WINDOW);
 
   /**
-   * Decides location where a link should be opend.
+   * Decides location where a link should be opened.
    *
    * @param {?HowToOpenLink.KeyState=} keyState
    * @param {?HowToOpenLink=} defaultHowToOpenLink

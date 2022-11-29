@@ -58,7 +58,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
     },
   };
 
-  const optionDisabledAssertioins = {
+  const optionDisabledAssertions = {
     switch: function assertOptionDisabledOfSwitch(name, expectedValue) {
       cy.get(`#qqs-option-${name}`).should(expectedValue ? "be.disabled" : "not.be.disabled");
     },
@@ -82,7 +82,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
 
   function assertOptionDisabled(expected) {
     for (const [name, expectedValue] of Object.entries(expected)) {
-      optionDisabledAssertioins[OPTIONS[name].type](name, expectedValue);
+      optionDisabledAssertions[OPTIONS[name].type](name, expectedValue);
     }
   }
 
@@ -286,8 +286,8 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             cy.get(`[data-grid-item-id="qqs-option-${name}"]`)
               .then(function (gridItems) {
                 expect(gridItems).to.have.lengthOf(2);
-                for (const griditem of gridItems) {
-                  expect(griditem.style.display).to.not.equal("none");
+                for (const gridItem of gridItems) {
+                  expect(gridItem.style.display).to.not.equal("none");
                 }
               })
               .find(".private-icon")
@@ -311,11 +311,11 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             cy.get(`[data-grid-item-id="qqs-option-${name}"]`)
               .then(function (gridItems) {
                 expect(gridItems).to.have.lengthOf(2);
-                for (const griditem of gridItems) {
+                for (const gridItem of gridItems) {
                   if (option.isPrivate) {
-                    expect(griditem.style.display).to.equal("none");
+                    expect(gridItem.style.display).to.equal("none");
                   } else {
-                    expect(griditem.style.display).to.not.equal("none");
+                    expect(gridItem.style.display).to.not.equal("none");
                   }
                 }
               })
@@ -617,7 +617,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
   });
 
   describe("Restore Defaults", function () {
-    context("when clicking `Restore Defaults` button, then cliking `OK` button", function () {
+    context("when clicking `Restore Defaults` button, then clicking `OK` button", function () {
       it("should restore all options to their default values", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
@@ -647,7 +647,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
       });
     });
 
-    context("when clicking `Restore Defaults` button, then cliking `CANCEL` button", function () {
+    context("when clicking `Restore Defaults` button, then clicking `CANCEL` button", function () {
       it("should NOT restore all options to their default values (just close the dialog)", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);

@@ -3,13 +3,13 @@ function mergeObject(target, source) {
 }
 
 function destruct(obj) {
-  if (!obj || typeof obj !== "object" || !("__destructable__" in obj)) {
+  if (!obj || typeof obj !== "object" || !("__destructible__" in obj)) {
     return;
   }
-  delete obj.__destructable__;
+  delete obj.__destructible__;
   for (const property in obj) {
     if (typeof obj[property] === "object") {
-      if ("__destructable__" in obj[property]) {
+      if ("__destructible__" in obj[property]) {
         destruct(obj[property]);
       } else {
         for (const value of Object.values(obj[property])) {
@@ -22,7 +22,7 @@ function destruct(obj) {
 }
 
 class EventListenerRegistry {
-  __destructable__;
+  __destructible__;
 
   __callbacks = {};
   __nextId = 0;
@@ -51,7 +51,7 @@ class EventListenerRegistry {
 }
 
 class AbstractCrxApi {
-  __destructable__;
+  __destructible__;
 
   _parent;
 
@@ -289,7 +289,7 @@ class RuntimeHub extends AbstractCrxApiHub {
 
 class Runtime extends AbstractCrxApiMock {
   static Port = class Port {
-    __destructable__;
+    __destructible__;
 
     onMessage = new EventListenerRegistry();
     onDisconnect = new EventListenerRegistry();
@@ -876,7 +876,7 @@ class Chrome extends AbstractCrxApiMock {
 export class CrxApiMockFactory {
   static Types = Chrome.Types;
 
-  __destructable__;
+  __destructible__;
 
   _hub = new ChromeHub();
 

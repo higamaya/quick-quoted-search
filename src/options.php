@@ -34,7 +34,7 @@
             <p><i data-group="i18n" data-i18n-name="msg_options_description_content_popup_icon_2" data-i18n-target="outerText"></i></p>
           </div>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-popupIcon", "msg_options_label_popup_icon", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-popupIcon", "msg_options_label_popup_icon", $description_func); ?>
 
         <!-- Icon Size-->
         <?php $description_func = function () { ?>
@@ -47,19 +47,19 @@
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_avoid_selection_1" data-i18n-target="outerHTML" data-i18n-args="qqs-i18n-arg-search-icon"></i></p>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_avoid_selection_2" data-i18n-target="outerText"></i></p>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-avoidSelection", "msg_options_label_avoid_selection", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-avoidSelection", "msg_options_label_avoid_selection", $description_func); ?>
 
         <!-- Options Button -->
         <?php $description_func = function () { ?>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_options_button" data-i18n-target="outerHTML" data-i18n-args="qqs-i18n-arg-options-icon qqs-i18n-arg-search-icon"></i></p>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-optionsButton", "msg_options_label_options_button", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-optionsButton", "msg_options_label_options_button", $description_func); ?>
 
         <!-- Context Menu -->
         <?php $description_func = function () { ?>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_context_menu" data-i18n-target="outerText"></i></p>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-contextMenu", "msg_options_label_context_menu", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-contextMenu", "msg_options_label_context_menu", $description_func); ?>
 
         <!-- Disposition -->
         <?php $description_func = function () { ?>
@@ -87,7 +87,7 @@
         <?php $description_func = function () { ?>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_auto_copy" data-i18n-target="outerHTML" data-i18n-args="qqs-i18n-arg-kbd-ctrl qqs-i18n-arg-kbd-f qqs-i18n-arg-kbd-v"></i></p>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-autoCopy", "msg_options_label_auto_copy", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-autoCopy", "msg_options_label_auto_copy", $description_func); ?>
 
         <!-- Auto Enter -->
         <?php $description_func = function () { ?>
@@ -100,13 +100,13 @@
             <li>DuckDuckGo</li>
           </ul>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-autoEnter", "msg_options_label_auto_enter", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-autoEnter", "msg_options_label_auto_enter", $description_func); ?>
 
         <!-- Auto Surround -->
         <?php $description_func = function () { ?>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_auto_surround" data-i18n-target="outerHTML" data-i18n-args="qqs-i18n-arg-kbd-double-quotation-mark"></i></p>
         <?php } ?>
-        <?php printOptionWithSitch("qqs-option-autoSurround", "msg_options_label_auto_surround", $description_func); ?>
+        <?php printOptionWithSwitch("qqs-option-autoSurround", "msg_options_label_auto_surround", $description_func); ?>
       </div>
 
       <!-- Restore defaults -->
@@ -199,7 +199,7 @@
 </html>
 
 <?php
-function printOptionWithSitch($id, $label, $description_func)
+function printOptionWithSwitch($id, $label, $description_func)
 {
 ?>
   <div class="grid-item grid-item--label" data-group="grid-item" data-grid-item-id="<?= $id ?>">

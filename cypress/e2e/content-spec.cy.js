@@ -110,7 +110,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
   describe("Notify selection updated", function () {
     context("when the current selection of the document is changed", function () {
-      it("should send `Notify Selection Updated` message (Note: A series of scenarios are included in this test case. See the comments in the source code of this teset case.", function () {
+      it("should send `Notify Selection Updated` message (Note: A series of scenarios are included in this test case. See the comments in the source code of this test case.", function () {
         // *** Case: Immediately after startup
         // --- preparation ---
         // --- conditions ---
@@ -350,7 +350,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         });
       });
 
-      context("when the selected text contains only whitespaces or quotation marks", function () {
+      context("when the selected text contains only whitespace characters or quotation marks", function () {
         it("should NOT show", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -978,7 +978,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     });
 
     describe("Normalizing the selected text", function () {
-      context("when the selected text contains consecutive whitespaces and quotation marks", function () {
+      context("when the selected text contains consecutive whitespace characters and quotation marks", function () {
         it("should collapse them into a single whitespace", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -997,7 +997,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         });
       });
 
-      context("when the selected text contains leading or trailing whitespaces", function () {
+      context("when the selected text contains leading or trailing whitespace characters", function () {
         it("should remove them", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -1223,7 +1223,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         });
       });
 
-      context("when the selected text contains only whitespaces or quotation marks", function () {
+      context("when the selected text contains only whitespace characters or quotation marks", function () {
         it("should NOT put quotes around the selected text (the selected text is replaced by a quotation mark)", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
@@ -1252,7 +1252,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           input.id = "input_lazy";
           input.type = "text";
           input.size = 32;
-          label.hemlFor = input.id;
+          label.htmlFor = input.id;
           label.innerText = "lazy";
         });
         // --- actions ---
@@ -1276,7 +1276,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           input.id = "input_lazy";
           input.type = "text";
           input.size = 32;
-          label.hemlFor = input.id;
+          label.htmlFor = input.id;
           label.innerText = "lazy";
         });
         // --- actions ---

@@ -147,7 +147,7 @@ import { MDCRipple } from "@material/ripple";
       if (shortcut) {
         spanShortcutKey.innerText = shortcut.replaceAll(/\+/g, " + ");
       } else {
-        divShortcutKey.classList.add("shortcuts__key--notset");
+        divShortcutKey.classList.add("shortcuts__key--not-set");
         spanShortcutKey.innerText = chrome.i18n.getMessage("msg_action_shortcut_key_not_set");
       }
 

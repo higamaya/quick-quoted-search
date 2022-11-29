@@ -22,7 +22,7 @@ export function filterSelectionText(selectionText) {
  * The normalization includes:
  *
  * - Replace double quotes with a space.
- * - Collapse consecutive whitespaces into single space.
+ * - Collapse consecutive whitespace characters into single space.
  * - Remove whitespace from both ends of the string.
  *
  * @param {?string} selectionText

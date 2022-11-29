@@ -11,7 +11,7 @@ import { MDCSlider } from "@material/slider";
  * - Set/Get the `disabled` property.
  *
  * @abstract
- * @property {!HTMLElement} root The root THML element of this component.
+ * @property {!HTMLElement} root The root HTML element of this component.
  */
 class QQSInput {
   #mdcComponent;
@@ -33,7 +33,7 @@ class QQSInput {
 
   /**
    * @readonly
-   * @returns {!HTMLElement} The root THML element of this component.
+   * @returns {!HTMLElement} The root HTML element of this component.
    */
   get root() {
     return this.#mdcComponent.root;
@@ -152,7 +152,7 @@ export class QQSSwitch extends QQSInput {
   _getValue() {
     // Refers directly the value of `aria-checked` attribute instead of
     // `QQSSwitch.selected`, because no guarantee that `QQSSwitch.selected` has
-    // beeen updated at the time of receiving the change event.
+    // been updated at the time of receiving the change event.
     return this._getMdcComponent().root.getAttribute(QQSSwitch.#ATTR_NAME) === "true";
   }
 
@@ -173,8 +173,8 @@ export class QQSSwitch extends QQSInput {
   }
 
   #addInternalChangeEventListener() {
-    // QQQSSwitch does not provide an event to detect the change of its value.
-    // Therfore, directly observes the change of `aria-checked` attribute.
+    // MDCSwitch does not provide an event to detect the change of its value.
+    // Therefore, directly observes the change of `aria-checked` attribute.
     const observer = new MutationObserver((mutationList, _observer) => {
       for (const mutation of mutationList) {
         if (
