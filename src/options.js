@@ -200,8 +200,8 @@ import { MDCDialog } from "@material/dialog";
 
   function scanOptionInputDependencies() {
     for (const { name, dependencies } of OPTION_ITEMS) {
-      const allEnabled = dependencies.reduce((previousValue, currentValue) => {
-        return previousValue && qqsInputComponents[currentValue].value;
+      const allEnabled = dependencies.reduce((currentEnabled, dependence) => {
+        return currentEnabled && qqsInputComponents[dependence].value;
       }, true);
       qqsInputComponents[name].disabled = !allEnabled;
     }
@@ -244,12 +244,17 @@ import { MDCDialog } from "@material/dialog";
       testText.style.left = "-9999px";
       testText.style.width = "max-content";
       selectedText.parentNode.appendChild(testText);
-      let maxWidth = 0;
-      for (const itemText of root.querySelectorAll("[data-group~='adjust-select-width-option-value']")) {
-        testText.innerText = itemText.innerText;
-        maxWidth = Math.max(maxWidth, testText.clientWidth);
-      }
-      testText.parentNode.removeChild(testText);
+
+      const maxWidth = Array.prototype.reduce.call(
+        root.querySelectorAll("[data-group~='adjust-select-width-option-value']"),
+        (currentMaxWidth, listItem) => {
+          testText.innerText = listItem.innerText;
+          return Math.max(currentMaxWidth, testText.clientWidth);
+        },
+        0
+      );
+
+      selectedText.parentNode.removeChild(testText);
 
       selectedText.style.width = maxWidth + 1 + "px";
       // The value of `Element.clientWidth` is rounded to an integer, so adding
