@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1669761294883" clover="3.2.0">
-  <project timestamp="1669761294883" name="All files">
-    <metrics statements="761" coveredstatements="726" conditionals="312" coveredconditionals="280" methods="217" coveredmethods="205" elements="1290" coveredelements="1211" complexity="0" loc="761" ncloc="761" packages="2" files="14" classes="14"/>
+<coverage generated="1669802205306" clover="3.2.0">
+  <project timestamp="1669802205306" name="All files">
+    <metrics statements="760" coveredstatements="725" conditionals="312" coveredconditionals="279" methods="218" coveredmethods="206" elements="1290" coveredelements="1210" complexity="0" loc="760" ncloc="760" packages="2" files="14" classes="14"/>
     <package name="src">
-      <metrics statements="397" coveredstatements="385" conditionals="178" coveredconditionals="164" methods="100" coveredmethods="100"/>
-      <file name="action.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\action.js">
+      <metrics statements="396" coveredstatements="384" conditionals="178" coveredconditionals="164" methods="101" coveredmethods="101"/>
+      <file name="action.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/action.js">
         <metrics statements="61" coveredstatements="61" conditionals="14" coveredconditionals="12" methods="10" coveredmethods="10"/>
         <line num="7" count="56" type="stmt"/>
         <line num="12" count="56" type="stmt"/>
@@ -68,7 +68,7 @@
         <line num="157" count="112" type="stmt"/>
         <line num="158" count="112" type="stmt"/>
       </file>
-      <file name="background.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\background.js">
+      <file name="background.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/background.js">
         <metrics statements="87" coveredstatements="87" conditionals="42" coveredconditionals="42" methods="23" coveredmethods="23"/>
         <line num="5" count="71" type="stmt"/>
         <line num="10" count="71" type="stmt"/>
@@ -158,7 +158,7 @@
         <line num="295" count="248" type="stmt"/>
         <line num="299" count="248" type="stmt"/>
       </file>
-      <file name="content.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\content.js">
+      <file name="content.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/content.js">
         <metrics statements="147" coveredstatements="140" conditionals="110" coveredconditionals="100" methods="28" coveredmethods="28"/>
         <line num="6" count="85" type="stmt"/>
         <line num="11" count="85" type="stmt"/>
@@ -171,7 +171,7 @@
         <line num="47" count="85" type="stmt"/>
         <line num="51" count="70" type="stmt"/>
         <line num="52" count="70" type="stmt"/>
-        <line num="55" count="8826" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="8956" type="cond" truecount="2" falsecount="0"/>
         <line num="58" count="70" type="cond" truecount="1" falsecount="1"/>
         <line num="62" count="85" type="stmt"/>
         <line num="65" count="85" type="stmt"/>
@@ -205,15 +205,15 @@
         <line num="133" count="2" type="stmt"/>
         <line num="135" count="2" type="stmt"/>
         <line num="139" count="9" type="stmt"/>
-        <line num="143" count="4037" type="stmt"/>
-        <line num="147" count="3360" type="stmt"/>
-        <line num="148" count="5580" type="cond" truecount="1" falsecount="1"/>
-        <line num="149" count="5580" type="stmt"/>
-        <line num="150" count="2832" type="cond" truecount="4" falsecount="0"/>
-        <line num="151" count="631" type="cond" truecount="2" falsecount="0"/>
+        <line num="143" count="4167" type="stmt"/>
+        <line num="147" count="2799" type="stmt"/>
+        <line num="148" count="4461" type="cond" truecount="1" falsecount="1"/>
+        <line num="149" count="4461" type="stmt"/>
+        <line num="150" count="2271" type="cond" truecount="4" falsecount="0"/>
+        <line num="151" count="614" type="cond" truecount="2" falsecount="0"/>
         <line num="152" count="3" type="stmt"/>
         <line num="153" count="3" type="stmt"/>
-        <line num="155" count="631" type="stmt"/>
+        <line num="155" count="614" type="stmt"/>
         <line num="156" count="1" type="stmt"/>
         <line num="157" count="1" type="stmt"/>
         <line num="166" count="229" type="cond" truecount="2" falsecount="0"/>
@@ -255,13 +255,13 @@
         <line num="278" count="4638" type="stmt"/>
         <line num="287" count="4638" type="stmt"/>
         <line num="289" count="4638" type="stmt"/>
-        <line num="293" count="8756" type="cond" truecount="1" falsecount="1"/>
+        <line num="293" count="8886" type="cond" truecount="1" falsecount="1"/>
         <line num="294" count="0" type="stmt"/>
-        <line num="297" count="8756" type="stmt"/>
-        <line num="298" count="8756" type="cond" truecount="5" falsecount="0"/>
-        <line num="299" count="8524" type="stmt"/>
-        <line num="309" count="8524" type="stmt"/>
-        <line num="310" count="8524" type="stmt"/>
+        <line num="297" count="8886" type="stmt"/>
+        <line num="298" count="8886" type="cond" truecount="5" falsecount="0"/>
+        <line num="299" count="8634" type="stmt"/>
+        <line num="309" count="8634" type="stmt"/>
+        <line num="310" count="8634" type="stmt"/>
         <line num="315" count="425" type="stmt"/>
         <line num="318" count="425" type="stmt"/>
         <line num="319" count="425" type="cond" truecount="2" falsecount="0"/>
@@ -296,20 +296,20 @@
         <line num="380" count="395" type="stmt"/>
         <line num="387" count="395" type="stmt"/>
         <line num="389" count="395" type="stmt"/>
-        <line num="393" count="8906" type="cond" truecount="2" falsecount="0"/>
-        <line num="394" count="1906" type="stmt"/>
-        <line num="396" count="7000" type="stmt"/>
-        <line num="397" count="7000" type="cond" truecount="2" falsecount="0"/>
+        <line num="393" count="9016" type="cond" truecount="2" falsecount="0"/>
+        <line num="394" count="1886" type="stmt"/>
+        <line num="396" count="7130" type="stmt"/>
+        <line num="397" count="7130" type="cond" truecount="2" falsecount="0"/>
         <line num="398" count="133" type="stmt"/>
         <line num="399" count="133" type="cond" truecount="2" falsecount="0"/>
         <line num="400" count="71" type="stmt"/>
         <line num="401" count="424" type="cond" truecount="2" falsecount="0"/>
         <line num="406" count="2" type="stmt"/>
         <line num="410" count="131" type="stmt"/>
-        <line num="413" count="7000" type="stmt"/>
+        <line num="413" count="7130" type="stmt"/>
       </file>
-      <file name="options.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\options.js">
-        <metrics statements="102" coveredstatements="97" conditionals="12" coveredconditionals="10" methods="39" coveredmethods="39"/>
+      <file name="options.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/options.js">
+        <metrics statements="101" coveredstatements="96" conditionals="12" coveredconditionals="10" methods="40" coveredmethods="40"/>
         <line num="10" count="90" type="stmt"/>
         <line num="15" count="90" type="stmt"/>
         <line num="21" count="90" type="stmt"/>
@@ -401,26 +401,25 @@
         <line num="244" count="90" type="stmt"/>
         <line num="245" count="90" type="stmt"/>
         <line num="246" count="90" type="stmt"/>
-        <line num="247" count="90" type="stmt"/>
         <line num="248" count="90" type="stmt"/>
-        <line num="249" count="270" type="stmt"/>
-        <line num="250" count="270" type="stmt"/>
-        <line num="252" count="90" type="stmt"/>
-        <line num="254" count="90" type="stmt"/>
-        <line num="261" count="90" type="stmt"/>
-        <line num="268" count="738" type="stmt"/>
-        <line num="272" count="7" type="stmt"/>
-        <line num="273" count="7" type="stmt"/>
-        <line num="274" count="7" type="stmt"/>
+        <line num="251" count="270" type="stmt"/>
+        <line num="252" count="270" type="stmt"/>
+        <line num="257" count="90" type="stmt"/>
+        <line num="259" count="90" type="stmt"/>
+        <line num="266" count="90" type="stmt"/>
+        <line num="273" count="738" type="stmt"/>
+        <line num="277" count="7" type="stmt"/>
+        <line num="278" count="7" type="stmt"/>
+        <line num="279" count="7" type="stmt"/>
       </file>
     </package>
     <package name="src.modules">
-      <metrics statements="364" coveredstatements="341" conditionals="134" coveredconditionals="116" methods="117" coveredmethods="105"/>
-      <file name="__config.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__config.js">
+      <metrics statements="364" coveredstatements="341" conditionals="134" coveredconditionals="115" methods="117" coveredmethods="105"/>
+      <file name="__config.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__config.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="305" type="stmt"/>
       </file>
-      <file name="__constants.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__constants.js">
+      <file name="__constants.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__constants.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="303" type="stmt"/>
         <line num="14" count="303" type="stmt"/>
@@ -429,10 +428,10 @@
         <line num="64" count="303" type="stmt"/>
         <line num="73" count="303" type="stmt"/>
       </file>
-      <file name="__functions.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__functions.js">
-        <metrics statements="71" coveredstatements="69" conditionals="41" coveredconditionals="33" methods="21" coveredmethods="21"/>
-        <line num="15" count="18375" type="stmt"/>
-        <line num="16" count="18375" type="cond" truecount="2" falsecount="0"/>
+      <file name="__functions.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__functions.js">
+        <metrics statements="71" coveredstatements="69" conditionals="41" coveredconditionals="32" methods="21" coveredmethods="21"/>
+        <line num="15" count="18485" type="stmt"/>
+        <line num="16" count="18485" type="cond" truecount="2" falsecount="0"/>
         <line num="32" count="5039" type="stmt"/>
         <line num="33" count="5039" type="cond" truecount="2" falsecount="0"/>
         <line num="45" count="5039" type="stmt"/>
@@ -462,21 +461,21 @@
         <line num="134" count="6434" type="stmt"/>
         <line num="135" count="6434" type="stmt"/>
         <line num="136" count="6434" type="stmt"/>
-        <line num="151" count="16791" type="cond" truecount="2" falsecount="0"/>
-        <line num="152" count="16771" type="stmt"/>
-        <line num="153" count="16771" type="cond" truecount="1" falsecount="1"/>
-        <line num="154" count="16771" type="stmt"/>
-        <line num="155" count="16771" type="cond" truecount="2" falsecount="0"/>
-        <line num="156" count="16561" type="cond" truecount="1" falsecount="1"/>
+        <line num="151" count="17031" type="cond" truecount="1" falsecount="1"/>
+        <line num="152" count="17031" type="stmt"/>
+        <line num="153" count="17031" type="cond" truecount="1" falsecount="1"/>
+        <line num="154" count="17031" type="stmt"/>
+        <line num="155" count="17031" type="cond" truecount="2" falsecount="0"/>
+        <line num="156" count="16821" type="cond" truecount="1" falsecount="1"/>
         <line num="157" count="0" type="stmt"/>
-        <line num="159" count="16561" type="stmt"/>
-        <line num="161" count="99232" type="stmt"/>
-        <line num="163" count="16561" type="cond" truecount="1" falsecount="1"/>
+        <line num="159" count="16821" type="stmt"/>
+        <line num="161" count="100800" type="stmt"/>
+        <line num="163" count="16821" type="cond" truecount="1" falsecount="1"/>
         <line num="164" count="0" type="stmt"/>
-        <line num="170" count="16791" type="stmt"/>
-        <line num="173" count="16791" type="stmt"/>
-        <line num="195" count="8846" type="stmt"/>
-        <line num="196" count="8846" type="stmt"/>
+        <line num="170" count="17031" type="stmt"/>
+        <line num="173" count="17031" type="stmt"/>
+        <line num="195" count="8956" type="stmt"/>
+        <line num="196" count="8956" type="stmt"/>
         <line num="198" count="1" type="stmt"/>
         <line num="214" count="75" type="stmt"/>
         <line num="215" count="75" type="stmt"/>
@@ -503,7 +502,7 @@
         <line num="352" count="52" type="stmt"/>
         <line num="353" count="52" type="stmt"/>
       </file>
-      <file name="__globals.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__globals.js">
+      <file name="__globals.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__globals.js">
         <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="34" count="303" type="stmt"/>
         <line num="35" count="303" type="stmt"/>
@@ -518,7 +517,7 @@
         <line num="50" count="232" type="stmt"/>
         <line num="52" count="303" type="stmt"/>
       </file>
-      <file name="__how_to_open_link.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__how_to_open_link.js">
+      <file name="__how_to_open_link.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__how_to_open_link.js">
         <metrics statements="19" coveredstatements="19" conditionals="15" coveredconditionals="15" methods="4" coveredmethods="4"/>
         <line num="16" count="304" type="stmt"/>
         <line num="22" count="304" type="stmt"/>
@@ -540,26 +539,26 @@
         <line num="83" count="671" type="cond" truecount="2" falsecount="0"/>
         <line num="84" count="605" type="cond" truecount="2" falsecount="0"/>
       </file>
-      <file name="__logger.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__logger.js">
+      <file name="__logger.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__logger.js">
         <metrics statements="16" coveredstatements="16" conditionals="9" coveredconditionals="9" methods="8" coveredmethods="8"/>
         <line num="15" count="330" type="stmt"/>
         <line num="22" count="71" type="stmt"/>
-        <line num="34" count="11161" type="stmt"/>
+        <line num="34" count="11271" type="stmt"/>
         <line num="46" count="23926" type="stmt"/>
         <line num="58" count="17288" type="stmt"/>
         <line num="70" count="6" type="stmt"/>
         <line num="82" count="5" type="stmt"/>
         <line num="95" count="7875" type="stmt"/>
-        <line num="108" count="60261" type="cond" truecount="2" falsecount="0"/>
+        <line num="108" count="60371" type="cond" truecount="2" falsecount="0"/>
         <line num="109" count="6" type="stmt"/>
-        <line num="112" count="60255" type="stmt"/>
-        <line num="113" count="60255" type="cond" truecount="5" falsecount="0"/>
-        <line num="114" count="59000" type="stmt"/>
-        <line num="115" count="109061" type="stmt"/>
-        <line num="116" count="109061" type="stmt"/>
-        <line num="120" count="60255" type="stmt"/>
+        <line num="112" count="60365" type="stmt"/>
+        <line num="113" count="60365" type="cond" truecount="5" falsecount="0"/>
+        <line num="114" count="59110" type="stmt"/>
+        <line num="115" count="109171" type="stmt"/>
+        <line num="116" count="109171" type="stmt"/>
+        <line num="120" count="60365" type="stmt"/>
       </file>
-      <file name="__options.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\__options.js">
+      <file name="__options.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/__options.js">
         <metrics statements="58" coveredstatements="58" conditionals="17" coveredconditionals="16" methods="17" coveredmethods="17"/>
         <line num="11" count="304" type="stmt"/>
         <line num="13" count="304" type="stmt"/>
@@ -620,15 +619,15 @@
         <line num="156" count="3453" type="stmt"/>
         <line num="161" count="8891" type="stmt"/>
       </file>
-      <file name="common.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\common.js">
+      <file name="common.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/common.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="input_components.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\input_components.js">
+      <file name="input_components.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/input_components.js">
         <metrics statements="55" coveredstatements="47" conditionals="7" coveredconditionals="7" methods="34" coveredmethods="26"/>
         <line num="19" count="810" type="stmt"/>
         <line num="22" count="810" type="stmt"/>
         <line num="23" count="810" type="stmt"/>
-        <line num="31" count="120638" type="stmt"/>
+        <line num="31" count="121397" type="stmt"/>
         <line num="39" count="90" type="stmt"/>
         <line num="46" count="35505" type="stmt"/>
         <line num="47" count="35505" type="stmt"/>
@@ -654,8 +653,8 @@
         <line num="164" count="35581" type="stmt"/>
         <line num="172" count="0" type="stmt"/>
         <line num="178" count="630" type="stmt"/>
-        <line num="179" count="5131" type="stmt"/>
-        <line num="180" count="17369" type="cond" truecount="2" falsecount="0"/>
+        <line num="179" count="5613" type="stmt"/>
+        <line num="180" count="18128" type="cond" truecount="2" falsecount="0"/>
         <line num="185" count="2189" type="stmt"/>
         <line num="189" count="630" type="stmt"/>
         <line num="198" count="90" type="stmt"/>
@@ -681,7 +680,7 @@
         <line num="300" count="738" type="stmt"/>
         <line num="301" count="738" type="stmt"/>
       </file>
-      <file name="popup_icon.js" path="D:\a\quick-quoted-search\quick-quoted-search\src\modules\popup_icon.js">
+      <file name="popup_icon.js" path="/Users/runner/work/quick-quoted-search/quick-quoted-search/src/modules/popup_icon.js">
         <metrics statements="126" coveredstatements="113" conditionals="43" coveredconditionals="34" methods="30" coveredmethods="27"/>
         <line num="11" count="85" type="stmt"/>
         <line num="13" count="85" type="stmt"/>
@@ -689,7 +688,7 @@
         <line num="23" count="85" type="stmt"/>
         <line num="25" count="830" type="stmt"/>
         <line num="26" count="1124" type="stmt"/>
-        <line num="27" count="4037" type="stmt"/>
+        <line num="27" count="4167" type="stmt"/>
         <line num="29" count="1235" type="stmt"/>
         <line num="36" count="4638" type="stmt"/>
         <line num="44" count="87" type="stmt"/>
@@ -705,8 +704,8 @@
         <line num="64" count="1124" type="stmt"/>
         <line num="65" count="1124" type="cond" truecount="1" falsecount="1"/>
         <line num="66" count="1124" type="stmt"/>
-        <line num="71" count="4037" type="cond" truecount="2" falsecount="0"/>
-        <line num="72" count="1473" type="stmt"/>
+        <line num="71" count="4167" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="1592" type="stmt"/>
         <line num="77" count="1235" type="stmt"/>
         <line num="79" count="1235" type="cond" truecount="2" falsecount="0"/>
         <line num="80" count="9" type="stmt"/>
@@ -806,7 +805,7 @@
         <line num="324" count="1320" type="cond" truecount="2" falsecount="0"/>
         <line num="325" count="1293" type="stmt"/>
         <line num="327" count="27" type="stmt"/>
-        <line num="332" count="1629" type="cond" truecount="2" falsecount="0"/>
+        <line num="332" count="1748" type="cond" truecount="2" falsecount="0"/>
         <line num="333" count="480" type="stmt"/>
         <line num="334" count="480" type="stmt"/>
       </file>
