@@ -77,6 +77,7 @@
 
   .option-label {
     margin-right: 0.2em;
+    padding-top: 0.15em;
   }
 
   .private-icon {
@@ -86,6 +87,10 @@
 
   .option-tooltip-open-button {
     font-size: 1.1em;
+
+    .question-icon {
+      display: block;
+    }
   }
 
   #qqs-option-iconSize {

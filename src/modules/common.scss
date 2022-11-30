@@ -184,7 +184,14 @@ $font-family-mono: "Roboto Mono", monospace;
     box-sizing: content-box;
     width: 1em;
     height: 1em;
-    vertical-align: middle;
+  }
+
+  h1,
+  h2,
+  h3 {
+    %icon {
+      vertical-align: middle;
+    }
   }
 
   .search-icon {

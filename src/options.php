@@ -286,7 +286,9 @@ function printOptionWithSlider($id, $label, $min, $max, $step, $description_func
 {
 ?>
   <div class="grid-item grid-item--label" data-group="grid-item" data-grid-item-id="<?= $id ?>">
-    <label id="<?= $id ?>-label" class="option-label" for="<?= $id ?>-input"><i data-group="i18n" data-i18n-name="<?= $label ?>" data-i18n-target="outerText"></i></label>
+    <label id="<?= $id ?>-label" class="option-label" for="<?= $id ?>-input">
+      <i data-group="i18n" data-i18n-name="<?= $label ?>" data-i18n-target="outerText"></i>
+    </label>
     <?php printTooltip($id, $label, $description_func); ?>
   </div>
   <div class="grid-item grid-item--input" data-group="grid-item" data-grid-item-id="<?= $id ?>">
@@ -325,7 +327,9 @@ function printLinkToBrowserSettings($id, $label, $url, $description_func)
 {
 ?>
   <div class="grid-item grid-item--label" data-group="grid-item" data-grid-item-id="<?= $id ?>">
-    <a id="<?= $id ?>" class="option-label" href="<?= $url ?>"><i data-group="i18n" data-i18n-name="<?= $label ?>" data-i18n-target="outerText"></i></a>
+    <a id="<?= $id ?>" class="option-label" href="<?= $url ?>">
+      <i data-group="i18n" data-i18n-name="<?= $label ?>" data-i18n-target="outerText"></i>
+    </a>
     <?php printTooltip($id, $label, $description_func); ?>
   </div>
   <div></div>
