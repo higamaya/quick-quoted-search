@@ -8,8 +8,8 @@ on:
       - "cypress/**/*.js"
 jobs:
   coverage:
-    name: "Run cypress with {mode: development, os: windows-latest, browser: chrome, test_search_site: off, coverage: on}"
-    runs-on: windows-latest
+    name: "Run cypress with {mode: development, os: macos-latest, browser: chrome, test_search_site: off, coverage: on}"
+    runs-on: macos-latest
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
           build: npx webpack build --mode=development
           browser: chrome
           record: true
-          tag: ci,development,Windows,chrome,coverage
+          tag: ci,development,macOS,chrome,coverage
         env:
           CYPRESS_coverage: true
           CYPRESS_test_on: ci
@@ -35,12 +35,12 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-development-Windows-chrome
+          name: cypress-videos-development-macOS-chrome
           path: cypress/videos
       - name: Save code coverage to repo
         run: |
-          git config --local user.name "${{ github.event.pusher.username }}"
-          git config --local user.email "${{ github.event.pusher.email }}"
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email ""
           git add coverage-main
           git commit -m "chore: update code coverage"
           git push
