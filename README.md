@@ -7,3 +7,5 @@
 A chrome extension for quick quoted search.
 
 :construction: **This project is under development.**
+
+I am planning to publish this extension on Chrome Web Store soon.
