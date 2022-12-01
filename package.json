@@ -2,6 +2,7 @@
   "name": "quick-quoted-search",
   "version": "1.0.0",
   "description": "Reduce the steps of your quoted search!",
+  "private": true,
   "author": "Higama-ya",
   "license": "MIT",
   "repository": {
@@ -87,11 +88,9 @@
     "lint": "run-s lint:*",
     "cy-open": "run-s cy-open-dev",
     "cy-run": "run-s cy-run-dev",
-    "test": "run-s cy-run",
     "coverage": "run-s coverage-setup webpack-build-dev cy-run-coverage coverage-cleanup webpack-build-dev coverage-result",
-    "build-dev": "run-s lint clean webpack-build-dev license cy-run-dev",
-    "prod-prod": "run-s lint clean webpack-build-prod license cy-run-prod pack",
-    "build": "run-s build-dev",
-    "prod": "run-s build-prod"
+    "build": "run-s clean lint webpack-build-dev license",
+    "test": "run-s build cy-run",
+    "prod": "run-s clean lint webpack-build-prod license cy-run-prod pack"
   }
 }
