@@ -33,7 +33,7 @@ import * as qqs from "./modules/common.js";
     blur: true,
   };
 
-  const Commands = {
+  const commands = {
     [qqs.CommandType.DO_QUOTED_SEARCH]: {
       shortcut: "",
       contextMenu: {
@@ -100,13 +100,13 @@ import * as qqs from "./modules/common.js";
       return;
     }
 
-    qqs.logger.assert(!Commands[info.menuItemId].contextMenu.registered, "Unregistered context menu was invoked", {
+    qqs.logger.assert(!commands[info.menuItemId].contextMenu.registered, "Unregistered context menu was invoked", {
       ["info.menuItemId"]: info.menuItemId,
       info,
       tab,
     });
 
-    Commands[info.menuItemId].onContextMenuClicked(info, tab);
+    commands[info.menuItemId].onContextMenuClicked(info, tab);
   }
 
   async function onCommand(command, tab) {
@@ -140,7 +140,7 @@ import * as qqs from "./modules/common.js";
       return;
     }
 
-    Commands[command].onShortcutPressed(tab);
+    commands[command].onShortcutPressed(tab);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -221,16 +221,16 @@ import * as qqs from "./modules/common.js";
   }
 
   async function updateCommandShortcuts() {
-    const commands = await chrome.commands.getAll();
-    for (const { name, shortcut } of commands) {
-      Commands[name].shortcut = shortcut;
+    const extensionCommands = await chrome.commands.getAll();
+    for (const { name, shortcut } of extensionCommands) {
+      commands[name].shortcut = shortcut;
     }
   }
 
   function updateContextMenu(selection) {
     const isSelectionTextValid = qqs.isNormalizedSelectionTextValid(qqs.normalizeSelectionText(selection.text));
 
-    for (const [id, command] of Object.entries(Commands)) {
+    for (const [id, command] of Object.entries(commands)) {
       const contextMenu = command.contextMenu;
       const properties = contextMenu.properties;
       const visible =
