@@ -100,8 +100,8 @@ import { MDCDialog } from "@material/dialog";
   }
 
   function addEventListenerToOptions() {
-    qqs.options.onChanged.addListener((options) => {
-      qqs.logger.callback("Options have been changed externally", { options });
+    qqs.options.onChanged.addListener(() => {
+      qqs.logger.callback("Options have been changed externally", { options: qqs.options });
       updateOptionInputsAll();
     });
   }

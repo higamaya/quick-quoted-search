@@ -79,9 +79,9 @@ export class Options {
     addListener(listener) {
       this.#listeners.push(listener);
     }
-    _fire(options) {
+    _fire() {
       for (const listener of this.#listeners) {
-        listener(options);
+        listener();
       }
     }
   })();
@@ -158,6 +158,6 @@ export class Options {
       });
     }
 
-    this.onChanged._fire(this);
+    this.onChanged._fire();
   }
 }

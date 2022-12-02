@@ -217,7 +217,7 @@ import * as qqs from "./modules/common.js";
   // Event Listeners (Options)
   //////////////////////////////////////////////////////////////////////////////
 
-  function onOptionsChanged(_options) {
+  function onOptionsChanged() {
     updateContextMenu(currentSelection);
   }
 

@@ -26,7 +26,7 @@ export class PopupIcon {
     this.#win.document.documentElement.addEventListener("mouseup", (e) => this.#onMouseUp(e));
     this.#win.document.addEventListener("selectionchange", (e) => this.#onSelectionChange(e));
 
-    qqs.options.onChanged.addListener((options) => this.#onOptionsChanged(options));
+    qqs.options.onChanged.addListener(() => this.#onOptionsChanged());
   }
 
   /**
@@ -73,7 +73,7 @@ export class PopupIcon {
     }
   }
 
-  #onOptionsChanged(_options) {
+  #onOptionsChanged() {
     this.#dom.reflectOptions();
 
     if (!qqs.options.popupIcon) {
