@@ -34,15 +34,15 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
     cy.spy(chromeForWin.windows, "create").as("spy_chrome_windows_create");
   }
 
-  function visitAndSetup(options, skipIfSameParameters = false) {
-    options = { isMac: false, initialOptions: undefined, ...options };
+  function visitAndSetup(params, skipIfSameParameters = false) {
+    params = { isMac: false, initialOptions: undefined, ...params };
 
     return cy
       .visitAndSetup(
         "cypress/support/test-background.html",
         {
-          isMac: options.isMac,
-          initialOptions: options.initialOptions,
+          isMac: params.isMac,
+          initialOptions: params.initialOptions,
 
           onCrxApiMockReady(crxApiMock) {
             setSpiesOnChromeForWin(crxApiMock.chromeForWin);
@@ -60,9 +60,9 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
   }
 
-  function visitAndSetup_own(options) {
+  function visitAndSetup_own(params) {
     // own: only when necessary
-    visitAndSetup.call(this, options, /* skipIfSameParameters */ true);
+    visitAndSetup.call(this, params, /* skipIfSameParameters */ true);
   }
 
   function sendNotifySelectionUpdated(args) {

@@ -602,9 +602,9 @@ class TabsHub extends AbstractCrxApiHub {
     super(parent);
   }
 
-  _createTab(options) {
+  _createTab(props) {
     const id = this.__nextId++;
-    this._tabs[id] = new Tabs.Tab({ windowId: this._root.windows?._currentWindow?.id, ...options, id });
+    this._tabs[id] = new Tabs.Tab({ windowId: this._root.windows?._currentWindow?.id, ...props, id });
     return this._tabs[id];
   }
 
@@ -630,8 +630,8 @@ class Tabs extends AbstractCrxApiMock {
     url = "https://example.com/";
     windowId = 123;
 
-    constructor(options) {
-      mergeObject(this, options);
+    constructor(props) {
+      mergeObject(this, props);
     }
   };
 
@@ -752,9 +752,9 @@ class WindowsHub extends AbstractCrxApiHub {
     super(parent);
   }
 
-  _createWindow(options) {
+  _createWindow(props) {
     const id = this.__nextId++;
-    this._windows[id] = new Windows.Window({ ...options, id });
+    this._windows[id] = new Windows.Window({ ...props, id });
     return this._windows[id];
   }
 
@@ -768,8 +768,8 @@ class Windows extends AbstractCrxApiMock {
     id = 123456789;
     state = "normal";
 
-    constructor(options) {
-      mergeObject(this, options);
+    constructor(props) {
+      mergeObject(this, props);
     }
   };
 

@@ -1,10 +1,10 @@
-export function deepEqual(lhs, rhs, options) {
-  options = {
+export function deepEqual(lhs, rhs, params) {
+  params = {
     ignoreFunctions: false,
-    ...options,
+    ...params,
   };
 
-  if (options.ignoreFunctions && typeof lhs === "function" && typeof rhs === "function") {
+  if (params.ignoreFunctions && typeof lhs === "function" && typeof rhs === "function") {
     return true;
   }
 
@@ -28,7 +28,7 @@ export function deepEqual(lhs, rhs, options) {
       return false;
     }
     for (let i = 0; i < lhs.length; i++) {
-      if (!deepEqual(lhs[i], rhs[i], options)) {
+      if (!deepEqual(lhs[i], rhs[i], params)) {
         return false;
       }
     }
@@ -39,11 +39,11 @@ export function deepEqual(lhs, rhs, options) {
 
   const lhsKeys = Object.keys(lhs).sort();
   const rhsKeys = Object.keys(rhs).sort();
-  if (!deepEqual(lhsKeys, rhsKeys, options)) {
+  if (!deepEqual(lhsKeys, rhsKeys, params)) {
     return false;
   }
   for (const key of lhsKeys) {
-    if (!deepEqual(lhs[key], rhs[key], options)) {
+    if (!deepEqual(lhs[key], rhs[key], params)) {
       return false;
     }
   }

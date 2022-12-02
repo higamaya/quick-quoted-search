@@ -37,16 +37,16 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     port.onMessage.addListener((message, port) => onMessage.call(this, message, port));
   }
 
-  function visitAndSetup(options, skipIfSameParameters = false) {
-    options = { isMac: false, initialOptions: undefined, clickIFrame: true, ...options };
+  function visitAndSetup(params, skipIfSameParameters = false) {
+    params = { isMac: false, initialOptions: undefined, clickIFrame: true, ...params };
 
     return cy
       .visitAndSetup(
         "cypress/support/test-content.html",
         {
-          isMac: options.isMac,
-          initialOptions: options.initialOptions,
-          clickIFrame: options.clickIFrame,
+          isMac: params.isMac,
+          initialOptions: params.initialOptions,
+          clickIFrame: params.clickIFrame,
 
           onCrxApiMockReady(_crxApiMock) {
             this.qqs.portToContent = undefined;
@@ -69,9 +69,9 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
       });
   }
 
-  function visitAndSetup_own(options) {
+  function visitAndSetup_own(params) {
     // own: only when necessary
-    visitAndSetup.call(this, options, /* skipIfSameParameters */ true);
+    visitAndSetup.call(this, params, /* skipIfSameParameters */ true);
   }
 
   before(function () {

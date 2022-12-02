@@ -28,16 +28,16 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
     cy.spy(chromeForWin.windows, "create").as("spy_chrome_windows_create");
   }
 
-  function visitAndSetup(options, skipIfSameParameters = false) {
-    options = { isMac: false, initialOptions: undefined, initialCommands: undefined, ...options };
+  function visitAndSetup(params, skipIfSameParameters = false) {
+    params = { isMac: false, initialOptions: undefined, initialCommands: undefined, ...params };
 
     return cy
       .visitAndSetup(
         "dist/action.html",
         {
-          isMac: options.isMac,
-          initialOptions: options.initialOptions,
-          initialCommands: options.initialCommands,
+          isMac: params.isMac,
+          initialOptions: params.initialOptions,
+          initialCommands: params.initialCommands,
 
           onCrxApiMockReady(crxApiMock) {
             setSpiesOnChromeForWin.call(this, crxApiMock.chromeForWin);
@@ -60,9 +60,9 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       });
   }
 
-  function visitAndSetup_own(options) {
+  function visitAndSetup_own(params) {
     // own: only when necessary
-    visitAndSetup.call(this, options, /* skipIfSameParameters */ true);
+    visitAndSetup.call(this, params, /* skipIfSameParameters */ true);
   }
 
   function assertCreateWindow(expected = true) {
