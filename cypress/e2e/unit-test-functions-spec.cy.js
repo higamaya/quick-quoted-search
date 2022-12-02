@@ -103,7 +103,9 @@ describe("[Unit Test] Functions", function () {
         // --- actions ---
         this.qqs.Functions.addDOMContentLoadedEventListener(window, spyListener);
         // --- results ---
-        cy.wrap(spyListener).should("have.been.called");
+        cy.defer(function () {
+          expect(spyListener).to.be.calledOnce;
+        });
       });
     });
   });
@@ -118,7 +120,9 @@ describe("[Unit Test] Functions", function () {
         // --- actions ---
         this.qqs.Functions.addLoadCompletedEventListener(window, spyListener);
         // --- results ---
-        cy.wrap(spyListener).should("have.been.called");
+        cy.defer(function () {
+          expect(spyListener).to.be.calledOnce;
+        });
       });
     });
   });
