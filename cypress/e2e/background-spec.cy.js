@@ -679,6 +679,32 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
     });
   });
 
+  describe("onTabsActivate()", function () {
+    context("when any tab is activated", function () {
+      it("should do nothing (only wake up)", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        // --- conditions ---
+        // --- actions ---
+        cy.getCrxApiMock().its("chromeForCypress.tabs").invoke("_activateTab");
+        // --- results ---
+      });
+    });
+  });
+
+  describe("onTabsUpdated()", function () {
+    context("when any tab is updated", function () {
+      it("should do nothing (only wake up)", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        // --- conditions ---
+        // --- actions ---
+        cy.getCrxApiMock().its("chromeForCypress.tabs").invoke("_updateTab");
+        // --- results ---
+      });
+    });
+  });
+
   describe("onOptionsChanged()", function () {
     context("when the extension's options are changed", function () {
       it("should update context menus", function () {

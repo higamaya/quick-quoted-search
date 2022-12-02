@@ -1,6 +1,7 @@
 "use strict";
 
 import * as qqs from "./modules/common.js";
+import { PortToBackground } from "./modules/port_to_background.js";
 import { PopupIcon } from "./modules/popup_icon.js";
 
 (async function main() {
@@ -59,10 +60,15 @@ import { PopupIcon } from "./modules/popup_icon.js";
     },
   };
 
-  const popupIcon = new PopupIcon(window, onClickPopupIconSearch, onClickPopupIconQuote, onClickPopupIconOptions);
+  const portToBackground = new PortToBackground({
+    name: (window === window.parent ? "" : "(in frame) ") + document.URL,
+    autoConnect: true,
+    onConnect: onPortToBackgroundConnect,
+    onDisconnect: onPortToBackgroundDisconnect,
+    onMessage: onPortToBackgroundMessage,
+  });
 
-  let portToBackground;
-  let disconnectedByTheOtherEnd = false;
+  const popupIcon = new PopupIcon(window, onClickPopupIconSearch, onClickPopupIconQuote, onClickPopupIconOptions);
 
   let editableNodeWithSelection;
 
@@ -70,9 +76,9 @@ import { PopupIcon } from "./modules/popup_icon.js";
   // Startup Operations
   //////////////////////////////////////////////////////////////////////////////
 
-  chrome.runtime.onConnect.addListener(onConnect);
+  portToBackground.connect();
 
-  connectToBackground();
+  chrome.runtime.onConnect.addListener(onConnect);
 
   window.addEventListener("focus", onWindowFocus);
   window.addEventListener("blur", onWindowBlur);
@@ -85,27 +91,32 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Message Listeners (Content scripts <-- Background service worker)
+  // Event Listeners (Background service worker)
   //////////////////////////////////////////////////////////////////////////////
+
+  function onPortToBackgroundConnect() {
+    portToBackground.postMessage({ type: qqs.MessageType.HELLO });
+
+    popupIcon.enable();
+  }
+
+  function onPortToBackgroundDisconnect() {
+    popupIcon.disable();
+  }
+
+  function onPortToBackgroundMessage(message) {
+    MESSAGE_HANDLERS[message.type](message, portToBackground.port);
+  }
 
   function onConnect(port) {
     qqs.logger.callback("onConnect()", { port });
+
     port.onMessage.addListener(onMessage);
-  }
-
-  function onDisconnect(port) {
-    qqs.logger.callback("onDisconnect()", { port });
-    if (port === portToBackground) {
-      portToBackground = undefined;
-      disconnectedByTheOtherEnd = true;
-      qqs.logger.state("Port to background service worker has been closed by the other end");
-
-      popupIcon.disable();
-    }
   }
 
   function onMessage(message, port) {
     qqs.logger.callback("onMessage()", { message, port });
+
     MESSAGE_HANDLERS[message.type](message, port);
   }
 
@@ -130,7 +141,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
 
   function onWindowFocus(_e) {
     // Reconnect to refresh port
-    connectToBackground();
+    portToBackground.reconnect();
 
     notifySelectionUpdated("window.focus");
   }
@@ -210,10 +221,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
   //////////////////////////////////////////////////////////////////////////////
 
   function onClickPopupIconSearch(e) {
-    if (!portToBackground) {
-      return;
-    }
-    qqs.postMessage(portToBackground, {
+    portToBackground.postMessage({
       type: qqs.MessageType.DO_QUOTED_SEARCH,
       keyState: new qqs.HowToOpenLink.KeyState(e.ctrlKey, e.shiftKey, e.metaKey),
       selectionText: qqs.filterSelectionText(qqs.getSelection(window).toString()),
@@ -231,10 +239,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   function onClickPopupIconOptions(e) {
-    if (!portToBackground) {
-      return;
-    }
-    qqs.postMessage(portToBackground, {
+    portToBackground.postMessage({
       type: qqs.MessageType.OPEN_OPTIONS_PAGE,
       keyState: new qqs.HowToOpenLink.KeyState(e.ctrlKey, e.shiftKey, e.metaKey),
       defaultHowToOpenLink: qqs.HowToOpenLink.NEW_TAB_ACTIVE,
@@ -244,27 +249,6 @@ import { PopupIcon } from "./modules/popup_icon.js";
   //////////////////////////////////////////////////////////////////////////////
   // Functions
   //////////////////////////////////////////////////////////////////////////////
-
-  function connectToBackground() {
-    if (disconnectedByTheOtherEnd) {
-      return;
-    }
-
-    if (portToBackground) {
-      qqs.logger.state("Reconnect to background service worker");
-      portToBackground.disconnect();
-    }
-    portToBackground = chrome.runtime.connect(undefined, {
-      name: (window === window.parent ? "" : "(in frame) ") + document.URL,
-    });
-    qqs.logger.state("Connected to background service worker", { portToBackground });
-
-    portToBackground.onDisconnect.addListener(onDisconnect);
-    portToBackground.onMessage.addListener(onMessage);
-    qqs.postMessage(portToBackground, { type: qqs.MessageType.HELLO });
-
-    popupIcon.enable();
-  }
 
   function updateEditableNodeWithSelection(editableNode, reason) {
     editableNodeWithSelection =
@@ -290,10 +274,6 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   function notifySelectionUpdated(reason) {
-    if (!portToBackground) {
-      return;
-    }
-
     const blur = reason.endsWith(".blur");
     if (contentId.isInitialized() && (blur || document.hasFocus())) {
       const message = {
@@ -306,7 +286,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
           blur: blur,
         },
       };
-      qqs.postMessage(portToBackground, message);
+      portToBackground.postMessage(message);
       qqs.logger.info(`Send '${message.type}' message to background service worker`, { message });
     }
   }
