@@ -1,6 +1,7 @@
 "use strict";
 
 import * as qqs from "./modules/common.js";
+import { PortToBackground } from "./modules/port_to_background.js";
 
 import { MDCRipple } from "@material/ripple";
 
@@ -23,8 +24,10 @@ import { MDCRipple } from "@material/ripple";
   // Variables
   //////////////////////////////////////////////////////////////////////////////
 
-  let parentTab;
-  let portToBackground;
+  const portToBackground = new PortToBackground({ name: document.URL, autoConnect: true, onMessage });
+
+  const parentTab = await qqs.getActiveTab();
+  qqs.logger.info("Get active tab as the parent one", { parentTab });
 
   let keyState;
 
@@ -32,31 +35,13 @@ import { MDCRipple } from "@material/ripple";
   // Startup Operations
   //////////////////////////////////////////////////////////////////////////////
 
-  parentTab = await qqs.getActiveTab();
-  qqs.logger.info("Get active tab as the parent one", { parentTab });
-
-  portToBackground = chrome.runtime.connect(undefined, { name: document.URL });
-  qqs.logger.state("Connected to background service worker", { portToBackground });
-
-  portToBackground.onDisconnect.addListener(onDisconnect);
-  portToBackground.onMessage.addListener(onMessage);
-
   qqs.addDOMContentLoadedEventListener(window, onDOMContentLoaded);
 
   //////////////////////////////////////////////////////////////////////////////
   // Event Listeners (Background service worker)
   //////////////////////////////////////////////////////////////////////////////
 
-  function onDisconnect(port) {
-    qqs.logger.callback("onDisconnect()", { port });
-    if (port === portToBackground) {
-      portToBackground = undefined;
-      qqs.logger.state("Port to background service worker has been closed by the other end");
-    }
-  }
-
   function onMessage(message, port) {
-    qqs.logger.callback("onMessage()", { message, port });
     MESSAGE_HANDLERS[message.type](message, port);
   }
 
@@ -76,9 +61,7 @@ import { MDCRipple } from "@material/ripple";
   //////////////////////////////////////////////////////////////////////////////
 
   async function onDOMContentLoaded() {
-    if (portToBackground) {
-      qqs.postMessage(portToBackground, { type: qqs.MessageType.GET_SELECTION, tab: parentTab });
-    }
+    portToBackground.postMessage({ type: qqs.MessageType.GET_SELECTION, tab: parentTab });
 
     qqs.injectI18NMessagesInHtml(document);
 
