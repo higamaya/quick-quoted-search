@@ -73,6 +73,10 @@ describe("[Unit Test] Options class", function () {
     await waitForSyncStorageChangedEvent.call(this, storage, () => storage.clear());
   }
 
+  function spy() {
+    return cy.spy();
+  }
+
   before(function () {
     cy.setupCrxApiMock(Cypress.qqs.CrxApiMockFactory.Types.UNIT_TEST).then(async function (crxApiMock) {
       window.chrome = Object.assign({}, window.chrome, crxApiMock.chromeForWin);
@@ -283,7 +287,7 @@ describe("[Unit Test] Options class", function () {
 
     describe("Synchronization", function () {
       context("when the options are changed by others", function () {
-        it("should update the option values with the values retrieved from the storage.", async function () {
+        it("should update the option values with the values retrieved from the storage", async function () {
           // --- preparation ---
           await clearOptionValues.call(this);
           const options = await newOptions.call(this);
@@ -301,7 +305,7 @@ describe("[Unit Test] Options class", function () {
       });
 
       context("when the options are changed by others, but timestamp is old", function () {
-        it("should NOT update the option values with the values retrieved from the storage.", async function () {
+        it("should NOT update the option values with the values retrieved from the storage", async function () {
           // --- preparation ---
           await setOptionValues.call(this, nonDefaultValues);
           const options = await newOptions.call(this);
@@ -353,6 +357,41 @@ describe("[Unit Test] Options class", function () {
             expect(options[name], name).to.equal(defaultValue);
           }
         });
+      });
+    });
+  });
+
+  describe("onChanged", function () {
+    context("when the options are changed by others", function () {
+      it("should callback listeners", async function () {
+        // --- preparation ---
+        await clearOptionValues.call(this);
+        const options = await newOptions.call(this);
+        // --- conditions ---
+        const spyOnChangedListener = spy();
+        options.onChanged.addListener(spyOnChangedListener);
+        // --- actions ---
+        await setOptionValues.call(this, nonDefaultValues);
+        // --- results ---
+        expect(spyOnChangedListener).to.be.calledOnce;
+      });
+    });
+
+    context("when changing any option value myself", function () {
+      it("should NOT callback listeners", async function () {
+        // --- preparation ---
+        await clearOptionValues.call(this);
+        const options = await newOptions.call(this);
+        // --- conditions ---
+        const spyOnChangedListener = spy();
+        options.onChanged.addListener(spyOnChangedListener);
+        // --- actions ---
+        const newOptionValue = false;
+        expect(options.popupIcon).to.not.equal(newOptionValue);
+        options.popupIcon = newOptionValue;
+        // --- results ---
+        expect(options.popupIcon).to.equal(newOptionValue);
+        expect(spyOnChangedListener).to.be.not.called;
       });
     });
   });
