@@ -111,7 +111,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
   describe("Notify selection updated", function () {
     context("when the current selection of the document is changed", function () {
-      it("should send `Notify Selection Updated` message (Note: A series of scenarios are included in this test case. See the comments in the source code of this test case.", function () {
+      it("should send `Notify Selection Updated` message (Note: A series of scenarios are included in this test case. See the comments in the source code of this test case)", function () {
         // *** Case: Immediately after startup
         // --- preparation ---
         // --- conditions ---

@@ -80,7 +80,7 @@ class AbstractCrxApiHub extends AbstractCrxApi {
   }
 
   _detach() {
-    throw new Error("AbstractCrxApiHub is non-detachable.");
+    throw new Error("AbstractCrxApiHub is non-detachable");
   }
 }
 
@@ -314,7 +314,7 @@ class Runtime extends AbstractCrxApiMock {
     postMessage(message) {
       assert.isObject(message);
       if (this.__disconnected) {
-        throw new Error("Already disconnected.");
+        throw new Error("Already disconnected");
       }
       for (const otherEnd of this.__otherEnds) {
         otherEnd._onMessage(message);

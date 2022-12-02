@@ -34,7 +34,7 @@ export class PortToBackground {
       // The extension might have been refreshed, in which case it will never be
       // able to connect to Background service worker from this context again.
       qqs.logger.info(
-        "⚠ The extension might have been refreshed, in which case it is impossible to connect to Background service worker.",
+        "⚠ The extension might have been refreshed, in which case it is impossible to connect to Background service worker",
         { error }
       );
       return;
