@@ -44,7 +44,7 @@ import { MDCRipple } from "@material/ripple";
   qqs.addDOMContentLoadedEventListener(window, onDOMContentLoaded);
 
   //////////////////////////////////////////////////////////////////////////////
-  // Message Listeners (Action scripts <-- Background service worker)
+  // Event Listeners (Background service worker)
   //////////////////////////////////////////////////////////////////////////////
 
   function onDisconnect(port) {

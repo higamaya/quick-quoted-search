@@ -38,7 +38,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
   }
 
   function visitAndSetup(options, skipIfSameParameters = false) {
-    options = { isMac: false, initialOptions: undefined, ...options };
+    options = { isMac: false, initialOptions: undefined, clickIFrame: true, ...options };
 
     return cy
       .visitAndSetup(
@@ -46,6 +46,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         {
           isMac: options.isMac,
           initialOptions: options.initialOptions,
+          clickIFrame: options.clickIFrame,
 
           onCrxApiMockReady(_crxApiMock) {
             this.qqs.portToContent = undefined;
@@ -96,10 +97,10 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- preparation ---
         // --- conditions ---
         // --- actions ---
-        visitAndSetup.call(this);
+        visitAndSetup.call(this, { clickIFrame: false });
         // --- results ---
         cy.get("@spy_OnMessage_hello")
-          .should("have.been.called")
+          .should("have.been.calledOnce")
           .and(function (spy) {
             const args = spy.firstCall.args;
             expect(args[0].type).to.equal("hello");
@@ -304,6 +305,32 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             expect(args[0].selection.editable).to.be.true;
             expect(args[0].selection.searchable).to.be.false;
             expect(args[0].selection.blur).to.be.false;
+          });
+      });
+    });
+
+    context("when disconnected from Background service worker", function () {
+      it("should connect again, and then send `Notify Selection Updated` message", function () {
+        // --- preparation ---
+        visitAndSetup.call(this, { clickIFrame: false });
+        cy.get("@spy_OnMessage_hello").should("have.been.calledOnce");
+        cy.get("@spy_OnMessage_notify_selection_updated").should("have.been.calledOnce");
+        // --- conditions ---
+        cy.get("@portToContent").invoke("disconnect");
+        cy.defer();
+        // --- actions ---
+        cy.get("#input_text").setValue("foo").selectText();
+        // --- results ---
+        cy.get("@spy_OnMessage_hello").should("have.been.calledTwice");
+        cy.get("@spy_OnMessage_notify_selection_updated")
+          .should(function (spy) {
+            expect(spy.callCount).to.be.at.least(5);
+          })
+          .and(function (spy) {
+            const args = spy.lastCall.args;
+            expect(args[0].type).to.equal("notify_selection_updated");
+            // expect(args[0].reason).to.equal("document.selectionchange"); // flaky
+            expect(args[0].selection.text).to.equal("foo");
           });
       });
     });

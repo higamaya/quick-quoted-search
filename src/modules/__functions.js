@@ -75,6 +75,17 @@ export function cloneDto(obj) {
 }
 
 /**
+ * Merges `rhs` to `lhs`, ignoring properties with a value of `undefined`.
+ *
+ * @param {?object} target
+ * @param {?object} source
+ * @returns {!object}
+ */
+export function mergeObject(target, source) {
+  return { ...target, ...Object.fromEntries(Object.entries(source ?? {}).filter(([, v]) => v !== undefined)) };
+}
+
+/**
  * Sets up an event listener for `DOMContentLoaded` event.
  *
  * This function checks `Document.readyState` and sets up the event listener as

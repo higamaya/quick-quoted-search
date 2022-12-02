@@ -79,13 +79,83 @@ import * as qqs from "./modules/common.js";
   //////////////////////////////////////////////////////////////////////////////
 
   chrome.runtime.onConnect.addListener(onConnect);
+
+  chrome.tabs.onActivated.addListener(onTabsActivate);
+  chrome.tabs.onUpdated.addListener(onTabsUpdated);
+
   chrome.contextMenus.onClicked.addListener(onContextMenuClicked);
   chrome.commands.onCommand.addListener(onCommand);
 
   qqs.options.onChanged.addListener(onOptionsChanged);
 
   //////////////////////////////////////////////////////////////////////////////
-  // Event Listeners (Platform)
+  // Event Listeners (Content scripts, Action scripts)
+  //////////////////////////////////////////////////////////////////////////////
+
+  async function onConnect(port) {
+    qqs.logger.callback("onConnect()", { port });
+    port.onMessage.addListener(onMessage);
+    await updateCommandShortcuts();
+  }
+
+  function onMessage(message, port) {
+    qqs.logger.callback("onMessage()", { message, port });
+    MESSAGE_HANDLERS[message.type](message, port);
+  }
+
+  async function onHello(_message, port) {
+    qqs.postMessage(port, {
+      type: qqs.MessageType.WELCOME,
+      identity: qqs.cloneDto(port.sender),
+    });
+  }
+
+  function onNotifySelectionUpdated(message, port) {
+    if (message.selection.blur) {
+      if (!isOwnerOfCurrentSelection(port.sender.tab.id, port.sender.frameId)) {
+        qqs.logger.info(
+          "Ignore message from blurred content because selection state has already been updated by newly focused content"
+        );
+        return;
+      }
+    }
+
+    updateCurrentSelection(message.selection, port.sender);
+    updateContextMenu(currentSelection);
+  }
+
+  async function onDoQuotedSearch(message, port) {
+    await doQuotedSearchForSelectionText(port.sender.tab, message.selectionText, message.keyState);
+  }
+
+  async function onOpenOptionsPage(message, port) {
+    await qqs.openOptionsPage(port.sender.tab, message.keyState, message.defaultHowToOpenLink);
+  }
+
+  function onGetSelection(message, port) {
+    qqs.postMessage(port, {
+      type: qqs.MessageType.NOTIFY_SELECTION,
+      selection: isOwnerOfCurrentSelection(message.tab.id) ? qqs.cloneDto(currentSelection) : undefined,
+    });
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Event Listeners (Tabs)
+  //////////////////////////////////////////////////////////////////////////////
+
+  // Listen for `chrome.tabs` events to ensure Background service worker to be
+  // loaded before Content scripts connect to it.
+
+  function onTabsActivate(activeInfo) {
+    qqs.logger.callback("onTabsActivate()", { activeInfo });
+  }
+
+  function onTabsUpdated(tabId, changeInfo, tab) {
+    qqs.logger.callback("onTabsUpdated()", { tabId, changeInfo, tab });
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Event Listeners (Context menus, Keyboard shortcuts)
   //////////////////////////////////////////////////////////////////////////////
 
   function onContextMenuClicked(info, tab) {
@@ -141,57 +211,6 @@ import * as qqs from "./modules/common.js";
     }
 
     commands[command].onShortcutPressed(tab);
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Message Listeners (Content/Action scripts)
-  //////////////////////////////////////////////////////////////////////////////
-
-  async function onConnect(port) {
-    qqs.logger.callback("onConnect()", { port });
-    port.onMessage.addListener(onMessage);
-    await updateCommandShortcuts();
-  }
-
-  function onMessage(message, port) {
-    qqs.logger.callback("onMessage()", { message, port });
-    MESSAGE_HANDLERS[message.type](message, port);
-  }
-
-  async function onHello(_message, port) {
-    qqs.postMessage(port, {
-      type: qqs.MessageType.WELCOME,
-      identity: qqs.cloneDto(port.sender),
-    });
-  }
-
-  function onNotifySelectionUpdated(message, port) {
-    if (message.selection.blur) {
-      if (!isOwnerOfCurrentSelection(port.sender.tab.id, port.sender.frameId)) {
-        qqs.logger.info(
-          "Ignore message from blurred content because selection state has already been updated by newly focused content"
-        );
-        return;
-      }
-    }
-
-    updateCurrentSelection(message.selection, port.sender);
-    updateContextMenu(currentSelection);
-  }
-
-  async function onDoQuotedSearch(message, port) {
-    await doQuotedSearchForSelectionText(port.sender.tab, message.selectionText, message.keyState);
-  }
-
-  async function onOpenOptionsPage(message, port) {
-    await qqs.openOptionsPage(port.sender.tab, message.keyState, message.defaultHowToOpenLink);
-  }
-
-  function onGetSelection(message, port) {
-    qqs.postMessage(port, {
-      type: qqs.MessageType.NOTIFY_SELECTION,
-      selection: isOwnerOfCurrentSelection(message.tab.id) ? qqs.cloneDto(currentSelection) : undefined,
-    });
   }
 
   //////////////////////////////////////////////////////////////////////////////

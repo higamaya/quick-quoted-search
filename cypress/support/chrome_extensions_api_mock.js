@@ -119,11 +119,11 @@ class CommandsHub extends AbstractCrxApiHub {
   }
 
   _setCommands(commands) {
-    this._commands = mergeObject(this._commands, commands);
+    this._commands = structuredClone(commands);
   }
 
   _invoke(command, tab) {
-    setTimeout(() => this._onCommand?._fire(command, tab));
+    setTimeout(() => this._onCommand?._fire(structuredClone(command), structuredClone(tab)));
   }
 
   async _restoreDefaults() {
@@ -182,7 +182,7 @@ class ContextMenusHub extends AbstractCrxApiHub {
   }
 
   _click(info, tab) {
-    setTimeout(() => this._onClicked?._fire(info, tab));
+    setTimeout(() => this._onClicked?._fire(structuredClone(info), structuredClone(tab)));
   }
 
   async _restoreDefaults() {
@@ -202,12 +202,18 @@ class ContextMenus extends AbstractCrxApiMock {
   }
 
   create(_createProperties) {
+    assert.notEqual(this._root._type, Chrome.Types.CONTENT);
+
     return _createProperties?.id ?? 0;
   }
 
-  update(_id, _updateProperties) {}
+  update(_id, _updateProperties) {
+    assert.notEqual(this._root._type, Chrome.Types.CONTENT);
+  }
 
-  remove(_menuItemId) {}
+  remove(_menuItemId) {
+    assert.notEqual(this._root._type, Chrome.Types.CONTENT);
+  }
 
   _click(info, tab) {
     this._hub._click({ frameId: this._root._sender.frameId, ...info }, { ...this._root._sender.tab, ...tab });
@@ -333,7 +339,7 @@ class Runtime extends AbstractCrxApiMock {
     _onMessage(message) {
       assert.isNotOk(this.__disconnected);
       setTimeout(() => {
-        this.onMessage?._fire(message, this);
+        this.onMessage?._fire(structuredClone(message), this);
       });
     }
 
@@ -420,6 +426,8 @@ class Scripting extends AbstractCrxApiMock {
   }
 
   async executeScript(injection) {
+    assert.notEqual(this._root._type, Chrome.Types.CONTENT);
+
     if (typeof injection?.func === "function") {
       setTimeout(() => injection.func(...injection.args));
     }
@@ -583,6 +591,9 @@ class Storage extends AbstractCrxApiMock {
 }
 
 class TabsHub extends AbstractCrxApiHub {
+  _onActivated = new EventListenerRegistry();
+  _onUpdated = new EventListenerRegistry();
+
   __nextId = 10;
   _tabs = {};
   _currentTab = this._createTab();
@@ -595,6 +606,14 @@ class TabsHub extends AbstractCrxApiHub {
     const id = this.__nextId++;
     this._tabs[id] = new Tabs.Tab({ windowId: this._root.windows?._currentWindow?.id, ...options, id });
     return this._tabs[id];
+  }
+
+  _activateTab(activeInfo) {
+    setTimeout(() => this._onActivated?._fire(structuredClone(activeInfo)));
+  }
+
+  _updateTab(tabId, changeInfo, tab) {
+    setTimeout(() => this._onUpdated?._fire(tabId, structuredClone(changeInfo), structuredClone(tab)));
   }
 
   async _restoreDefaults() {
@@ -616,8 +635,22 @@ class Tabs extends AbstractCrxApiMock {
     }
   };
 
+  onActivated = new EventListenerRegistry();
+  onUpdated = new EventListenerRegistry();
+
+  __onActivatedListenerId;
+  __onUpdatedListenerId;
+
   constructor(parent, hub) {
     super(parent, hub);
+
+    this.__onActivatedListenerId = this._hub._onActivated.addListener((activeInfo) =>
+      this.onActivated._fire(activeInfo)
+    );
+
+    this.__onUpdatedListenerId = this._hub._onUpdated.addListener((tabId, changeInfo, tab) =>
+      this.onUpdated._fire(tabId, changeInfo, tab)
+    );
   }
 
   connect(tabId, connectInfo) {
@@ -687,7 +720,25 @@ class Tabs extends AbstractCrxApiMock {
     });
   }
 
+  _activateTab(activeInfo) {
+    this._hub._activateTab({
+      tabId: this._hub._currentTab.id,
+      windowId: this._hub._currentTab.windowId,
+      ...activeInfo,
+    });
+  }
+
+  _updateTab(tabId, changeInfo, tab) {
+    this._hub._updateTab(tabId ?? this._hub._currentTab.id, { ...changeInfo }, tab ?? this._hub._currentTab);
+  }
+
   _detach() {
+    this._hub._onActivated._removeListener(this.__onActivatedListenerId);
+    this.onActivated._reset();
+
+    this._hub._onUpdated._removeListener(this.__onUpdatedListenerId);
+    this.onUpdated._reset();
+
     super._detach();
   }
 }

@@ -16,6 +16,83 @@ describe("[Unit Test] Functions", function () {
     });
   });
 
+  describe("mergeObject()", function () {
+    context("when `source` contains a property with a value of `undefined`", function () {
+      it("should ignore the property having `undefined`", function () {
+        // --- preparation ---
+        // --- conditions ---
+        const target = { a: "foo", b: 2, c: true };
+        const source = { a: "bar", b: undefined, c: 3 };
+        // --- actions ---
+        const result = this.qqs.Functions.mergeObject(target, source);
+        // --- results ---
+        expect(target).to.deep.equal({ a: "foo", b: 2, c: true });
+        expect(source).to.deep.equal({ a: "bar", b: undefined, c: 3 });
+        expect(result).to.deep.equal({ a: "bar", b: 2, c: 3 });
+      });
+    });
+
+    context("when `source` is an empty object", function () {
+      it("should merge nothing", function () {
+        // --- preparation ---
+        // --- conditions ---
+        const target = { a: "foo", b: 2, c: true };
+        const source = {};
+        // --- actions ---
+        const result = this.qqs.Functions.mergeObject(target, source);
+        // --- results ---
+        expect(target).to.deep.equal({ a: "foo", b: 2, c: true });
+        expect(source).to.deep.equal({});
+        expect(result).to.deep.equal({ a: "foo", b: 2, c: true });
+      });
+    });
+
+    context("when `source` is `undefined`", function () {
+      it("should merge nothing", function () {
+        // --- preparation ---
+        // --- conditions ---
+        const target = { a: "foo", b: 2, c: true };
+        const source = undefined;
+        // --- actions ---
+        const result = this.qqs.Functions.mergeObject(target, source);
+        // --- results ---
+        expect(target).to.deep.equal({ a: "foo", b: 2, c: true });
+        expect(source).to.deep.equal(undefined);
+        expect(result).to.deep.equal({ a: "foo", b: 2, c: true });
+      });
+    });
+
+    context("when `target` is an empty object", function () {
+      it("should merge as usual", function () {
+        // --- preparation ---
+        // --- conditions ---
+        const target = {};
+        const source = { a: "bar", b: undefined, c: 3 };
+        // --- actions ---
+        const result = this.qqs.Functions.mergeObject(target, source);
+        // --- results ---
+        expect(target).to.deep.equal({});
+        expect(source).to.deep.equal({ a: "bar", b: undefined, c: 3 });
+        expect(result).to.deep.equal({ a: "bar", c: 3 });
+      });
+    });
+
+    context("when `target` is `undefined`", function () {
+      it("should merge like `target` is empty object", function () {
+        // --- preparation ---
+        // --- conditions ---
+        const target = undefined;
+        const source = { a: "bar", b: undefined, c: 3 };
+        // --- actions ---
+        const result = this.qqs.Functions.mergeObject(target, source);
+        // --- results ---
+        expect(target).to.deep.equal(undefined);
+        expect(source).to.deep.equal({ a: "bar", b: undefined, c: 3 });
+        expect(result).to.deep.equal({ a: "bar", c: 3 });
+      });
+    });
+  });
+
   describe("addDOMContentLoadedEventListener()", function () {
     context("when `DOMContentLoaded` event has already been fired", function () {
       it("should callback the event listener", function () {
