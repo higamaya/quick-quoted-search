@@ -39,8 +39,8 @@ jobs:
           path: cypress/videos
       - name: Save code coverage to repo
         run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email ""
+          git config --local user.name "${{ github.event.pusher.name }}"
+          git config --local user.email "${{ github.event.pusher.email }}"
           git add coverage-main
           git commit -m "chore: update code coverage"
           git push
