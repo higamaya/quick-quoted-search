@@ -1,6 +1,6 @@
 describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function () {
   const spiesOnMessage = {
-    get_selection: { spy: undefined, alias: "spy_OnMessage_get_selection" },
+    get_selection: { spy: undefined, alias: "spy_onMessage_get_selection" },
   };
 
   function setSpiesOnMessage() {
@@ -184,7 +184,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         // --- actions ---
         visitAndSetup.call(this);
         // --- results ---
-        cy.get("@spy_OnMessage_get_selection")
+        cy.get("@spy_onMessage_get_selection")
           .should("have.been.calledOnce")
           .and(function (spy) {
             const crxApiMock = this.qqs.crxApiMock;
@@ -199,7 +199,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       it("should be able to do Quoted Search", function () {
         // --- preparation ---
         visitAndSetup.call(this);
-        cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+        cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
         // --- conditions ---
         cy.get("@portToAction").invoke("disconnect");
         // --- actions ---
@@ -217,7 +217,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         it("should display the selected text in the search bar and select it", function () {
           // --- preparation ---
           visitAndSetup.call(this);
-          cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+          cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
           // --- conditions ---
           const inputValue = "foo";
           // --- actions ---
@@ -232,7 +232,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         it("should normalize the selected text", function () {
           // --- preparation ---
           visitAndSetup.call(this);
-          cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+          cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
           // --- conditions ---
           const inputValue = ' " "foo" ""   ';
           // --- actions ---
@@ -247,7 +247,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         it("should NOT display the selected text (search bar remains empty)", function () {
           // --- preparation ---
           visitAndSetup.call(this);
-          cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+          cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
           // --- conditions ---
           const inputValue = ' " "" ""   ';
           // --- actions ---
@@ -262,7 +262,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
         it("should NOT display anything (search bar remains empty)", function () {
           // --- preparation ---
           visitAndSetup.call(this);
-          cy.get("@spy_OnMessage_get_selection").should("have.been.calledOnce");
+          cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
           // --- conditions ---
           const inputSelection = undefined;
           // --- actions ---

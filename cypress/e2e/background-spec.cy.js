@@ -1,8 +1,8 @@
 describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 }, function () {
   const spiesOnMessage = {
-    welcome: { spy: undefined, alias: "spy_OnMessage_welcome" },
-    notify_selection: { spy: undefined, alias: "spy_OnMessage_notify_selection" },
-    put_quotes: { spy: undefined, alias: "spy_OnMessage_put_quotes" },
+    welcome: { spy: undefined, alias: "spy_onMessage_welcome" },
+    notify_selection: { spy: undefined, alias: "spy_onMessage_notify_selection" },
+    put_quotes: { spy: undefined, alias: "spy_onMessage_put_quotes" },
   };
 
   function setSpiesOnMessage() {
@@ -307,7 +307,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
           // --- actions ---
           cy.connect({ listener: onMessage }).postMessage({ type: "hello" });
           // --- results ---
-          cy.get("@spy_OnMessage_welcome")
+          cy.get("@spy_onMessage_welcome")
             .should("have.been.calledOnce")
             .and(function (spy) {
               const chromeForCypress = this.qqs.crxApiMock.chromeForCypress;
@@ -638,7 +638,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
             });
           });
           // --- results ---
-          cy.get("@spy_OnMessage_notify_selection")
+          cy.get("@spy_onMessage_notify_selection")
             .should("have.been.calledOnce")
             .and(function (spy) {
               const chromeForCypress = this.qqs.crxApiMock.chromeForCypress;
@@ -666,7 +666,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
               });
             });
             // --- results ---
-            cy.get("@spy_OnMessage_notify_selection")
+            cy.get("@spy_onMessage_notify_selection")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -746,7 +746,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         // --- actions ---
         cy.getCrxApiMock().its("chromeForCypress.contextMenus").invoke("_click", { menuItemId });
         // --- results ---
-        cy.get("@spy_OnMessage_put_quotes").should("have.been.calledOnce");
+        cy.get("@spy_onMessage_put_quotes").should("have.been.calledOnce");
       });
     });
 
@@ -831,7 +831,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         // --- actions ---
         cy.getCrxApiMock().its("chromeForCypress.commands").invoke("_invoke", command);
         // --- results ---
-        cy.get("@spy_OnMessage_put_quotes").should("have.been.calledOnce");
+        cy.get("@spy_onMessage_put_quotes").should("have.been.calledOnce");
       });
     });
 

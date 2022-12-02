@@ -1,9 +1,9 @@
 describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, function () {
   const spiesOnMessage = {
-    hello: { spy: undefined, alias: "spy_OnMessage_hello" },
-    notify_selection_updated: { spy: undefined, alias: "spy_OnMessage_notify_selection_updated" },
-    do_quoted_search: { spy: undefined, alias: "spy_OnMessage_do_quoted_search" },
-    open_options_page: { spy: undefined, alias: "spy_OnMessage_open_options_page" },
+    hello: { spy: undefined, alias: "spy_onMessage_hello" },
+    notify_selection_updated: { spy: undefined, alias: "spy_onMessage_notify_selection_updated" },
+    do_quoted_search: { spy: undefined, alias: "spy_onMessage_do_quoted_search" },
+    open_options_page: { spy: undefined, alias: "spy_onMessage_open_options_page" },
   };
 
   function setSpiesOnMessage() {
@@ -99,7 +99,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- actions ---
         visitAndSetup.call(this, { clickIFrame: false });
         // --- results ---
-        cy.get("@spy_OnMessage_hello")
+        cy.get("@spy_onMessage_hello")
           .should("have.been.calledOnce")
           .and(function (spy) {
             const args = spy.firstCall.args;
@@ -118,7 +118,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- actions ---
         visitAndSetup.call(this);
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.been.called") // at least 1
           .and(function (spy) {
             const args = spy.firstCall.args;
@@ -135,12 +135,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
         // *** Case: Focus on the input field
         // --- preparation ---
-        cy.get("@spy_OnMessage_notify_selection_updated").invoke("resetHistory");
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
         cy.get("#input_text").focus().should("match", ":focus");
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 2)
           .and(function (spy) {
             const expectedArgs = [
@@ -161,7 +161,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
         // *** Case: Type text and select
         // --- preparation ---
-        cy.get("@spy_OnMessage_notify_selection_updated").invoke("resetHistory");
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
         cy.get("#input_text").type("foo").selectText();
@@ -169,7 +169,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // Flaky: The order in which DOM events occur is indeterminate.
         // So check only last message.
         /*
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 5)
           .and(function (spy) {
           const expectedArgs = [
@@ -191,7 +191,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           });
         });
         */
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 5)
           .and(function (spy) {
             const args = spy.lastCall.args;
@@ -207,12 +207,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
         // *** Case: Focus on the other element (non-editable)
         // --- preparation ---
-        cy.get("@spy_OnMessage_notify_selection_updated").invoke("resetHistory");
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
         cy.get("#input_email").focus().should("match", ":focus");
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 2)
           .and(function (spy) {
             const expectedArgs = [
@@ -233,12 +233,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
         // *** Case: Type text and select
         // --- preparation ---
-        cy.get("@spy_OnMessage_notify_selection_updated").invoke("resetHistory");
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
         cy.get("#input_email").type("bar").dblclick().should("be.selected");
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 4)
           .and(function (spy) {
             const expectedArgs = [
@@ -261,12 +261,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
         // *** Case: Blur the window.
         // --- preparation ---
-        cy.get("@spy_OnMessage_notify_selection_updated").invoke("resetHistory");
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
         cy.window().blur();
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should("have.callCount", 1)
           .and(function (spy) {
             const expectedArgs = [{ reason: "window.blur", text: "bar", editable: false, blur: true }];
@@ -293,7 +293,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- actions ---
         cy.get("#input_text").setValue(inputValue).selectText();
         // --- results ---
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should(function (spy) {
             expect(spy.callCount).to.be.at.least(4);
           })
@@ -313,16 +313,16 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
       it("should connect again, and then send `Notify Selection Updated` message", function () {
         // --- preparation ---
         visitAndSetup.call(this, { clickIFrame: false });
-        cy.get("@spy_OnMessage_hello").should("have.been.calledOnce");
-        cy.get("@spy_OnMessage_notify_selection_updated").should("have.been.calledOnce");
+        cy.get("@spy_onMessage_hello").should("have.been.calledOnce");
+        cy.get("@spy_onMessage_notify_selection_updated").should("have.been.calledOnce");
         // --- conditions ---
         cy.get("@portToContent").invoke("disconnect");
         cy.defer();
         // --- actions ---
         cy.get("#input_text").setValue("foo").selectText();
         // --- results ---
-        cy.get("@spy_OnMessage_hello").should("have.been.calledTwice");
-        cy.get("@spy_OnMessage_notify_selection_updated")
+        cy.get("@spy_onMessage_hello").should("have.been.calledTwice");
+        cy.get("@spy_onMessage_notify_selection_updated")
           .should(function (spy) {
             expect(spy.callCount).to.be.at.least(5);
           })
@@ -448,7 +448,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -470,7 +470,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -492,7 +492,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -514,7 +514,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -538,7 +538,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -560,7 +560,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -582,7 +582,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -604,7 +604,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_do_quoted_search")
+            cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -740,7 +740,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
               .find(".qqs-options-button")
               .click();
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -762,7 +762,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
               .find(".qqs-options-button")
               .click();
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -783,7 +783,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -806,7 +806,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -829,7 +829,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -852,7 +852,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -877,7 +877,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -900,7 +900,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -923,7 +923,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
@@ -946,7 +946,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
             // --- results ---
-            cy.get("@spy_OnMessage_open_options_page")
+            cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
               .and(function (spy) {
                 const args = spy.firstCall.args;
