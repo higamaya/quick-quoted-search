@@ -125,11 +125,8 @@
   "msg_options_description_content_auto_surround": {
     "message": "Automatically surround the selected text in an input field with quotes when typing double quotation mark ($1)."
   },
-  "msg_options_description_content_select_search_engine_1": {
-    "message": "Quick Quoted Search uses the default search engine configured in your browser."
-  },
-  "msg_options_description_content_select_search_engine_2": {
-    "message": "You can specify your favorite search engine as the default."
+  "msg_options_description_content_select_search_engine": {
+    "message": "Quick Quoted Search uses the default search engine configured in your browser. You can specify your favorite search engine as the default."
   },
   "msg_options_description_content_customize_keyboard_shortcuts": {
     "message": "You can customize keyboard shortcuts invoking functions of Quick Quoted Search."

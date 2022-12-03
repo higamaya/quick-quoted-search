@@ -157,10 +157,7 @@
 
         <!-- Select search engine -->
         <?php $description_func = function () { ?>
-          <p>
-            <i data-group="i18n" data-i18n-name="msg_options_description_content_select_search_engine_1" data-i18n-target="outerText"></i><br>
-            <i data-group="i18n" data-i18n-name="msg_options_description_content_select_search_engine_2" data-i18n-target="outerText"></i>
-          </p>
+          <p><i data-group="i18n" data-i18n-name="msg_options_description_content_select_search_engine" data-i18n-target="outerText"></i></p>
         <?php } ?>
         <?php printLinkToBrowserSettings("qqs-search-engine-settings-link", "msg_options_label_select_search_engine", "chrome://settings/search", $description_func); ?>
 

@@ -125,11 +125,8 @@
   "msg_options_description_content_auto_surround": {
     "message": "$1 キーを入力したとき、入力欄のテキストを選択中の場合は引用符で囲みます。"
   },
-  "msg_options_description_content_select_search_engine_1": {
-    "message": "Quick Quoted Search はブラウザに設定されている既定の検索エンジンを使用します。"
-  },
-  "msg_options_description_content_select_search_engine_2": {
-    "message": "自分が使いたい検索エンジンをブラウザの既定の検索エンジンとして指定できます。"
+  "msg_options_description_content_select_search_engine": {
+    "message": "Quick Quoted Search はブラウザに設定されている既定の検索エンジンを使用します。自分が使いたい検索エンジンをブラウザの既定の検索エンジンとして指定できます。"
   },
   "msg_options_description_content_customize_keyboard_shortcuts": {
     "message": "Quick Quoted Search の機能を呼び出すキーボード ショートカットをカスタマイズできます。"
