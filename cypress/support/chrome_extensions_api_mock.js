@@ -375,8 +375,7 @@ class Runtime extends AbstractCrxApiMock {
 
     const thisEnd = this._hub._createPort(name);
 
-    for (const mock of this._hub._root._getAllMocksExceptContent()) {
-      if (mock === this._root) continue;
+    for (const mock of this._hub._root._getAllMocksExceptContent().filter((m) => m !== this._root)) {
       const otherEnd = this._hub._createPort(name, structuredClone(sender));
       thisEnd._addOtherEnd(otherEnd);
       otherEnd._addOtherEnd(thisEnd);
@@ -476,10 +475,7 @@ class StorageAreaHub extends AbstractCrxApiHub {
   async _set(items) {
     assert.isObject(items);
     const changes = {};
-    for (const [key, value] of Object.entries(items)) {
-      if (value === undefined) {
-        continue;
-      }
+    for (const [key, value] of Object.entries(items).filter(([, v]) => v !== undefined)) {
       changes[key] = { newValue: structuredClone(value) };
       if (this.__data[key] !== undefined) {
         changes[key].oldValue = this.__data[key];
