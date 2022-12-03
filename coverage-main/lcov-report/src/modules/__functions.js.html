@@ -442,8 +442,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16368x</span>
-<span class="cline-any cline-yes">16368x</span>
+<span class="cline-any cline-yes">16366x</span>
+<span class="cline-any cline-yes">16366x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -512,7 +512,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">464x</span>
+<span class="cline-any cline-yes">632x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -589,32 +589,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16672x</span>
-<span class="cline-any cline-yes">16668x</span>
-<span class="cline-any cline-yes">16668x</span>
-<span class="cline-any cline-yes">16668x</span>
-<span class="cline-any cline-yes">16668x</span>
-<span class="cline-any cline-yes">16461x</span>
+<span class="cline-any cline-yes">16670x</span>
+<span class="cline-any cline-yes">16666x</span>
+<span class="cline-any cline-yes">16666x</span>
+<span class="cline-any cline-yes">16666x</span>
+<span class="cline-any cline-yes">16666x</span>
+<span class="cline-any cline-yes">16459x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16461x</span>
+<span class="cline-any cline-yes">16459x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">98640x</span>
+<span class="cline-any cline-yes">98628x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16461x</span>
+<span class="cline-any cline-yes">16459x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16672x</span>
+<span class="cline-any cline-yes">16670x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16672x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16670x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -633,8 +630,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8782x</span>
-<span class="cline-any cline-yes">8782x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8781x</span>
+<span class="cline-any cline-yes">8781x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1002,7 +1002,7 @@ export function postMessage(port, message) {
     port.postMessage(message);
   } catch (error) {
     logger.warn(
-      "It seems that the message could not be sent because the other side of the port has already been closed.",
+      "It seems that the message could not be sent because the other side of the port has already been closed",
       { error, port, message }
     );
   }
@@ -1028,16 +1028,16 @@ export async function getActiveTab() {
  * service worker, action scripts or options script.
  *
  * @param {!chrome.tabs.Tab} tab Current tab calling this function.
- * @param {?{url:?string=, active:?boolean=}=} options
+ * @param {?{url:?string=, active:?boolean=}=} params
  * @returns {!Promise&lt;void&gt;}
  */
-export async function createNewTab(tab, options) {
+export async function createNewTab(tab, params) {
   return await chrome.tabs.create({
     windowId: tab.windowId,
     openerTabId: tab.id,
     index: tab.index + 1,
-    url: options?.url,
-    active: options?.active ?? <span class="branch-1 cbranch-no" title="branch not covered" >true,</span>
+    url: params?.url,
+    active: params?.active ?? <span class="branch-1 cbranch-no" title="branch not covered" >true,</span>
   });
 }
 &nbsp;
@@ -1047,14 +1047,14 @@ export async function createNewTab(tab, options) {
  * **Note:** Not available in content scripts, available only in background
  * service worker, action scripts or options script.
  *
- * @param {?{url:?string=}=} options
+ * @param {?{url:?string=}=} params
  * @returns {!Promise&lt;void&gt;}
  */
-export async function createNewWindow(options) {
+export async function createNewWindow(params) {
   const currentWindow = await chrome.windows.getCurrent();
   return await chrome.windows.create({
     state: currentWindow.state,
-    url: options?.url,
+    url: params?.url,
   });
 }
 &nbsp;
@@ -1165,7 +1165,7 @@ export async function openShortcutsSettings(tab, keyState, defaultHowToOpenLink)
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-02T09:05:26.448Z
+                at 2022-12-03T02:23:25.132Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
