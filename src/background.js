@@ -170,7 +170,7 @@ import * as qqs from "./modules/common.js";
       return;
     }
 
-    qqs.logger.assert(!commands[info.menuItemId].contextMenu.registered, "Unregistered context menu was invoked", {
+    qqs.logger.assert(commands[info.menuItemId].contextMenu.registered, "Unregistered context menu was invoked", {
       ["info.menuItemId"]: info.menuItemId,
       info,
       tab,
