@@ -2,6 +2,7 @@
 
 import * as qqs from "./modules/common.js";
 import { PortToBackground } from "./modules/port_to_background.js";
+import { ModifierKeys } from "./modules/modifier_keys.js";
 
 import { MDCRipple } from "@material/ripple";
 
@@ -29,7 +30,7 @@ import { MDCRipple } from "@material/ripple";
   const parentTab = await qqs.getActiveTab();
   qqs.logger.info("Get active tab as the parent one", { parentTab });
 
-  let keyState;
+  const modifierKeys = new ModifierKeys(window);
 
   //////////////////////////////////////////////////////////////////////////////
   // Startup Operations
@@ -67,10 +68,6 @@ import { MDCRipple } from "@material/ripple";
 
     await fillShortcutsTable();
 
-    document.documentElement.addEventListener("keydown", onKeystroke);
-    document.documentElement.addEventListener("keyup", onKeystroke);
-    document.documentElement.addEventListener("click", onKeystroke);
-
     document.getElementById("qqs-search-form").addEventListener("submit", onSearchFormSubmit);
 
     document.getElementById("qqs-shortcuts-settings-link").addEventListener("click", onShortcutsSettingsLinkClick);
@@ -79,10 +76,6 @@ import { MDCRipple } from "@material/ripple";
     optionsPageButton.addEventListener("click", onOptionsPageButtonClick);
     const optionsPageButtonRipple = new MDCRipple(optionsPageButton);
     optionsPageButtonRipple.unbounded = true;
-  }
-
-  async function onKeystroke(e) {
-    keyState = new qqs.HowToOpenLink.KeyState(e.ctrlKey, e.shiftKey, e.metaKey);
   }
 
   async function onSearchFormSubmit(e) {
@@ -94,7 +87,7 @@ import { MDCRipple } from "@material/ripple";
       if (qqs.options.autoCopy) {
         window.navigator.clipboard.writeText(normalizedSelectionText);
       }
-      await qqs.doQuotedSearch(parentTab, normalizedSelectionText, keyState);
+      await qqs.doQuotedSearch(parentTab, normalizedSelectionText, modifierKeys.keyState);
     }
   }
 
