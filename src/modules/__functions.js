@@ -233,16 +233,16 @@ export async function getActiveTab() {
  * service worker, action scripts or options script.
  *
  * @param {!chrome.tabs.Tab} tab Current tab calling this function.
- * @param {?{url:?string=, active:?boolean=}=} options
+ * @param {?{url:?string=, active:?boolean=}=} params
  * @returns {!Promise<void>}
  */
-export async function createNewTab(tab, options) {
+export async function createNewTab(tab, params) {
   return await chrome.tabs.create({
     windowId: tab.windowId,
     openerTabId: tab.id,
     index: tab.index + 1,
-    url: options?.url,
-    active: options?.active ?? true,
+    url: params?.url,
+    active: params?.active ?? true,
   });
 }
 
@@ -252,14 +252,14 @@ export async function createNewTab(tab, options) {
  * **Note:** Not available in content scripts, available only in background
  * service worker, action scripts or options script.
  *
- * @param {?{url:?string=}=} options
+ * @param {?{url:?string=}=} params
  * @returns {!Promise<void>}
  */
-export async function createNewWindow(options) {
+export async function createNewWindow(params) {
   const currentWindow = await chrome.windows.getCurrent();
   return await chrome.windows.create({
     state: currentWindow.state,
-    url: options?.url,
+    url: params?.url,
   });
 }
 
