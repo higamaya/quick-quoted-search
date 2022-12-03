@@ -254,6 +254,8 @@ import { PopupIcon } from "./modules/popup_icon.js";
     editableNodeWithSelection =
       editableNode &&
       editableNode.matches(":focus") &&
+      !editableNode.disabled &&
+      !editableNode.readOnly &&
       editableNode.value.substring(editableNode.selectionStart, editableNode.selectionEnd) ===
         qqs.getSelection(window).toString()
         ? editableNode
@@ -292,6 +294,14 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   function putQuotesAroundSelectionText(editableNode) {
+    if (editableNode.disabled || editableNode.readOnly) {
+      qqs.logger.info(`Ignore ${qqs.CommandType.PUT_QUOTES} command because the input field can not be changed`, {
+        disabled: editableNode.disabled,
+        readOnly: editableNode.readOnly,
+      });
+      return false;
+    }
+
     const selectionText = qqs.filterSelectionText(
       editableNode.value.substring(editableNode.selectionStart, editableNode.selectionEnd)
     );

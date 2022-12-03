@@ -229,6 +229,15 @@ Cypress.Commands.add("mouseUpLeft", { prevSubject: true }, function (subject) {
   return cy.wrap(subject).realMouseUp({ button: "left" });
 });
 
+Cypress.Commands.add("set", { prevSubject: true }, function (subject, prop, value) {
+  expect(subject).to.have.lengthOf(1);
+  const element = subject[0];
+
+  element[prop] = value;
+
+  return subject;
+});
+
 Cypress.Commands.add("setValue", { prevSubject: true }, function (subject, value) {
   expect(subject).to.have.lengthOf(1);
   const element = subject[0];

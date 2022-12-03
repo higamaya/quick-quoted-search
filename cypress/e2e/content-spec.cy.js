@@ -56,9 +56,9 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
       )
       .then(function (win) {
         if (win.qqs.skipped) {
-          cy.get("#input_text").setValue("");
-          cy.get("#input_email").setValue("");
-          cy.get("#textarea").setValue("");
+          cy.get("#input_text").setValue("").set("readOnly", false).set("disabled", false);
+          cy.get("#input_email").setValue("").set("readOnly", false).set("disabled", false);
+          cy.get("#textarea").setValue("").set("readOnly", false).set("disabled", false);
           cy.get(".qqs-root.qqs-popup-icon").should("not.exist");
         } else {
           expect(this.qqs.portToContent).to.exist;
@@ -280,6 +280,56 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
               expect(args[0].selection.searchable).to.be.false;
               expect(args[0].selection.blur).to.equal(expectedArg.blur);
             });
+          });
+      });
+    });
+
+    context("when the input field with selected text is read-only", function () {
+      it("should send `Notify Selection Updated` message which `editable` is `false`", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        // --- conditions ---
+        cy.get("#input_text").set("readOnly", true);
+        // --- actions ---
+        cy.get("#input_text").setValue("foo").dblclick();
+        // --- results ---
+        cy.get("@spy_onMessage_notify_selection_updated")
+          .should(function (spy) {
+            expect(spy.callCount).to.be.at.least(4);
+          })
+          .and(function (spy) {
+            const args = spy.lastCall.args;
+            expect(args[0].type).to.equal("notify_selection_updated");
+            // expect(args[0].reason).to.equal("document.selectionchange"); // flaky
+            expect(args[0].selection.text).to.equal("foo");
+            expect(args[0].selection.editable).to.be.false;
+            expect(args[0].selection.searchable).to.be.false;
+            expect(args[0].selection.blur).to.be.false;
+          });
+      });
+    });
+
+    context("when the input field with selected text is disabled", function () {
+      it("should send `Notify Selection Updated` message which `editable` is `false`", function () {
+        // --- preparation ---
+        visitAndSetup_own.call(this);
+        // --- conditions ---
+        cy.get("#input_text").set("disabled", true);
+        // --- actions ---
+        cy.get("#input_text").setValue("foo").dblclick();
+        // --- results ---
+        cy.get("@spy_onMessage_notify_selection_updated")
+          .should(function (spy) {
+            expect(spy.callCount).to.be.at.least(4);
+          })
+          .and(function (spy) {
+            const args = spy.lastCall.args;
+            expect(args[0].type).to.equal("notify_selection_updated");
+            // expect(args[0].reason).to.equal("document.selectionchange"); // flaky
+            expect(args[0].selection.text).to.equal("foo");
+            expect(args[0].selection.editable).to.be.false;
+            expect(args[0].selection.searchable).to.be.false;
+            expect(args[0].selection.blur).to.be.false;
           });
       });
     });
@@ -1261,6 +1311,34 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           cy.get("#input_text").realPress('"');
           // --- results ---
           cy.get("#input_text").should("have.value", '"').and("not.be.selected");
+        });
+      });
+
+      context("when the input field with selected text is read-only", function () {
+        it("should NOT put quotes around the selected text, and should NOT change anything", function () {
+          // --- preparation ---
+          visitAndSetup_own.call(this);
+          cy.setOptions({ autoSurround: true });
+          // --- conditions ---
+          cy.get("#input_text").setValue("foo").selectText().set("readOnly", true);
+          // --- actions ---
+          cy.get("#input_text").realPress('"');
+          // --- results ---
+          cy.get("#input_text").should("have.value", "foo").and("be.selected");
+        });
+      });
+
+      context("when the input field with selected text is disabled", function () {
+        it("should NOT put quotes around the selected text, and should NOT change anything", function () {
+          // --- preparation ---
+          visitAndSetup_own.call(this);
+          cy.setOptions({ autoSurround: true });
+          // --- conditions ---
+          cy.get("#input_text").setValue("foo").selectText().set("disabled", true);
+          // --- actions ---
+          cy.get("#input_text").realPress('"');
+          // --- results ---
+          cy.get("#input_text").should("have.value", "foo").and("be.selected");
         });
       });
     });
