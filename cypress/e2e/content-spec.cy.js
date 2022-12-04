@@ -38,7 +38,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
   }
 
   function visitAndSetup(params, skipIfSameParameters = false) {
-    params = { isMac: false, initialOptions: undefined, clickIFrame: true, ...params };
+    params = { isMac: false, initialOptions: undefined, ...params };
 
     return cy
       .visitAndSetup(
@@ -46,7 +46,6 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         {
           isMac: params.isMac,
           initialOptions: params.initialOptions,
-          clickIFrame: params.clickIFrame,
 
           onCrxApiMockReady(_crxApiMock) {
             this.qqs.portToContent = undefined;
@@ -97,7 +96,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- preparation ---
         // --- conditions ---
         // --- actions ---
-        visitAndSetup.call(this, { clickIFrame: false });
+        visitAndSetup.call(this);
         // --- results ---
         cy.get("@spy_onMessage_hello")
           .should("have.been.calledOnce")
@@ -119,7 +118,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         visitAndSetup.call(this);
         // --- results ---
         cy.get("@spy_onMessage_notify_selection_updated")
-          .should("have.been.called") // at least 1
+          .should("have.been.calledOnce")
           .and(function (spy) {
             const args = spy.firstCall.args;
             expect(args[0].type).to.equal("notify_selection_updated");
@@ -129,23 +128,22 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             expect(args[0].selection.searchable).to.be.false;
             expect(args[0].selection.blur).to.be.false;
           });
-        // Flaky: `notify_selection_updated` message might be sent more.
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(200);
 
         // *** Case: Focus on the input field
         // --- preparation ---
         cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
         // --- conditions ---
         // --- actions ---
-        cy.get("#input_text").focus().should("match", ":focus");
+        cy.get("#input_text").realClick().should("match", ":focus");
         // --- results ---
         cy.get("@spy_onMessage_notify_selection_updated")
-          .should("have.callCount", 2)
+          .should("have.callCount", 4)
           .and(function (spy) {
             const expectedArgs = [
+              { reason: "window.focus", text: "", editable: false, blur: false },
               { reason: "editable.focus", text: "", editable: true, blur: false },
               { reason: "document.selectionchange", text: "", editable: true, blur: false },
+              { reason: "contentId.initialize", text: "", editable: true, blur: false },
             ];
             expect(spy.callCount).to.equal(expectedArgs.length);
             expectedArgs.forEach((expectedArg, index) => {
@@ -362,7 +360,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     context("when disconnected from Background service worker", function () {
       it("should connect again, and then send `Notify Selection Updated` message", function () {
         // --- preparation ---
-        visitAndSetup.call(this, { clickIFrame: false });
+        visitAndSetup.call(this);
         cy.get("@spy_onMessage_hello").should("have.been.calledOnce");
         cy.get("@spy_onMessage_notify_selection_updated").should("have.been.calledOnce");
         // --- conditions ---

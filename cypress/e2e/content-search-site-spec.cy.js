@@ -9,7 +9,7 @@ describe("Content scripts on search engine site", { retries: 2 }, function () {
   });
 
   function visitAndSetup(url) {
-    return cy.visitAndSetup(url, { convertCssUrl: false, clickIFrame: false }).then(function (win) {
+    return cy.visitAndSetup(url, { convertCssUrl: false }).then(function (win) {
       cy.readFile("dist/content_bundle.css").then(function (content) {
         win.document.head.appendChild(win.document.createElement("style")).innerHTML = content;
       });
