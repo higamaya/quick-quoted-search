@@ -62,13 +62,6 @@ class QQSInput {
   }
 
   /**
-   * @returns {!boolean}
-   */
-  get disabled() {
-    return this._getDisabled();
-  }
-
-  /**
    * @param {!function(!QQSInput):void} listener
    */
   addChangeEventListener(listener) {
@@ -114,15 +107,6 @@ class QQSInput {
   _setDisabled(_value) {
     throw new Error("Subclass must override _setDisabled() method");
   }
-
-  /**
-   * @protected
-   * @abstract
-   * @returns {!boolean}
-   */
-  _getDisabled() {
-    throw new Error("Subclass must override _getDisabled() method");
-  }
 }
 
 export class QQSSwitch extends QQSInput {
@@ -162,14 +146,6 @@ export class QQSSwitch extends QQSInput {
    */
   _setDisabled(value) {
     this._getMdcComponent().disabled = value;
-  }
-
-  /**
-   * @override
-   * @returns {!boolean}
-   */
-  _getDisabled() {
-    return this._getMdcComponent().disabled;
   }
 
   #addInternalChangeEventListener() {
@@ -224,14 +200,6 @@ export class QQSSelect extends QQSInput {
     this._getMdcComponent().disabled = value;
   }
 
-  /**
-   * @override
-   * @returns {!boolean}
-   */
-  _getDisabled() {
-    return this._getMdcComponent().disabled;
-  }
-
   #addInternalChangeEventListener() {
     this._getMdcComponent().listen("MDCSelect:change", () => {
       this._fireChangeEvent();
@@ -271,14 +239,6 @@ export class QQSSlider extends QQSInput {
    */
   _setDisabled(value) {
     this._getMdcComponent().setDisabled(value);
-  }
-
-  /**
-   * @override
-   * @returns {!boolean}
-   */
-  _getDisabled() {
-    return this._getMdcComponent().getDisabled();
   }
 
   #addInternalChangeEventListener() {
