@@ -1344,7 +1344,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
 
   describe("Lazy rendered input", function () {
     context("when selecting text in an editable node rendered lazy", function () {
-      it("should recognize the input field as `editable node` (can do `Put Quotes`)", function () {
+      it("should recognize the input field as `editable node` (can execute `Put Quotes`)", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         // --- conditions ---
@@ -1367,7 +1367,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     });
 
     context("when selecting text in an editable node rendered lazy, and the node is deeper", function () {
-      it("should recognize the input field as `editable node` (can do `Put Quotes`)", function () {
+      it("should recognize the input field as `editable node` (can execute `Put Quotes`)", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         // --- conditions ---

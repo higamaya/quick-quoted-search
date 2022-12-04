@@ -196,7 +196,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
     });
 
     context("when the port is closed", function () {
-      it("should be able to do Quoted Search", function () {
+      it("should be able to execute Do Quoted Search", function () {
         // --- preparation ---
         visitAndSetup.call(this);
         cy.get("@spy_onMessage_get_selection").should("have.been.calledOnce");
@@ -328,7 +328,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
   describe("Search bar", function () {
     describe("Trigger", function () {
       context("when pressing `Enter` key", function () {
-        it("should do Quoted Search", function () {
+        it("should execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           cy.get("#qqs-search-bar-text").setValue("foo");
@@ -341,7 +341,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       });
 
       context("when clicking on the search button", function () {
-        it("should do Quoted Search", function () {
+        it("should execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           cy.get("#qqs-search-bar-text").setValue("foo");
@@ -572,7 +572,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
 
     describe("Inspect the input text", function () {
       context("when the input text is empty", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
@@ -585,7 +585,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       });
 
       context("when the input text is too long", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
@@ -613,7 +613,7 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
       });
 
       context("when the input text contains only whitespace characters or quotation marks", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---

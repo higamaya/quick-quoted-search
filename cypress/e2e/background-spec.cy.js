@@ -402,7 +402,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
 
     describe("onDoQuotedSearch()", function () {
       context("when receiving `Do Quoted Search` message", function () {
-        it("should do Quoted Search", function () {
+        it("should execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
@@ -723,7 +723,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
 
   describe("onContextMenuClicked()", function () {
     context("when firing chrome.contextMenus.onClicked event for `Do Quoted Search`", function () {
-      it("should do Quoted Search", function () {
+      it("should execute Do Quoted Search", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         sendNotifySelectionUpdated.call(this);
@@ -737,7 +737,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
     });
 
     context("when firing chrome.contextMenus.onClicked event for `Put Quotes`", function () {
-      it("should do Put Quotes", function () {
+      it("should execute Put Quotes", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         sendNotifySelectionUpdated.call(this);
@@ -808,7 +808,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
 
   describe("onCommand()", function () {
     context("when firing chrome.commands.onCommand event for `Do Quoted Search`", function () {
-      it("should do Quoted Search", function () {
+      it("should execute Do Quoted Search", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         sendNotifySelectionUpdated.call(this);
@@ -822,7 +822,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
     });
 
     context("when firing chrome.commands.onCommand event for `Put Quotes`", function () {
-      it("should do Put Quotes", function () {
+      it("should execute Put Quotes", function () {
         // --- preparation ---
         visitAndSetup_own.call(this);
         sendNotifySelectionUpdated.call(this);
@@ -1410,7 +1410,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
 
     describe("Inspect the selected text", function () {
       context("when the selected text is empty", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
@@ -1423,7 +1423,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
 
       context("when the selected text is too long", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
@@ -1451,7 +1451,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
       });
 
       context("when the selected text contains only whitespace characters or quotation marks", function () {
-        it("should NOT do Quoted Search", function () {
+        it("should NOT execute Do Quoted Search", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
           // --- conditions ---
