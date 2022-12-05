@@ -1,3 +1,4 @@
 {
-  "report-dir": "./coverage-main"
+  "report-dir": "./coverage-main",
+  "lines": 90
 }
