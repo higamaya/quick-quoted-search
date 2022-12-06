@@ -1,0 +1,35 @@
+name: Production Build
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "coverage-main/**"
+      - "cws/**"
+jobs:
+  production:
+    name: Production Build
+    runs-on: macos-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: production
+      - name: Rebase `production` branch on top of `origin/main`
+        run: |
+          git rebase --force-rebase origin/main
+          git push --force
+      - name: Build & Pack
+        run: |
+          npm ci
+          npm run lint
+          npm run webpack-build-prod
+          npm run pack
+      - name: Save product to repo
+        run: |
+          git config --local user.name "${{ github.event.pusher.name }}"
+          git config --local user.email "${{ github.event.pusher.email }}"
+          git add cws
+          git commit -m "chore: update product"
+          git push
