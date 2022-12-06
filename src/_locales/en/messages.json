@@ -3,7 +3,7 @@
     "message": "Quick Quoted Search"
   },
   "msg_extension_description": {
-    "message": "Eliminate the hassle of search for exact match!"
+    "message": "Exact match searching can be performed quickly!"
   },
   "msg_command_description_do_quoted_search": {
     "message": "Do \"Quoted Search\" for the selected text"
