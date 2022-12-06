@@ -13,6 +13,13 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: coverage
+      - name: Rebase `coverage` branch on top of `origin/main`
+        run: |
+          git rebase --force-rebase origin/main
+          git push --force
       - name: Setup code coverage
         run: npm run coverage-setup
       - name: Change disposition of code coverage report
