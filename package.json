@@ -67,7 +67,9 @@
   },
   "browserslist": "chrome 92",
   "scripts": {
-    "postinstall": "is-ci || husky install",
+    "postinstall:husky": "is-ci || husky install",
+    "postinstall:php": "php -v || (echo ERROR: PHP could not be found. PHP is required to build this package. && exit 1)",
+    "postinstall": "run-s postinstall:*",
     "lint:format": "prettier --check .",
     "lint:js": "eslint \"**/*.js\"",
     "lint:css": "stylelint \"**/*.{css,scss}\"",
