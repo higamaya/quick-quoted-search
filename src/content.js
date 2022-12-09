@@ -132,6 +132,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
       qqs.logger.info(`Ignore ${qqs.CommandType.PUT_QUOTES} command due to no editable node selected `);
       return;
     }
+
     putQuotesAroundSelectionText(editableNodeWithSelection);
   }
 
@@ -232,9 +233,11 @@ import { PopupIcon } from "./modules/popup_icon.js";
     // Uses `editableNode` specified as an argument of the event instead of
     // `editableNodeWithSelection`, because `editableNodeWithSelection` may be
     // already cleared on `blur` event caused by clicking the button.
+
     if (!editableNode) {
       return;
     }
+
     putQuotesAroundSelectionText(editableNode);
   }
 
@@ -276,21 +279,31 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   function notifySelectionUpdated(reason) {
-    const blur = reason.endsWith(".blur");
-    if (contentId.isInitialized() && (blur || document.hasFocus())) {
-      const message = {
-        type: qqs.MessageType.NOTIFY_SELECTION_UPDATED,
-        reason: reason,
-        selection: {
-          text: qqs.filterSelectionText(qqs.getSelection(window).toString()),
-          editable: !!editableNodeWithSelection,
-          searchable: isSearchable(editableNodeWithSelection),
-          blur: blur,
-        },
-      };
-      portToBackground.postMessage(message);
-      qqs.logger.info(`Send '${message.type}' message to background service worker`, { message });
+    if (!contentId.isInitialized()) {
+      // It will be notified when the content id is initialized later.
+      return;
     }
+
+    const blur = reason.endsWith(".blur");
+    if (!(blur || document.hasFocus())) {
+      // It should be notified at least once when this document lost focus
+      // (i.e. blurred). After that, it does not needed to be notified
+      // while this document does not have focus.
+      return;
+    }
+
+    const message = {
+      type: qqs.MessageType.NOTIFY_SELECTION_UPDATED,
+      reason: reason,
+      selection: {
+        text: qqs.filterSelectionText(qqs.getSelection(window).toString()),
+        editable: !!editableNodeWithSelection,
+        searchable: isSearchable(editableNodeWithSelection),
+        blur: blur,
+      },
+    };
+    portToBackground.postMessage(message);
+    qqs.logger.info(`Send '${message.type}' message to background service worker`, { message });
   }
 
   function putQuotesAroundSelectionText(editableNode) {
@@ -383,6 +396,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
     if (!editableNode) {
       return false;
     }
+
     editableNode.qqs ??= {};
     if (!Object.hasOwn(editableNode.qqs, "isSearchable")) {
       editableNode.qqs.isSearchable = (() => {
