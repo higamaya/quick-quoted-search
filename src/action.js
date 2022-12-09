@@ -47,14 +47,18 @@ import { MDCRipple } from "@material/ripple";
   }
 
   function onNotifySelection(message, _port) {
-    if (message.selection) {
-      const normalizedSelectionText = qqs.normalizeSelectionText(message.selection.text);
-      if (qqs.isNormalizedSelectionTextValid(normalizedSelectionText)) {
-        const textField = document.getElementById("qqs-search-bar-text");
-        textField.value = normalizedSelectionText;
-        textField.setSelectionRange(0, textField.value.length, "forward");
-      }
+    if (!message.selection) {
+      return;
     }
+
+    const normalizedSelectionText = qqs.normalizeSelectionText(message.selection.text);
+    if (!qqs.isNormalizedSelectionTextValid(normalizedSelectionText)) {
+      return;
+    }
+
+    const textField = document.getElementById("qqs-search-bar-text");
+    textField.value = normalizedSelectionText;
+    textField.setSelectionRange(0, textField.value.length, "forward");
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -80,9 +84,11 @@ import { MDCRipple } from "@material/ripple";
 
   async function onSearchFormSubmit(e) {
     e.preventDefault();
+
     const normalizedSelectionText = qqs.normalizeSelectionText(
       qqs.filterSelectionText(document.getElementById("qqs-search-bar-text").value)
     );
+
     if (qqs.isNormalizedSelectionTextValid(normalizedSelectionText)) {
       if (qqs.options.autoCopy) {
         window.navigator.clipboard.writeText(normalizedSelectionText);
