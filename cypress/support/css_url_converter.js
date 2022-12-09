@@ -3,8 +3,7 @@ function reviseUrl(value) {
 }
 
 function scanCSSStyleDeclaration(cssStyleDeclaration) {
-  for (let i = 0; i < cssStyleDeclaration.length; i++) {
-    const name = cssStyleDeclaration.item(i);
+  for (const name of cssStyleDeclaration) {
     const value = cssStyleDeclaration.getPropertyValue(name);
     if (value.includes("url")) {
       const newValue = reviseUrl(value);
@@ -16,11 +15,8 @@ function scanCSSStyleDeclaration(cssStyleDeclaration) {
 export function convertCssUrl(stylesheets) {
   for (const stylesheet of stylesheets) {
     for (const cssRule of stylesheet.cssRules) {
-      switch (cssRule.constructor.name) {
-        case "CSSStyleRule":
-        case "CSSFontFaceRule":
-          scanCSSStyleDeclaration(cssRule.style);
-          break;
+      if (/^(CSSStyleRule|CSSFontFaceRule)$/.test(cssRule.constructor.name)) {
+        scanCSSStyleDeclaration(cssRule.style);
       }
     }
   }
