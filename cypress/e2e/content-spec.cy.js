@@ -279,6 +279,21 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
               expect(args[0].selection.blur).to.equal(expectedArg.blur);
             });
           });
+
+        // *** Case: Change selection after blurred.
+        // --- preparation ---
+        cy.get("@spy_onMessage_notify_selection_updated").invoke("resetHistory");
+        // --- conditions ---
+        cy.document().then(function (doc) {
+          cy.stub(doc, "hasFocus").returns(false);
+        });
+        cy.get("#input_email").should("be.selected");
+        // --- actions ---
+        cy.get("#input_email").setValue("baz").should("not.be.selected");
+        // --- results ---
+        cy.defer(function () {
+          cy.get("@spy_onMessage_notify_selection_updated").should("have.not.been.called");
+        });
       });
     });
 

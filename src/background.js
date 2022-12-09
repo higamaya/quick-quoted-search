@@ -111,13 +111,11 @@ import * as qqs from "./modules/common.js";
   }
 
   function onNotifySelectionUpdated(message, port) {
-    if (message.selection.blur) {
-      if (!isOwnerOfCurrentSelection(port.sender.tab.id, port.sender.frameId)) {
-        qqs.logger.info(
-          "Ignore message from blurred content because selection state has already been updated by newly focused content"
-        );
-        return;
-      }
+    if (message.selection.blur && !isOwnerOfCurrentSelection(port.sender.tab.id, port.sender.frameId)) {
+      qqs.logger.info(
+        "Ignore message from blurred content because selection state has already been updated by newly focused content"
+      );
+      return;
     }
 
     updateCurrentSelection(message.selection, port.sender);
