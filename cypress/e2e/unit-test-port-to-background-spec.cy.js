@@ -4,9 +4,9 @@ describe("[Unit Test] Options class", function () {
   let spyBackgroundOnMessage;
 
   function setSpies() {
-    spyBackgroundOnConnect = cy.spy().as("spy_background_onConnect");
-    spyBackgroundOnDisconnect = cy.spy().as("spy_background_onDisconnect");
-    spyBackgroundOnMessage = cy.spy().as("spy_background_onMessage");
+    spyBackgroundOnConnect = cy.spy();
+    spyBackgroundOnDisconnect = cy.spy();
+    spyBackgroundOnMessage = cy.spy();
   }
 
   function onDisconnect(port) {
