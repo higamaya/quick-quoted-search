@@ -30,16 +30,15 @@ export class PortToBackground {
 
     try {
       this.#port = chrome.runtime.connect(undefined, { name: this.#params.name });
+      qqs.logger.state("Connected to Background service worker", { port: this.#port });
     } catch (error) {
-      // The extension might have been refreshed, in which case it will never be
+      // The extension might have been updated, in which case it will never be
       // able to connect to Background service worker from this context again.
-      qqs.logger.info(
-        "⚠ The extension might have been refreshed, in which case it is impossible to connect to Background service worker",
-        { error }
-      );
+      qqs.logger.info("⚠ Failed to connect to Background service worker. The extension might have been updated.", {
+        error,
+      });
       return;
     }
-    qqs.logger.state("Connected to Background service worker", { port: this.#port });
 
     this.#port.onDisconnect.addListener((port) => this.#onDisconnect(port));
     this.#port.onMessage.addListener((message, port) => this.#onMessage(message, port));
@@ -49,9 +48,18 @@ export class PortToBackground {
 
   disconnect() {
     if (this.#port) {
-      this.#port.disconnect();
+      try {
+        this.#port.disconnect();
+        qqs.logger.state("Disconnected from Background service worker");
+      } catch (error) {
+        // The extension might have been updated.
+        qqs.logger.info(
+          "⚠ Failed to disconnect from Background service worker. The extension might have been updated.",
+          { error }
+        );
+      }
+
       this.#port = undefined;
-      qqs.logger.state("Disconnected from Background service worker");
     }
   }
 

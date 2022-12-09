@@ -206,8 +206,8 @@ export function postMessage(port, message) {
   try {
     port.postMessage(message);
   } catch (error) {
-    logger.warn(
-      "It seems that the message could not be sent because the other side of the port has already been closed",
+    logger.info(
+      "⚠ It seems that the message could not be sent because the other side of the port has already been closed",
       { error, port, message }
     );
   }

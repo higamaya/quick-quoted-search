@@ -95,7 +95,7 @@ describe("[Unit Test] Options class", function () {
       });
     });
 
-    context("when connect() throws an error", function () {
+    context("when chrome.runtime.connect() throws an error", function () {
       it("should NOT callback onConnect listener, and `port` property should return `undefined`", function () {
         // --- preparation ---
         const spyOnConnect = cy.spy();
@@ -200,6 +200,22 @@ describe("[Unit Test] Options class", function () {
         cy.defer(function () {
           expect(spyBackgroundOnDisconnect).to.be.not.called;
           expect(spyOnDisconnect).to.be.not.called;
+        });
+      });
+    });
+
+    context("when chrome.runtime.Port.disconnect() throws an error", function () {
+      it("should return without error, and `port` property should return `undefined`", function () {
+        // --- preparation ---
+        const portToBackground = new this.qqs.PortToBackground();
+        portToBackground.connect();
+        // --- conditions ---
+        cy.stub(portToBackground.port, "disconnect").throws();
+        // --- actions ---
+        portToBackground.disconnect();
+        // --- results ---
+        cy.defer(function () {
+          expect(portToBackground.port).to.be.undefined;
         });
       });
     });
