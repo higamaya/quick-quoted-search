@@ -96,10 +96,10 @@
     "message": "完全一致検索の結果を表示する場所を選択します。"
   },
   "msg_options_description_content_disposition_2": {
-    "message": "ポップアップ アイコン $1 をクリックして検索するとき、以下のキーを押すことで、この動作を変更できます。"
+    "message": "ポップアップ アイコン $1 をクリックして検索する時のみ、以下のキーを押すことで、この動作を変更できます。"
   },
   "msg_options_description_content_disposition_3": {
-    "message": "ポップアップ アイコンのクリックではなく、キーボード ショートカットやコンテキスト メニューから検索を行った場合は、上記のキーは無視されます。"
+    "message": "ポップアップ アイコンのクリックではなく、キーボード ショートカットやコンテキスト メニューから検索を行う場合は、上記のキーは無視されます。"
   },
   "msg_options_description_content_click": {
     "message": "クリック"
