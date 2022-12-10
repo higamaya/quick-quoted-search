@@ -1,17 +1,11 @@
 name: Test
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - "coverage-main/**"
-      - "cws/**"
+    branches: [main]
+    paths-ignore: [coverage-main/**, cws/**]
   pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - "coverage-main/**"
-      - "cws/**"
+    branches: [main]
+    paths-ignore: [coverage-main/**, cws/**]
 jobs:
   test:
     strategy:

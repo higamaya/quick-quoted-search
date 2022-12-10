@@ -1,11 +1,8 @@
 name: Production Build
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - "coverage-main/**"
-      - "cws/**"
+    branches: [main]
+    paths-ignore: [coverage-main/**, cws/**]
 jobs:
   production:
     name: Production Build

@@ -1,11 +1,8 @@
 name: Code Coverage
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "src/**/*.js"
-      - "cypress/**/*.js"
+    branches: [main]
+    paths: [src/**/*.js, cypress/**/*.js]
 jobs:
   coverage:
     name: "Run cypress with {mode: development, os: macos-latest, browser: chrome, test_search_site: off, coverage: on}"
