@@ -70,19 +70,25 @@
     align-items: center;
     height: 2em;
 
+    &.grid-item--label {
+      justify-content: space-between;
+    }
+
     &.grid-item--input {
       justify-content: flex-end;
     }
   }
 
   .option-label {
+    display: flex;
+    align-items: center;
     margin-right: 0.2em;
     padding-top: 0.15em;
-  }
 
-  .private-icon {
-    margin-left: 0.3em;
-    margin-right: 0.2em;
+    .private-icon {
+      margin-top: -0.1em;
+      margin-left: 0.3em;
+    }
   }
 
   .option-tooltip-open-button {

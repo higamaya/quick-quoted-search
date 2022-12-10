@@ -212,7 +212,7 @@ import { MDCDialog } from "@material/dialog";
       if (qqs.config.privateOptionEnabled) {
         const privateIcon = document.createElement("i");
         privateIcon.classList.add("private-icon");
-        document.getElementById(`${INPUT_ID_PREFIX}${name}-label`).after(privateIcon);
+        document.getElementById(`${INPUT_ID_PREFIX}${name}-label`).append(privateIcon);
       } else {
         for (const gridItem of document.querySelectorAll(
           `[data-group~='grid-item'][data-grid-item-id='${INPUT_ID_PREFIX}${name}'`
