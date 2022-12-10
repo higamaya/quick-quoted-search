@@ -2,6 +2,7 @@ import { config } from "./__config.js";
 import { ScriptId } from "./__constants.js";
 import { Logger } from "./__logger.js";
 import { Options } from "./__options.js";
+import { setupCommunicationProxy } from "./__communication_proxy.js";
 
 /**
  * Logger used used throughout the extension.
@@ -38,6 +39,8 @@ export async function init(scriptId) {
   await options.init();
 
   await checkOsIsMac(scriptId);
+
+  setupCommunicationProxy(logger);
 }
 
 async function checkOsIsMac(scriptId) {

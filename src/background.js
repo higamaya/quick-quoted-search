@@ -93,13 +93,11 @@ import * as qqs from "./modules/common.js";
   //////////////////////////////////////////////////////////////////////////////
 
   async function onConnect(port) {
-    qqs.logger.callback("onConnect()", { port });
     port.onMessage.addListener(onMessage);
     await updateCommandShortcuts();
   }
 
   function onMessage(message, port) {
-    qqs.logger.callback("onMessage()", { message, port });
     MESSAGE_HANDLERS[message.type](message, port);
   }
 

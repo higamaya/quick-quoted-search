@@ -4,14 +4,16 @@ import { Logger } from "../../src/modules/__logger.js";
 describe("[Unit Test] Logger class", function () {
   // prettier-ignore
   const OUTPUT_METHODS = [
-    { name: "info"    , header: "[INFO]"    , api: "debug" , assertion: false },
-    { name: "state"   , header: "[STATE]"   , api: "debug" , assertion: false },
-    { name: "callback", header: "[CALLBACK]", api: "debug" , assertion: false },
-    { name: "warn"    , header: "[WARN]"    , api: "warn"  , assertion: false },
-    { name: "error"   , header: "[ERROR]"   , api: "error" , assertion: false },
-    { name: "assert"  , header: "[ERROR]"   , api: "assert", assertion: true  },
+    { name: "info"     , header: "[INFO]"    , api: "debug" , assertion: false, force: false },
+    { name: "state"    , header: "[STATE]"   , api: "debug" , assertion: false, force: false },
+    { name: "invoke"   , header: "[INVOKE]"  , api: "debug" , assertion: false, force: false },
+    { name: "callback" , header: "[CALLBACK]", api: "debug" , assertion: false, force: false },
+    { name: "warn"     , header: "[WARN]"    , api: "warn"  , assertion: false, force: false },
+    { name: "error"    , header: "[ERROR]"   , api: "error" , assertion: false, force: false },
+    { name: "assert"   , header: "[ERROR]"   , api: "assert", assertion: true , force: false },
+    { name: "forceInfo", header: "[INFO]"    , api: "info"  , assertion: false, force: true  },
   ];
-  for (const { name, header, api, assertion } of OUTPUT_METHODS) {
+  for (const { name, header, api, assertion, force } of OUTPUT_METHODS) {
     describe(`${name}()`, function () {
       context(`when invoking ${name}()`, function () {
         it(`should call console.${api}()`, function () {
@@ -130,37 +132,58 @@ describe("[Unit Test] Logger class", function () {
           }
         });
       });
-    });
-  }
 
-  describe("All output methods", function () {
-    context("when `config.logEnabled` is false", function () {
-      it("should NOT call any Console APIs", function () {
-        // --- preparation ---
-        const spyDebug = cy.spy(console, "debug");
-        const spyWarn = cy.spy(console, "warn");
-        const spyError = cy.spy(console, "error");
-        const spyAssert = cy.spy(console, "assert");
-        const logger = new Logger("TEST");
-        // --- conditions ---
-        config.logEnabled = false;
-        // --- actions ---
-        logger.info("foo");
-        logger.state("foo");
-        logger.callback("foo");
-        logger.warn("foo");
-        logger.error("foo");
-        logger.assert(false, "foo");
-        // --- results ---
-        expect(spyDebug).to.be.not.called;
-        expect(spyWarn).to.be.not.called;
-        expect(spyError).to.be.not.called;
-        expect(spyAssert).to.be.not.called;
-        // *** restore ***
-        config.logEnabled = true;
+      context("when `config.logEnabled` is false", function () {
+        if (force) {
+          it(`should call console.${api}()`, function () {
+            // --- preparation ---
+            const spyConsoleApi = cy.spy(console, api);
+            const id = "TEST";
+            const logger = new Logger(id);
+            const message = "foo";
+            // --- conditions ---
+            config.logEnabled = false;
+            // --- actions ---
+            if (assertion) {
+              logger[name](!assertion, message);
+            } else {
+              logger[name](message);
+            }
+            // --- results ---
+            expect(spyConsoleApi).to.be.calledOnce;
+            const args = spyConsoleApi.firstCall.args;
+            let argIndex = 0;
+            if (assertion) {
+              expect(args[argIndex++]).to.equal(!assertion);
+            }
+            expect(args[argIndex++]).to.equal(`[${id}] ${header} ${message}`);
+            // *** restore ***
+            config.logEnabled = true;
+          });
+        } else {
+          it(`should NOT call console.${api}()`, function () {
+            // --- preparation ---
+            const spyConsoleApi = cy.spy(console, api);
+            const id = "TEST";
+            const logger = new Logger(id);
+            const message = "foo";
+            // --- conditions ---
+            config.logEnabled = false;
+            // --- actions ---
+            if (assertion) {
+              logger[name](!assertion, message);
+            } else {
+              logger[name](message);
+            }
+            // --- results ---
+            expect(spyConsoleApi).to.be.not.called;
+            // *** restore ***
+            config.logEnabled = true;
+          });
+        }
       });
     });
-  });
+  }
 
   describe("setId()", function () {
     context("when invoking setId()", function () {

@@ -47,6 +47,18 @@ export class Logger {
   }
 
   /**
+   * Call `console.debug()` with the header `[INVOKE]` prepended to the message.
+   *
+   * @param {!string} message
+   * @param {...any=} args arguments for the substitutions if included in the
+   *    message. If specifying an object (key-value pairs) at the end, it will
+   *    be decomposed and output in the form `\n${key}= ${value}`.
+   */
+  invoke(message, ...args) {
+    this.#output("debug", "[INVOKE]", message, args);
+  }
+
+  /**
    * Call `console.debug()` with the header `[CALLBACK]` prepended to the message.
    *
    * @param {!string} message
@@ -92,7 +104,22 @@ export class Logger {
    *    be decomposed and output in the form `\n${key}= ${value}`.
    */
   assert(assertion, message, ...args) {
-    this.#output("assert", "[ERROR]", message, args, assertion);
+    this.#output("assert", "[ERROR]", message, args, { assertion });
+  }
+
+  /**
+   * Call `console.info()` with the header `[INFO]` prepended to the message.
+   *
+   * This method outputs the message even if `config.logEnabled` is `false`
+   * (i.e. in production).
+   *
+   * @param {!string} message
+   * @param {...any=} args arguments for the substitutions if included in the
+   *    message. If specifying an object (key-value pairs) at the end, it will
+   *    be decomposed and output in the form `\n${key}= ${value}`.
+   */
+  forceInfo(message, ...args) {
+    this.#output("info", "[INFO]", message, args, { force: true });
   }
 
   /**
@@ -102,10 +129,10 @@ export class Logger {
    * @param {!string} header
    * @param {!string} message
    * @param {?any[]=} args
-   * @param {?boolean=} assertion must be specified if `method` is "assert", otherwise ignored.
+   * @param {?{assertion:?boolean=,?force:?boolean=}=} params
    */
-  #output(consoleApi, header, message, args, assertion) {
-    if (!config.logEnabled) {
+  #output(consoleApi, header, message, args, params) {
+    if (!(config.logEnabled || params?.force)) {
       return;
     }
 
@@ -118,7 +145,7 @@ export class Logger {
     }
 
     console[consoleApi](
-      ...(consoleApi === "assert" ? [!!assertion] : []),
+      ...(consoleApi === "assert" ? [!!params?.assertion] : []),
       `[${this.#id}] ${header} ${message}`,
       ...args,
       ...optionalArgs

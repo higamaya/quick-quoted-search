@@ -268,6 +268,41 @@ describe("[Unit Test] Options class", function () {
         });
       });
     });
+
+    context("when now connected, and chrome.runtime.connect() throws an error", function () {
+      it("should callback onDisconnect listener, and `port` property should return `undefined`", function () {
+        // --- preparation ---
+        const spyOnDisconnect = cy.spy();
+        const portToBackground = new this.qqs.PortToBackground({ onDisconnect: spyOnDisconnect });
+        portToBackground.connect();
+        // --- conditions ---
+        cy.stub(window.chrome.runtime, "connect").throws();
+        // --- actions ---
+        portToBackground.reconnect();
+        // --- results ---
+        cy.defer(function () {
+          expect(spyOnDisconnect).to.be.calledOnce;
+          expect(portToBackground.port).to.be.undefined;
+        });
+      });
+    });
+
+    context("when now NOT connected, and chrome.runtime.connect() throws an error", function () {
+      it("should NOT callback onDisconnect listener, and `port` property should return `undefined`", function () {
+        // --- preparation ---
+        const spyOnDisconnect = cy.spy();
+        const portToBackground = new this.qqs.PortToBackground({ onDisconnect: spyOnDisconnect });
+        // --- conditions ---
+        cy.stub(window.chrome.runtime, "connect").throws();
+        // --- actions ---
+        portToBackground.reconnect();
+        // --- results ---
+        cy.defer(function () {
+          expect(spyOnDisconnect).to.be.not.called;
+          expect(portToBackground.port).to.be.undefined;
+        });
+      });
+    });
   });
 
   describe("get port()", function () {

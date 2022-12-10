@@ -109,14 +109,10 @@ import { PopupIcon } from "./modules/popup_icon.js";
   }
 
   function onConnect(port) {
-    qqs.logger.callback("onConnect()", { port });
-
     port.onMessage.addListener(onMessage);
   }
 
   function onMessage(message, port) {
-    qqs.logger.callback("onMessage()", { message, port });
-
     MESSAGE_HANDLERS[message.type](message, port);
   }
 
@@ -292,7 +288,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
       return;
     }
 
-    const message = {
+    portToBackground.postMessage({
       type: qqs.MessageType.NOTIFY_SELECTION_UPDATED,
       reason: reason,
       selection: {
@@ -301,9 +297,7 @@ import { PopupIcon } from "./modules/popup_icon.js";
         searchable: isSearchable(editableNodeWithSelection),
         blur: blur,
       },
-    };
-    portToBackground.postMessage(message);
-    qqs.logger.info(`Send '${message.type}' message to background service worker`, { message });
+    });
   }
 
   function putQuotesAroundSelectionText(editableNode) {
