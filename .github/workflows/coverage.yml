@@ -18,8 +18,7 @@ jobs:
       - name: Switch to `coverage` branch, and rebase it on top of `origin/main`
         run: |
           git switch -c coverage
-          git branch --set-upstream-to origin/coverage
-          git push --force
+          git push --force --set-upstream origin coverage
       - name: Setup code coverage
         run: npm run coverage-setup
       - name: Change disposition of code coverage report
