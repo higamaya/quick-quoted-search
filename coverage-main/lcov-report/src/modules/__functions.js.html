@@ -442,8 +442,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17817x</span>
-<span class="cline-any cline-yes">17817x</span>
+<span class="cline-any cline-yes">17784x</span>
+<span class="cline-any cline-yes">17784x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -512,7 +512,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">644x</span>
+<span class="cline-any cline-yes">646x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -589,32 +589,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18415x</span>
-<span class="cline-any cline-yes">18379x</span>
-<span class="cline-any cline-yes">18379x</span>
-<span class="cline-any cline-yes">18379x</span>
-<span class="cline-any cline-yes">18379x</span>
-<span class="cline-any cline-yes">18379x</span>
+<span class="cline-any cline-yes">18387x</span>
+<span class="cline-any cline-yes">18351x</span>
+<span class="cline-any cline-yes">18351x</span>
+<span class="cline-any cline-yes">18351x</span>
+<span class="cline-any cline-yes">18351x</span>
+<span class="cline-any cline-yes">18351x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18379x</span>
+<span class="cline-any cline-yes">18351x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">110140x</span>
+<span class="cline-any cline-yes">109972x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18379x</span>
+<span class="cline-any cline-yes">18351x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18415x</span>
+<span class="cline-any cline-yes">18387x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18415x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18387x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -633,8 +630,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9739x</span>
-<span class="cline-any cline-yes">9739x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9706x</span>
+<span class="cline-any cline-yes">9706x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -983,7 +983,7 @@ export function getSelection(win) {
  * Calls `chrome.runtime.Port.postMessage()` method.
  *
  * Catches the error thrown from `chrome.runtime.Port.postMessage()` method and
- * logs a warning message.
+ * logs a information message.
  *
  * `chrome.runtime.Port.postMessage()` throws an error if the other side of the
  * port has already been closed, but there is no way to check in advance whether
@@ -992,7 +992,7 @@ export function getSelection(win) {
  * and most of the time it is not an error case.
  * Therefore, if an error is thrown from `chrome.runtime.Port.postMessage()`
  * method, this function assumes the cause is port disconnection and logs it as
- * a warning instead of an error.
+ * a information instead of an error.
  *
  * @param {!chrome.runtime.Port} port
  * @param {!*} message
@@ -1001,8 +1001,8 @@ export function postMessage(port, message) {
   try {
     port.postMessage(message);
   } catch (error) {
-    logger.warn(
-      "It seems that the message could not be sent because the other side of the port has already been closed",
+    logger.info(
+      "⚠ It seems that the message could not be sent because the other side of the port has already been closed",
       { error, port, message }
     );
   }
@@ -1165,7 +1165,7 @@ export async function openShortcutsSettings(tab, keyState, defaultHowToOpenLink)
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-04T10:37:52.159Z
+                at 2022-12-10T10:40:27.034Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

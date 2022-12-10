@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/modules/__globals.js</title>
+    <title>Code coverage report for src/modules/__initializer.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/modules</a> __globals.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/modules</a> __initializer.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -96,25 +96,7 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,46 +112,55 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">311x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">311x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">311x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">311x</span>
+<span class="cline-any cline-yes">311x</span>
+<span class="cline-any cline-yes">311x</span>
+<span class="cline-any cline-yes">73x</span>
+<span class="cline-any cline-yes">73x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">238x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">311x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Logger } from "./__logger.js";
-import { Options } from "./__options.js";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { config } from "./__config.js";
+import { ScriptId } from "./__constants.js";
+import { setupCommunicationProxy } from "./__communication_proxy.js";
+import { logger, initGlobals } from "./__globals.js";
 &nbsp;
 /**
- * Logger used used throughout the extension.
+ * Initializes modules.
  *
- * It will be initialized in {@link init()} function.
- *
- * @type {Logger}
- */
-export let logger;
-&nbsp;
-/**
- * Options used used throughout the extension.
- *
- * It will be initialized in {@link init()} function.
- *
- * @type {Options}
- */
-export let options;
-&nbsp;
-/**
- * Initializes global objects.
- *
- * This function must be called by `init()` function within`__initializer.js`.
+ * This function must be called first to initialize global objects before
+ * using them and any other functions depending these global objects.
  *
  * @param {!string} scriptId
  * @returns {!Promise&lt;void&gt;}
  */
-export async function initGlobals(scriptId) {
-  logger = new Logger(scriptId);
-  logger.state("Initialize script", { scriptId });
+export async function init(scriptId) {
+  await initGlobals(scriptId);
 &nbsp;
-  options = new Options(logger);
-  await options.init();
+  await checkOsIsMac(scriptId);
+&nbsp;
+  setupCommunicationProxy();
+}
+&nbsp;
+async function checkOsIsMac(scriptId) {
+  const STORAGE_KEY = "isMac";
+  const storage = chrome.storage.local;
+  if (scriptId === ScriptId.BACKGROUND) {
+    config.isMac = (await chrome.runtime.getPlatformInfo()).os === "mac";
+    await storage.set({ [STORAGE_KEY]: config.isMac });
+  } else {
+    config.isMac = !!(await storage.get(STORAGE_KEY))[STORAGE_KEY];
+  }
+  logger.state("Updated `isMac` in config", { ["config.isMac"]: config.isMac });
 }
 &nbsp;</pre></td></tr></table></pre>
 
