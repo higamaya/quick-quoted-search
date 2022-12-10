@@ -1,6 +1,7 @@
 import { config } from "./__config.js";
+import { logger } from "./__globals.js";
 
-function setupPortProxy(logger, port) {
+function setupPortProxy(port) {
   const originalPortOnDisconnect = port.onDisconnect;
   const originalPortOnDisconnectAddListener = port.onDisconnect.addListener;
   port.onDisconnect.addListener = function (callback) {
@@ -32,7 +33,7 @@ function setupPortProxy(logger, port) {
   };
 }
 
-export function setupCommunicationProxy(logger) {
+export function setupCommunicationProxy() {
   if (!config.logEnabled) {
     return;
   }
@@ -41,7 +42,7 @@ export function setupCommunicationProxy(logger) {
   chrome.runtime.connect = function (extensionId, connectInfo) {
     logger.invoke("chrome.runtime.connect()", { extensionId, connectInfo });
     const port = originalRuntimeConnect.call(chrome.runtime, extensionId, connectInfo);
-    setupPortProxy(logger, port);
+    setupPortProxy(port);
     return port;
   };
 
@@ -49,7 +50,7 @@ export function setupCommunicationProxy(logger) {
   chrome.runtime.onConnect.addListener = function (callback) {
     originalRuntimeOnConnectAddListener.call(chrome.runtime.onConnect, (port) => {
       logger.callback("chrome.runtime.onConnect()", { port });
-      setupPortProxy(logger, port);
+      setupPortProxy(port);
       callback(port);
     });
   };
@@ -59,7 +60,7 @@ export function setupCommunicationProxy(logger) {
     chrome.tabs.connect = function (tabId, connectInfo) {
       logger.invoke("chrome.tabs.connect()", { tabId, connectInfo });
       const port = originalTabsConnect.call(chrome.tabs, tabId, connectInfo);
-      setupPortProxy(logger, port);
+      setupPortProxy(port);
       return port;
     };
   }

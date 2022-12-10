@@ -2,7 +2,7 @@ describe("[Unit Test] Functions", function () {
   // Implements only tests that can not be covered by E2E tests.
 
   async function importModules() {
-    this.qqs.Globals = await import("../../src/modules/__globals.js");
+    this.qqs.Initializer = await import("../../src/modules/__initializer.js");
     this.qqs.Functions = await import("../../src/modules/__functions.js");
   }
 
@@ -12,7 +12,7 @@ describe("[Unit Test] Functions", function () {
       // Import modules under test after injecting the mock into `window`, since
       // modules refer to Chrome Extension API via `window.chrome`.
       await importModules.call(this);
-      await this.qqs.Globals.init("TEST");
+      await this.qqs.Initializer.init("TEST");
     });
   });
 

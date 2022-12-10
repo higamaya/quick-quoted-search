@@ -1,8 +1,5 @@
-import { config } from "./__config.js";
-import { ScriptId } from "./__constants.js";
 import { Logger } from "./__logger.js";
 import { Options } from "./__options.js";
-import { setupCommunicationProxy } from "./__communication_proxy.js";
 
 /**
  * Logger used used throughout the extension.
@@ -23,34 +20,17 @@ export let logger;
 export let options;
 
 /**
- * Initializes the module.
+ * Initializes global objects.
  *
- * This function must be called first to initialize global variables before
- * using them and any other functions depending these global variables.
+ * This function must be called by `init()` function within`__initializer.js`.
  *
  * @param {!string} scriptId
  * @returns {!Promise<void>}
  */
-export async function init(scriptId) {
+export async function initGlobals(scriptId) {
   logger = new Logger(scriptId);
   logger.state("Initialize script", { scriptId });
 
   options = new Options(logger);
   await options.init();
-
-  await checkOsIsMac(scriptId);
-
-  setupCommunicationProxy(logger);
-}
-
-async function checkOsIsMac(scriptId) {
-  const STORAGE_KEY = "isMac";
-  const storage = chrome.storage.local;
-  if (scriptId === ScriptId.BACKGROUND) {
-    config.isMac = (await chrome.runtime.getPlatformInfo()).os === "mac";
-    await storage.set({ [STORAGE_KEY]: config.isMac });
-  } else {
-    config.isMac = !!(await storage.get(STORAGE_KEY))[STORAGE_KEY];
-  }
-  logger.state("Updated `isMac` in config", { ["config.isMac"]: config.isMac });
 }
