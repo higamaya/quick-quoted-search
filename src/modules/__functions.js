@@ -188,7 +188,7 @@ export function getSelection(win) {
  * Calls `chrome.runtime.Port.postMessage()` method.
  *
  * Catches the error thrown from `chrome.runtime.Port.postMessage()` method and
- * logs a warning message.
+ * logs a information message.
  *
  * `chrome.runtime.Port.postMessage()` throws an error if the other side of the
  * port has already been closed, but there is no way to check in advance whether
@@ -197,7 +197,7 @@ export function getSelection(win) {
  * and most of the time it is not an error case.
  * Therefore, if an error is thrown from `chrome.runtime.Port.postMessage()`
  * method, this function assumes the cause is port disconnection and logs it as
- * a warning instead of an error.
+ * a information instead of an error.
  *
  * @param {!chrome.runtime.Port} port
  * @param {!*} message
