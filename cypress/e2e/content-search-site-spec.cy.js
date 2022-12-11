@@ -107,14 +107,14 @@ describe("Content scripts on search engine site", { retries: 2 }, function () {
         url: "https://scholar.google.com/",
         inputPattern: "input[name=q]",
         searchPhrase: "foo",
-        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22foo%22(&.+)?$/,
+        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?([^=&]+=[^=&]+&)*q=%22foo%22(&.+)?$/,
       },
       {
         name: "Google Scholar - Search result page",
         url: "https://scholar.google.com/scholar?q=foo",
         inputPattern: "input[name=q]",
         searchPhrase: "bar",
-        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?(.+=.+&)*q=%22bar%22(&.+)?$/,
+        resultUrlPattern: /^https:\/\/scholar\.google\.com\/scholar\?([^=&]+=[^=&]+&)*q=%22bar%22(&.+)?$/,
         skipOnCi: true, // Skip this test on CI because reCAPTCHA interferes with it.
       },
       {
@@ -144,7 +144,7 @@ describe("Content scripts on search engine site", { retries: 2 }, function () {
         url: "https://search.yahoo.com/search?p=foo",
         inputPattern: "input[name=p]",
         searchPhrase: "bar",
-        resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search(;.+=.+)*\?p=%22bar%22(&.+)?$/,
+        resultUrlPattern: /^https:\/\/search\.yahoo\.com\/search(;[^=;?]+=[^=;?]+)*\?p=%22bar%22(&.+)?$/,
       },
       {
         name: "Yahoo Japan - Top page",
