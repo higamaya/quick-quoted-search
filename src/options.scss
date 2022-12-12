@@ -2,6 +2,8 @@
 @use "modules/mdc_customized";
 
 .qqs-root {
+  scrollbar-gutter: stable;
+
   body {
     margin: 0;
     padding: 1em;
