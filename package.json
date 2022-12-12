@@ -5,11 +5,11 @@
   "private": true,
   "author": "Higama-ya",
   "license": "MIT",
+  "homepage": "https://github.com/higamaya/quick-quoted-search#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/higamaya/quick-quoted-search.git"
   },
-  "homepage": "https://github.com/higamaya/quick-quoted-search#readme",
   "bugs": {
     "url": "https://github.com/higamaya/quick-quoted-search/issues"
   },
