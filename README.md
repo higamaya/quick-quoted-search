@@ -9,7 +9,7 @@
 
 Quick Quoted Search is a chrome extension for quick quoted search.
 
-Exact match searching (i.e. quoted search) can be performed quickly via popup icon, keyboard shortcuts or context menus after selecting text in any web page. No need to type double quotation marks to quote your search words every time!
+Exact match search (i.e. quoted search) can be performed quickly via popup icon, keyboard shortcuts or context menus after selecting text in any web page. No need to type double quotation marks to quote your search words every time!
 
 ## About quoted search
 
