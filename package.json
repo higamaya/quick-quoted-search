@@ -87,7 +87,7 @@
     "coverage-result": "echo See coverage/lcov-report/index.html",
     "depcruise": "depcruise src --include-only \"^src\" --config --output-type dot | dot -T svg > dependency-graph.svg",
     "clean": "rimraf dist",
-    "pack": "node -e \"require('bestzip').zip({ source: '*', destination: '../cws/quick-quoted-search.zip', cwd: 'dist' })\"",
+    "pack": "node -e \"require('bestzip').zip({ source: '*', destination: '../cws/package.zip', cwd: 'dist' })\"",
     "license": "generate-license-file --input package.json --output third-party-licenses.txt --overwrite --eol lf",
     "watch": "run-s webpack-watch",
     "lint": "run-s lint:*",
