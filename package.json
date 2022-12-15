@@ -85,7 +85,7 @@
     "coverage-setup": "node -e \"require('fs').copyFileSync('.babelrc.coverage', '.babelrc')\"",
     "coverage-cleanup": "node -e \"require('fs').unlinkSync('.babelrc')\"",
     "coverage-result": "echo See coverage/lcov-report/index.html",
-    "depcruise": "depcruise src --include-only \"^src\" --config --output-type dot | dot -T svg > dependency-graph.svg",
+    "depcruise": "depcruise src --include-only \"^src\" --config --output-type dot | dot -T svg > misc/dependency-graph.svg",
     "clean": "rimraf dist",
     "pack": "node -e \"require('bestzip').zip({ source: '*', destination: '../cws/package.zip', cwd: 'dist' })\"",
     "license": "generate-license-file --input package.json --output third-party-licenses.txt --overwrite --eol lf",
