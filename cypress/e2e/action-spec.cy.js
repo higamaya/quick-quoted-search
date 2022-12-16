@@ -290,8 +290,8 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
           commands.forEach((command, index) => {
             const selectorForKey = `[data-shortcut-name="${command.name}"].shortcuts__key`;
             const selectorForDescription = `[data-shortcut-name="${command.name}"].shortcuts__description`;
-            cy.get(selectorForKey).invoke("text").should("equal", expectedShortcutKeys[index]);
-            cy.get(selectorForDescription).invoke("text").should("equal", command.description);
+            cy.get(selectorForKey).should("have.text", expectedShortcutKeys[index]);
+            cy.get(selectorForDescription).should("have.text", command.description);
           });
         });
       });
@@ -312,13 +312,13 @@ describe("Action Page", { viewportWidth: 500, viewportHeight: 400 }, function ()
             const selectorForKey = `[data-shortcut-name="${command.name}"].shortcuts__key`;
             const selectorForDescription = `[data-shortcut-name="${command.name}"].shortcuts__description`;
             if (command.shortcut.length === 0) {
-              cy.get(selectorForKey).invoke("text").should("equal", "msg_action_shortcut_key_not_set");
+              cy.get(selectorForKey).should("have.text", "msg_action_shortcut_key_not_set");
               cy.get(selectorForKey).should("have.class", "shortcuts__key--not-set");
             } else {
-              cy.get(selectorForKey).invoke("text").should("equal", expectedShortcutKeys[index]);
+              cy.get(selectorForKey).should("have.text", expectedShortcutKeys[index]);
               cy.get(selectorForKey).should("not.have.class", "shortcuts__key--not-set");
             }
-            cy.get(selectorForDescription).invoke("text").should("equal", command.description);
+            cy.get(selectorForDescription).should("have.text", command.description);
           });
         });
       });
