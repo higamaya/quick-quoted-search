@@ -3,6 +3,7 @@ export const defaultOptionValues = {
   iconSize: 3,
   avoidSelection: false,
   optionsButton: true,
+  tooltip: true,
   contextMenu: true,
   disposition: "NEW_TAB",
   autoCopy: true,

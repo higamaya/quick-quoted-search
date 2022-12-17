@@ -303,6 +303,11 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
         it("should send back `Welcome` message", function () {
           // --- preparation ---
           visitAndSetup_own.call(this);
+          const commands = [
+            { name: "do_quoted_search", shortcut: "Ctrl+Z" },
+            { name: "put_quotes", shortcut: "Shift+Y" },
+          ];
+          cy.getCrxApiMock().its("chromeForCypress._hub.commands").invoke("_setCommands", commands);
           // --- conditions ---
           // --- actions ---
           cy.connect({ listener: onMessage }).postMessage({ type: "hello" });
@@ -314,6 +319,7 @@ describe("Background service worker", { viewportWidth: 250, viewportHeight: 100 
               const args = spy.firstCall.args;
               expect(args[0].type).to.equal("welcome");
               expect(args[0].identity).to.deep.equal(chromeForCypress._sender);
+              expect(args[0].extensionCommands).to.deep.equal(commands);
             });
         });
       });

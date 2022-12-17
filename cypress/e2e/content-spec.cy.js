@@ -21,6 +21,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         port.postMessage({
           type: "welcome",
           identity: structuredClone(port.sender),
+          extensionCommands: structuredClone(this.qqs.commands),
         });
       } catch (error) {
         // The situation where the port is already closed is predicable
@@ -38,7 +39,9 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
   }
 
   function visitAndSetup(params, skipIfSameParameters = false) {
-    params = { isMac: false, initialOptions: undefined, ...params };
+    params = { isMac: false, initialOptions: undefined, initialCommands: undefined, ...params };
+
+    this.qqs.commands = params.initialCommands;
 
     return cy
       .visitAndSetup(
@@ -46,6 +49,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         {
           isMac: params.isMac,
           initialOptions: params.initialOptions,
+          initialCommands: params.initialCommands,
 
           onCrxApiMockReady(_crxApiMock) {
             this.qqs.portToContent = undefined;
@@ -509,7 +513,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: false, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -531,7 +535,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: true, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -553,7 +557,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: false, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -575,7 +579,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: true, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -599,7 +603,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: false, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -621,7 +625,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: true, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -643,7 +647,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: false, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -665,7 +669,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: true, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-search-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").find(".qqs-popup-icon__button--search").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_do_quoted_search")
               .should("have.been.calledOnce")
@@ -684,7 +688,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     describe("Quote button", function () {
       describe("Appearance", function () {
         context("when selecting text in an editable node", function () {
-          it("should show (Popup Icon should have `qqs-editable` class)", function () {
+          it("should show (Popup Icon should have `qqs-popup-icon--editable` class)", function () {
             // --- preparation ---
             visitAndSetup_own.call(this);
             // --- conditions ---
@@ -692,12 +696,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(selector).setValue("foo").selectText().mouseUpLeft();
             // --- results ---
-            cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-editable");
+            cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-popup-icon--editable");
           });
         });
 
         context("when selecting text in a non-editable node", function () {
-          it("should NOT show (Popup Icon should NOT have `qqs-editable` class)", function () {
+          it("should NOT show (Popup Icon should NOT have `qqs-popup-icon--editable` class)", function () {
             // --- preparation ---
             visitAndSetup_own.call(this);
             // --- conditions ---
@@ -705,7 +709,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get(selector).setValue("bar").dblclick().should("be.selected");
             // --- results ---
-            cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-editable");
+            cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-popup-icon--editable");
           });
         });
       });
@@ -718,7 +722,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- conditions ---
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             cy.get("#input_text").should("have.value", '"foo"').and("be.selected", 1, 4);
           });
@@ -729,7 +733,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
     describe("Options button", function () {
       describe("Appearance", function () {
         context("when the extension's options are { Options Button: On }", function () {
-          it("should show (Popup Icon should have `qqs-show-options-button` class)", function () {
+          it("should show (Popup Icon should have `qqs-popup-icon--show-options-button` class)", function () {
             // --- preparation ---
             visitAndSetup_own.call(this);
             // --- conditions ---
@@ -737,12 +741,12 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             // --- results ---
-            cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-show-options-button");
+            cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-popup-icon--show-options-button");
           });
         });
 
         context("when the extension's options are { Options Button: Off }", function () {
-          it("should NOT show (Popup Icon should NOT have `qqs-show-options-button` class)", function () {
+          it("should NOT show (Popup Icon should NOT have `qqs-popup-icon--show-options-button` class)", function () {
             // --- preparation ---
             visitAndSetup_own.call(this);
             // --- conditions ---
@@ -750,24 +754,24 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             // --- actions ---
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             // --- results ---
-            cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-show-options-button");
+            cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-popup-icon--show-options-button");
           });
         });
 
         context(
           "when the extension's options become { Options Button: ON ---> Off } while showing Popup Icon",
           function () {
-            it("should hide (Popup Icon should NOT have `qqs-show-options-button` class)", function () {
+            it("should hide (Popup Icon should NOT have `qqs-popup-icon--show-options-button` class)", function () {
               // --- preparation ---
               visitAndSetup_own.call(this);
               // --- conditions ---
               cy.setOptions({ optionsButton: true });
               cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
-              cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-show-options-button");
+              cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-popup-icon--show-options-button");
               // --- actions ---
               cy.setOptions({ optionsButton: false });
               // --- results ---
-              cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-show-options-button");
+              cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-popup-icon--show-options-button");
             });
           }
         );
@@ -775,17 +779,17 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         context(
           "when the extension's options become { Options Button: Off ---> On } while showing Popup Icon",
           function () {
-            it("should show (Popup Icon should have `qqs-show-options-button` class)", function () {
+            it("should show (Popup Icon should have `qqs-popup-icon--show-options-button` class)", function () {
               // --- preparation ---
               visitAndSetup_own.call(this);
               // --- conditions ---
               cy.setOptions({ optionsButton: false });
               cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
-              cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-show-options-button");
+              cy.get(".qqs-root.qqs-popup-icon").should("not.have.class", "qqs-popup-icon--show-options-button");
               // --- actions ---
               cy.setOptions({ optionsButton: true });
               // --- results ---
-              cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-show-options-button");
+              cy.get(".qqs-root.qqs-popup-icon").should("have.class", "qqs-popup-icon--show-options-button");
             });
           }
         );
@@ -798,9 +802,9 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon")
-              .should("have.class", "qqs-editable")
+              .should("have.class", "qqs-popup-icon--editable")
               .hover()
-              .find(".qqs-options-button")
+              .find(".qqs-popup-icon__button--options")
               .click();
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
@@ -820,9 +824,9 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_email").setValue("bar").dblclick().should("be.selected");
             // --- actions ---
             cy.get(".qqs-root.qqs-popup-icon")
-              .should("not.have.class", "qqs-editable")
+              .should("not.have.class", "qqs-popup-icon--editable")
               .hover()
-              .find(".qqs-options-button")
+              .find(".qqs-popup-icon__button--options")
               .click();
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
@@ -844,7 +848,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: false, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -867,7 +871,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: true, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -890,7 +894,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: false, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -913,7 +917,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { ctrlKey: true, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -938,7 +942,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: false, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -961,7 +965,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: true, shiftKey: false };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -984,7 +988,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: false, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -1007,7 +1011,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
             const clickOptions = { metaKey: true, shiftKey: true };
             // --- actions ---
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-options-button").click(clickOptions);
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--options").click(clickOptions);
             // --- results ---
             cy.get("@spy_onMessage_open_options_page")
               .should("have.been.calledOnce")
@@ -1021,6 +1025,249 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
               });
           });
         });
+      });
+    });
+
+    describe("Tooltip", function () {
+      describe("Appearance", function () {
+        context(
+          "when hovering the mouse pointer over the search button, and the extension's options are { Tooltip: On }",
+          function () {
+            it("should show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: true });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--search").hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--search")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed");
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the search button, and the extension's options are { Tooltip: Off }",
+          function () {
+            it("should NOT show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: false });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--search").hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--search")
+                .should("have.computedStyle", "scale", "1")
+                .and("not.be.displayed");
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the quote button, and the extension's options are { Tooltip: On }",
+          function () {
+            it("should show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: true });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .hover()
+                .find(".qqs-popup-icon__button--quote")
+                .should("have.computedStyle", "opacity", "1")
+                .hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--quote")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed");
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the quote button, and the extension's options are { Tooltip: Off }",
+          function () {
+            it("should NOT show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: false });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .hover()
+                .find(".qqs-popup-icon__button--quote")
+                .should("have.computedStyle", "opacity", "1")
+                .hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--quote")
+                .should("have.computedStyle", "scale", "1")
+                .and("not.be.displayed");
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the options button, and the extension's options are { Tooltip: On }",
+          function () {
+            it("should show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: true });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .hover()
+                .find(".qqs-popup-icon__button--options")
+                .should("have.computedStyle", "opacity", "1")
+                .hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--options")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed");
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the options button, and the extension's options are { Tooltip: Off }",
+          function () {
+            it("should NOT show the tooltip", function () {
+              // --- preparation ---
+              visitAndSetup_own.call(this);
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- conditions ---
+              cy.setOptions({ tooltip: false });
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .hover()
+                .find(".qqs-popup-icon__button--options")
+                .should("have.computedStyle", "opacity", "1")
+                .hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--options")
+                .should("have.computedStyle", "scale", "1")
+                .and("not.be.displayed");
+            });
+          }
+        );
+      });
+
+      describe("Display keyboard shortcuts", function () {
+        context(
+          "when hovering the mouse pointer over the search button, and the keyboard shortcut is set",
+          function () {
+            it("should include the keyboard shortcut in the tooltip text", function () {
+              // --- preparation ---
+              // --- conditions ---
+              const commands = [
+                { name: "do_quoted_search", shortcut: "Alt+S" },
+                { name: "put_quotes", shortcut: "Alt+Q" },
+              ];
+              visitAndSetup_own.call(this, { initialCommands: commands });
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--search").hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--search")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed")
+                .and("include.text", `[${commands[0].shortcut}]`);
+            });
+          }
+        );
+
+        context(
+          "when hovering the mouse pointer over the search button, and the keyboard shortcut is NOT set",
+          function () {
+            it("should NOT include the keyboard shortcut in the tooltip text", function () {
+              // --- preparation ---
+              // --- conditions ---
+              const commands = [
+                { name: "do_quoted_search", shortcut: "" },
+                { name: "put_quotes", shortcut: "Alt+Q" },
+              ];
+              visitAndSetup_own.call(this, { initialCommands: commands });
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--search").hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--search")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed")
+                .and("not.include.text", `[${commands[0].shortcut}]`);
+            });
+          }
+        );
+
+        context("when hovering the mouse pointer over the quote button, and the keyboard shortcut is set", function () {
+          it("should include the keyboard shortcut in the tooltip text", function () {
+            // --- preparation ---
+            // --- conditions ---
+            const commands = [
+              { name: "do_quoted_search", shortcut: "Alt+S" },
+              { name: "put_quotes", shortcut: "Alt+Q" },
+            ];
+            visitAndSetup_own.call(this, { initialCommands: commands });
+            cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+            // --- actions ---
+            cy.get(".qqs-root.qqs-popup-icon")
+              .hover()
+              .find(".qqs-popup-icon__button--quote")
+              .should("have.computedStyle", "opacity", "1")
+              .hover();
+            // --- results ---
+            cy.get(".qqs-root.qqs-popup-icon")
+              .find(".qqs-popup-icon__tooltip--quote")
+              .should("have.computedStyle", "scale", "1")
+              .and("be.displayed")
+              .and("include.text", `[${commands[1].shortcut}]`);
+          });
+        });
+
+        context(
+          "when hovering the mouse pointer over the quote button, and the keyboard shortcut is NOT set",
+          function () {
+            it("should NOT include the keyboard shortcut in the tooltip text", function () {
+              // --- preparation ---
+              // --- conditions ---
+              const commands = [
+                { name: "do_quoted_search", shortcut: "Alt+S" },
+                { name: "put_quotes", shortcut: "" },
+              ];
+              visitAndSetup_own.call(this, { initialCommands: commands });
+              cy.get("#input_text").setValue("foo").selectText().mouseUpLeft();
+              // --- actions ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .hover()
+                .find(".qqs-popup-icon__button--quote")
+                .should("have.computedStyle", "opacity", "1")
+                .hover();
+              // --- results ---
+              cy.get(".qqs-root.qqs-popup-icon")
+                .find(".qqs-popup-icon__tooltip--quote")
+                .should("have.computedStyle", "scale", "1")
+                .and("be.displayed")
+                .and("not.include.text", `[${commands[1].shortcut}]`);
+            });
+          }
+        );
       });
     });
   });
@@ -1078,7 +1325,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             "Quotes:[\u0022\u201c\u201d\u201e\u201f\u2033\u301d\u301e\u301f\uff02]";
           cy.get("#textarea").setValue(inputValue).selectText().mouseUpLeft();
           // --- actions ---
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           const expectedValue = '"Spaces:[ ],Quotes:[ ]"';
           cy.get("#textarea")
@@ -1095,7 +1342,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           const inputValue = ` " foo " `;
           cy.get("#input_text").setValue(inputValue).selectText().mouseUpLeft();
           // --- actions ---
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           cy.get("#input_text").should("have.value", `"foo"`).and("be.selected", 1, 4);
         });
@@ -1113,7 +1360,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             const input = { value: 'foo "bar', start: 5, end: 8 }; // selected text: [bar]
             // --- actions ---
             cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             const expected = { value: 'foo "bar"', start: 5, end: 8 }; // selected text: [bar]
             cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1131,7 +1378,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             const input = { value: 'foo " bar', start: 5, end: 9 }; // selected text: [ bar]
             // --- actions ---
             cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             const expected = { value: 'foo " "bar"', start: 7, end: 10 }; // selected text: bar
             cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1149,7 +1396,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             const input = { value: 'foo" bar', start: 0, end: 3 }; // selected text: [foo]
             // --- actions ---
             cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             const expected = { value: '"foo" bar', start: 1, end: 4 }; // selected text: [bar]
             cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1167,7 +1414,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             const input = { value: 'foo " bar', start: 0, end: 3 }; // selected text: [foo]
             // --- actions ---
             cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             const expected = { value: '"foo" " bar', start: 1, end: 4 }; // selected text: [bar]
             cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1197,7 +1444,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
             const input = { value: `foo${quotationMark}bar`, start: 0, end: 3 }; // selected text: [foo]
             // --- actions ---
             cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+            cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
             // --- results ---
             const expected = { value: '"foo" bar', start: 1, end: 4 }; // selected text: [bar]
             cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1215,7 +1462,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           const input = { value: "foobar", start: 3, end: 6 }; // selected text: [bar]
           // --- actions ---
           cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           const expected = { value: 'foo "bar"', start: 5, end: 8 }; // selected text: [bar]
           cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1230,7 +1477,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           const input = { value: "foo bar", start: 4, end: 7 }; // selected text: [bar]
           // --- actions ---
           cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           const expected = { value: 'foo "bar"', start: 5, end: 8 }; // selected text: [bar]
           cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1245,7 +1492,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           const input = { value: "foobar", start: 0, end: 3 }; // selected text: [foo]
           // --- actions ---
           cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           const expected = { value: '"foo" bar', start: 1, end: 4 }; // selected text: [bar]
           cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1260,7 +1507,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
           const input = { value: "foo bar", start: 0, end: 3 }; // selected text: [foo]
           // --- actions ---
           cy.get("#input_text").setValue(input.value).selectText(input.start, input.end).mouseUpLeft();
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           const expected = { value: '"foo" bar', start: 1, end: 4 }; // selected text: [bar]
           cy.get("#input_text").should("have.value", expected.value).and("be.selected", expected.start, expected.end);
@@ -1376,7 +1623,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- actions ---
         cy.get("#input_lazy").setValue("foo").selectText().mouseUpLeft();
         // --- results ---
-        cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+        cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
         cy.get("#input_lazy").should("have.value", '"foo"').and("be.selected", 1, 4);
       });
     });
@@ -1400,7 +1647,7 @@ describe("Content scripts", { viewportWidth: 380, viewportHeight: 300 }, functio
         // --- actions ---
         cy.get("#input_lazy").setValue("foo").selectText().mouseUpLeft();
         // --- results ---
-        cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+        cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
         cy.get("#input_lazy").should("have.value", '"foo"').and("be.selected", 1, 4);
       });
     });

@@ -29,6 +29,15 @@
   "msg_context_menu_title_put_quotes_supplement": {
     "message": ", and search immediately"
   },
+  "msg_popup_icon_tooltip_search": {
+    "message": "Do \"Quoted Search\" for the selected text"
+  },
+  "msg_popup_icon_tooltip_quote": {
+    "message": "Put quotes around the selected text"
+  },
+  "msg_popup_icon_tooltip_options": {
+    "message": "Extension Options"
+  },
   "msg_options_title": {
     "message": "Quick Quoted Search - Extension Options"
   },
@@ -49,6 +58,9 @@
   },
   "msg_options_label_options_button": {
     "message": "Options Button"
+  },
+  "msg_options_label_tooltip": {
+    "message": "Tooltip"
   },
   "msg_options_label_context_menu": {
     "message": "Context Menu"
@@ -88,6 +100,9 @@
   },
   "msg_options_description_content_options_button": {
     "message": "Options button $1 appears next to popup icon $2 when you hover the mouse pointer over it."
+  },
+  "msg_options_description_content_tooltip": {
+    "message": "Tooltip appears when you hover the mouse pointer over each button in popup icon $1."
   },
   "msg_options_description_content_context_menu": {
     "message": "Items to invoke functions of Quick Quoted Search appear in context menu displayed upon a right-click mouse operation."

@@ -35,7 +35,7 @@ describe("Content scripts on search engine site", { retries: 2 }, function () {
       visitAndSetup.call(this, "https://www.yahoo.co.jp/");
       cy.window().its("navigator.clipboard").thenSpy("writeText").as("spy_clipboard_writeText");
       cy.get("input[name=p]").type("foo").selectText().should("be.selected").mouseUpLeft();
-      cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").as("quoteButton");
+      cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").as("quoteButton");
     }
 
     context("when the extension's options are { Auto Enter: On, Auto Copy: On }", function () {
@@ -201,7 +201,7 @@ describe("Content scripts on search engine site", { retries: 2 }, function () {
             .selectText()
             .should("be.selected")
             .mouseUpLeft();
-          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-quote-button").click();
+          cy.get(".qqs-root.qqs-popup-icon").hover().find(".qqs-popup-icon__button--quote").click();
           // --- results ---
           cy.url().should("match", resultUrlPattern);
         });

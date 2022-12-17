@@ -115,4 +115,24 @@ chai.use(function (chai, utils) {
       display
     );
   });
+
+  chai.Assertion.addChainableMethod("computedStyle", function (prop, expectedValue) {
+    const obj = utils.flag(this, "object");
+
+    if (obj.length !== 1) {
+      throw new chai.AssertionError(`expected 'length' of the target to be '1', actual '${obj.length}'`);
+    }
+    const element = obj[0];
+
+    const win = element.ownerDocument.defaultView;
+    const actualValue = win.getComputedStyle(element).getPropertyValue(prop);
+
+    this.assert(
+      actualValue === expectedValue,
+      `expected CSS property '${prop}' of #{this} to be '#{exp}' (actually #{act})`,
+      `expected CSS property '${prop}' of #{this} to be not '#{exp}' (actually #{act})`,
+      expectedValue,
+      actualValue
+    );
+  });
 });

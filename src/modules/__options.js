@@ -37,6 +37,7 @@ export class Options {
     { name: "iconSize"      , defaultValue: 3                          , validator: (value) => typeof value === "number" && value >= Options.ICON_SIZE_MIN && value <= Options.ICON_SIZE_MAX },
     { name: "avoidSelection", defaultValue: false                      , validator: (value) => typeof value === "boolean"                                                                    },
     { name: "optionsButton" , defaultValue: true                       , validator: (value) => typeof value === "boolean"                                                                    },
+    { name: "tooltip"       , defaultValue: true                       , validator: (value) => typeof value === "boolean"                                                                    },
     { name: "contextMenu"   , defaultValue: true                       , validator: (value) => typeof value === "boolean"                                                                    },
     { name: "disposition"   , defaultValue: Options.Disposition.NEW_TAB, validator: (value) => typeof value === "string" && Object.values(Options.Disposition).includes(value)               },
     { name: "autoCopy"      , defaultValue: true                       , validator: (value) => typeof value === "boolean"                                                                    },

@@ -29,6 +29,15 @@
   "msg_context_menu_title_put_quotes_supplement": {
     "message": " ➡ すぐ検索"
   },
+  "msg_popup_icon_tooltip_search": {
+    "message": "完全一致で検索"
+  },
+  "msg_popup_icon_tooltip_quote": {
+    "message": "引用符で囲む"
+  },
+  "msg_popup_icon_tooltip_options": {
+    "message": "拡張機能のオプション"
+  },
   "msg_options_title": {
     "message": "Quick Quoted Search 拡張機能のオプション"
   },
@@ -49,6 +58,9 @@
   },
   "msg_options_label_options_button": {
     "message": "オプション ボタン"
+  },
+  "msg_options_label_tooltip": {
+    "message": "ツールチップ"
   },
   "msg_options_label_context_menu": {
     "message": "コンテキスト メニュー"
@@ -88,6 +100,9 @@
   },
   "msg_options_description_content_options_button": {
     "message": "ポップアップ アイコン $2 にマウス ポインタを重ねたときに、オプション ボタン $1 を隣に表示します。"
+  },
+  "msg_options_description_content_tooltip": {
+    "message": "ポップアップ アイコン $1 の各ボタンにマウス ポインタを重ねたときに、ツールチップを表示します。"
   },
   "msg_options_description_content_context_menu": {
     "message": "マウスの右ボタンをクリックすると表示されるコンテキスト メニューに、Quick Quoted Search の機能を呼び出すための項目を表示します。"
