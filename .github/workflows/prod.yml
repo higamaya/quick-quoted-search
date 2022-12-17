@@ -19,13 +19,15 @@ jobs:
       - name: Build & Pack
         run: |
           npm ci
+          npm run version
           npm run lint
           npm run webpack-build-prod
+          npm run license
           npm run pack
       - name: Save product to repo
         run: |
           git config --local user.name "${{ github.event.pusher.name }}"
           git config --local user.email "${{ github.event.pusher.email }}"
-          git add cws
-          git commit -m "chore: update product"
+          git add .
+          git commit -m "chore: update product v$(npm pkg get version | xargs)"
           git push

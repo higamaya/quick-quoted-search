@@ -41,6 +41,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",
+    "standard-version": "^9.5.0",
     "stylelint": "^14.14.0",
     "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-standard-scss": "^6.0.0",
@@ -67,6 +68,35 @@
     }
   },
   "browserslist": "chrome 92",
+  "standard-version": {
+    "skip": {
+      "tag": true,
+      "commit": true
+    },
+    "packageFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ],
+    "bumpFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      },
+      {
+        "filename": "package-lock.json",
+        "type": "json"
+      },
+      {
+        "filename": "src/manifest.json",
+        "type": "json"
+      }
+    ],
+    "scripts": {
+      "postchangelog": "prettier --write ."
+    }
+  },
   "scripts": {
     "postinstall:husky": "is-ci || husky install",
     "postinstall:php": "php -v || (echo ERROR: PHP could not be found. PHP is required to build this package. && exit 1)",
@@ -87,6 +117,7 @@
     "coverage-result": "echo See coverage/lcov-report/index.html",
     "depcruise": "depcruise src --include-only \"^src\" --config --output-type dot | dot -T svg > misc/dependency-graph.svg",
     "clean": "rimraf dist",
+    "version": "standard-version",
     "pack": "node -e \"require('bestzip').zip({ source: '*', destination: '../cws/package.zip', cwd: 'dist' })\"",
     "license": "generate-license-file --input package.json --output third-party-licenses.txt --overwrite --eol lf",
     "watch": "run-s webpack-watch",
@@ -96,6 +127,6 @@
     "coverage": "run-s coverage-setup webpack-build-dev cy-run-coverage coverage-cleanup webpack-build-dev coverage-result",
     "build": "run-s clean lint webpack-build-dev license",
     "test": "run-s build cy-run",
-    "prod": "run-s clean lint webpack-build-prod license cy-run-prod pack"
+    "prod": "run-s version clean lint webpack-build-prod license pack"
   }
 }
