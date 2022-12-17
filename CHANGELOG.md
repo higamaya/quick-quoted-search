@@ -7,3 +7,9 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 - add a tooltip to each button in the popup icon ([5e916f9](https://github.com/higamaya/quick-quoted-search/commit/5e916f93a16db48498b63efbd02fe30778ac3c46))
+
+## 1.0.0 (2022-12-14)
+
+### Features
+
+- initial release
