@@ -105,6 +105,7 @@ import * as qqs from "./modules/common.js";
     qqs.postMessage(port, {
       type: qqs.MessageType.WELCOME,
       identity: qqs.cloneDto(port.sender),
+      extensionCommands: qqs.cloneDto(await chrome.commands.getAll()),
     });
   }
 

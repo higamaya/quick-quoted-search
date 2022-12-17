@@ -55,6 +55,12 @@
         <?php } ?>
         <?php printOptionWithSwitch("qqs-option-optionsButton", "msg_options_label_options_button", $description_func); ?>
 
+        <!-- Tooltip -->
+        <?php $description_func = function () { ?>
+          <p><i data-group="i18n" data-i18n-name="msg_options_description_content_tooltip" data-i18n-target="outerHTML" data-i18n-args="qqs-i18n-arg-search-icon"></i></p>
+        <?php } ?>
+        <?php printOptionWithSwitch("qqs-option-tooltip", "msg_options_label_tooltip", $description_func); ?>
+
         <!-- Context Menu -->
         <?php $description_func = function () { ?>
           <p><i data-group="i18n" data-i18n-name="msg_options_description_content_context_menu" data-i18n-target="outerText"></i></p>

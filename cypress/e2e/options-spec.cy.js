@@ -33,6 +33,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
     iconSize      : { displayName: "Icon Size"      , isPrivate: false, type: "slider", range: { min: 1, max: 5 } },
     avoidSelection: { displayName: "Avoid Selection", isPrivate: true,  type: "switch" },
     optionsButton : { displayName: "Options Button" , isPrivate: false, type: "switch" },
+    tooltip       : { displayName: "Tooltip"        , isPrivate: false, type: "switch" },
     contextMenu   : { displayName: "Context Menu"   , isPrivate: false, type: "switch" },
     disposition   : { displayName: "Disposition"    , isPrivate: false, type: "select", values: ["NEW_TAB", "NEW_WINDOW", "CURRENT_TAB"] },
     autoCopy      : { displayName: "Auto Copy"      , isPrivate: false, type: "switch" },
@@ -203,6 +204,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: 5,
             avoidSelection: true,
             optionsButton: false,
+            tooltip: false,
             contextMenu: false,
             disposition: "NEW_WINDOW",
             autoCopy: false,
@@ -218,7 +220,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
       });
     });
 
-    describe("Options related to `Popup Icon` (`Icon Size`, `Avoid Selection`, and `Options Button`)", function () {
+    describe("Options related to `Popup Icon` (`Icon Size`, `Avoid Selection`, `Options Button` and `Tooltip`)", function () {
       context("when `Popup Icon` is On", function () {
         it("should be enabled", function () {
           // --- preparation ---
@@ -234,6 +236,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: false,
             avoidSelection: false,
             optionsButton: false,
+            tooltip: false,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -259,6 +262,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: true,
             avoidSelection: true,
             optionsButton: true,
+            tooltip: true,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -417,7 +421,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
   });
 
   describe("Relationships between input components", function () {
-    describe("Options related to `Popup Icon` (`Icon Size`, `Avoid Selection`, and `Options Button`)", function () {
+    describe("Options related to `Popup Icon` (`Icon Size`, `Avoid Selection`, `Options Button` and `Tooltip`)", function () {
       context("when `Popup Icon` changes from On to Off", function () {
         it("should be disabled", function () {
           // --- preparation ---
@@ -429,6 +433,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: false,
             avoidSelection: false,
             optionsButton: false,
+            tooltip: false,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -444,6 +449,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: true,
             avoidSelection: true,
             optionsButton: true,
+            tooltip: true,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -465,6 +471,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: true,
             avoidSelection: true,
             optionsButton: true,
+            tooltip: true,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -480,6 +487,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
             iconSize: false,
             avoidSelection: false,
             optionsButton: false,
+            tooltip: false,
             contextMenu: false,
             disposition: false,
             autoCopy: false,
@@ -589,6 +597,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
           iconSize: 3,
           avoidSelection: false,
           optionsButton: true,
+          tooltip: true,
           contextMenu: true,
           disposition: "NEW_TAB",
           autoCopy: true,
@@ -603,6 +612,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
           iconSize: 5,
           avoidSelection: true,
           optionsButton: false,
+          tooltip: false,
           contextMenu: false,
           disposition: "CURRENT_TAB",
           autoCopy: false,
@@ -627,6 +637,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
           iconSize: 5,
           avoidSelection: true,
           optionsButton: false,
+          tooltip: false,
           contextMenu: false,
           disposition: "CURRENT_TAB",
           autoCopy: false,
@@ -657,6 +668,7 @@ describe("Options Page", { viewportWidth: 850, viewportHeight: 950 }, function (
           iconSize: 5,
           avoidSelection: true,
           optionsButton: false,
+          tooltip: false,
           contextMenu: false,
           disposition: "CURRENT_TAB",
           autoCopy: false,

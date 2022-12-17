@@ -30,6 +30,13 @@ export class PopupIcon {
   }
 
   /**
+   * @param {!chrome.commands.Command[]} extensionCommands
+   */
+  updateShortcuts(extensionCommands) {
+    this.#dom.updateShortcuts(extensionCommands);
+  }
+
+  /**
    * @param {!HTMLElement} editableNode
    */
   setEditableNode(editableNode) {
@@ -170,9 +177,9 @@ class PopupIconDom {
     set editableNode(value) {
       this.#_editableNode = value;
       if (this.#_editableNode) {
-        this.#owner.#rootNode.classList.add("qqs-editable");
+        this.#owner.#rootNode.classList.add("qqs-popup-icon--editable");
       } else {
-        this.#owner.#rootNode.classList.remove("qqs-editable");
+        this.#owner.#rootNode.classList.remove("qqs-popup-icon--editable");
       }
     }
     get editableNode() {
@@ -212,28 +219,50 @@ class PopupIconDom {
     // -------------------------------------------------------------------------
     // Creates buttons in Popup Icon.
     // -------------------------------------------------------------------------
-    const createButton = (buttonClass, imageClass, clickEventListener) => {
+    const createButton = (type, commandType, clickEventListener) => {
+      const BUTTON_CLASS = "qqs-popup-icon__button";
+      const IMAGE_CLASS = "qqs-popup-icon__image";
+      const TOOLTIP_CLASS = "qqs-popup-icon__tooltip";
+
       const button = this.#rootNode.appendChild(this.#win.document.createElement("div"));
-      button.classList.add(buttonClass);
+      button.classList.add(BUTTON_CLASS, `${BUTTON_CLASS}--${type}`);
+      if (commandType) {
+        button.dataset.group = "command";
+        button.dataset.commandType = commandType;
+      }
       button.addEventListener("click", clickEventListener);
+
       const image = button.appendChild(this.#win.document.createElement("i"));
-      image.classList.add(imageClass);
+      image.classList.add(IMAGE_CLASS, `${IMAGE_CLASS}--${type}`);
+
+      const tooltip = button.appendChild(this.#win.document.createElement("div"));
+      tooltip.classList.add(TOOLTIP_CLASS, `${TOOLTIP_CLASS}--${type}`);
+      const tooltipText = tooltip.appendChild(this.#win.document.createElement("span"));
+      const tooltipTextContent = chrome.i18n.getMessage(`msg_popup_icon_tooltip_${type}`);
+      if (commandType) {
+        tooltipText.dataset.group = "command-tooltip";
+        tooltipText.dataset.commandTooltipText = tooltipTextContent;
+      } else {
+        tooltipText.innerText = tooltipTextContent;
+      }
     };
 
-    createButton("qqs-search-button", "qqs-search-icon", (e) => {
+    createButton("search", qqs.CommandType.DO_QUOTED_SEARCH, (e) => {
       this.clicking = true;
       callbackOnClickSearch(e);
     });
 
-    createButton("qqs-quote-button", "qqs-quote-icon", (e) => {
+    createButton("quote", qqs.CommandType.PUT_QUOTES, (e) => {
       this.clicking = true;
       callbackOnClickQuote(e, this.atMouseup.editableNode);
     });
 
-    createButton("qqs-options-button", "qqs-options-icon", (e) => {
+    createButton("options", undefined, (e) => {
       this.clicking = true;
       callbackOnClickOptions(e);
     });
+
+    this.#updateTooltipText();
 
     // -------------------------------------------------------------------------
     // Makes Popup Icon draggable.
@@ -266,6 +295,26 @@ class PopupIconDom {
     // Reflects options in Popup Icon style.
     // -------------------------------------------------------------------------
     this.reflectOptions();
+  }
+
+  /**
+   * @param {!chrome.commands.Command[]} extensionCommands
+   */
+  updateShortcuts(extensionCommands) {
+    this.#updateTooltipText(extensionCommands);
+  }
+
+  /**
+   * @param {?chrome.commands.Command[]=} extensionCommands
+   */
+  #updateTooltipText(extensionCommands) {
+    const shortcuts = extensionCommands ? Object.fromEntries(extensionCommands.map((v) => [v.name, v.shortcut])) : {};
+    for (const commandType of Object.values(qqs.CommandType)) {
+      const button = this.#rootNode.querySelector(`[data-group~="command"][data-command-type="${commandType}"]`);
+      const tooltipText = button.querySelector('[data-group~="command-tooltip"]');
+      const shortcut = shortcuts[commandType];
+      tooltipText.innerText = tooltipText.dataset.commandTooltipText + (shortcut ? ` [${shortcut}]` : "");
+    }
   }
 
   /**
@@ -322,9 +371,15 @@ class PopupIconDom {
     this.#rootNode.style.fontSize = PopupIconDom.#FONT_SIZES[qqs.options.iconSize];
 
     if (qqs.options.optionsButton) {
-      this.#rootNode.classList.add("qqs-show-options-button");
+      this.#rootNode.classList.add("qqs-popup-icon--show-options-button");
     } else {
-      this.#rootNode.classList.remove("qqs-show-options-button");
+      this.#rootNode.classList.remove("qqs-popup-icon--show-options-button");
+    }
+
+    if (qqs.options.tooltip) {
+      this.#rootNode.classList.add("qqs-popup-icon--show-tooltip");
+    } else {
+      this.#rootNode.classList.remove("qqs-popup-icon--show-tooltip");
     }
   }
 

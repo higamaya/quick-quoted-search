@@ -6,6 +6,7 @@ describe("[Unit Test] Options class", function () {
     iconSize: 1,
     avoidSelection: true,
     optionsButton: false,
+    tooltip: false,
     contextMenu: false,
     disposition: "NEW_WINDOW",
     autoCopy: false,
@@ -18,6 +19,7 @@ describe("[Unit Test] Options class", function () {
     iconSize: "1",
     avoidSelection: "false",
     optionsButton: "false",
+    tooltip: undefined,
     contextMenu: "false",
     disposition: 2,
     autoCopy: null,
@@ -192,6 +194,7 @@ describe("[Unit Test] Options class", function () {
         context(`when writing invalid value to ${name}`, function () {
           it("should throw an error and not change its value", async function () {
             // --- preparation ---
+            await setOptionValues.call(this, nonDefaultValues);
             const options = await newOptions.call(this);
             // --- conditions ---
             const currentValue = options[name];
@@ -217,6 +220,7 @@ describe("[Unit Test] Options class", function () {
         context(`when writing invalid value to ${name}`, function () {
           it("should throw an error and not change its value", async function () {
             // --- preparation ---
+            await setOptionValues.call(this, nonDefaultValues);
             const options = await newOptions.call(this);
             // --- conditions ---
             const newValue = null;
@@ -243,6 +247,7 @@ describe("[Unit Test] Options class", function () {
         context(`when writing invalid value to ${name}`, function () {
           it("should throw an error and not change its value", async function () {
             // --- preparation ---
+            await setOptionValues.call(this, nonDefaultValues);
             const options = await newOptions.call(this);
             // --- conditions ---
             const newValue = undefined;

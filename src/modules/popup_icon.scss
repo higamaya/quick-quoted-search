@@ -19,37 +19,9 @@
     padding: $popup-icon-padding-size;
     width: max-content;
     height: max-content;
-    overflow: hidden;
     font-size: max(1em, 16px);
 
-    .qqs-search-icon {
-      // Adds the prefix `qqs-` since this CSS will be injected into any document.
-      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
-      @extend .search-icon;
-    }
-
-    .qqs-quote-icon {
-      // Adds the prefix `qqs-` since this CSS will be injected into any document.
-      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
-      @extend .quote-icon;
-    }
-
-    .qqs-options-icon {
-      // Adds the prefix `qqs-` since this CSS will be injected into any document.
-      /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
-      @extend .options-icon;
-    }
-
-    .qqs-search-icon,
-    .qqs-quote-icon,
-    .qqs-options-icon {
-      display: block;
-      box-sizing: border-box;
-      width: $button-content-size;
-      height: $button-content-size;
-    }
-
-    %button {
+    .qqs-popup-icon__button {
       border-radius: 100vh;
       background-color: qqs.$background-color;
       padding: $button-padding-size;
@@ -58,6 +30,33 @@
       height: $button-content-size;
       cursor: pointer;
 
+      .qqs-popup-icon__image {
+        display: block;
+        box-sizing: border-box;
+        width: $button-content-size;
+        height: $button-content-size;
+      }
+
+      .qqs-popup-icon__image--search {
+        // Needs the prefix `qqs-` since this CSS will be injected into any document.
+        /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+        @extend .search-icon;
+      }
+
+      .qqs-popup-icon__image--quote {
+        // Needs the prefix `qqs-` since this CSS will be injected into any document.
+        /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+        @extend .quote-icon;
+      }
+
+      .qqs-popup-icon__image--options {
+        // Needs the prefix `qqs-` since this CSS will be injected into any document.
+        /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+        @extend .options-icon;
+      }
+
+      @include qqs.tooltip(qqs-popup-icon__tooltip);
+
       &:hover {
         background-color: color.scale(qqs.$background-color, $lightness: -5%);
       }
@@ -65,21 +64,23 @@
 
     %animation-button {
       opacity: 0;
-      transform: rotate(-180deg);
       transition: all 0.3s;
+
+      /* stylelint-disable-next-line no-descending-specificity */
+      .qqs-popup-icon__image {
+        transform: rotate(-180deg);
+        transition: all 0.3s;
+      }
     }
 
-    .qqs-search-button {
-      @extend %button;
-
+    .qqs-popup-icon__button--search {
       position: absolute;
       left: $popup-icon-padding-size;
       top: $popup-icon-padding-size;
       z-index: 2;
     }
 
-    .qqs-quote-button {
-      @extend %button;
+    .qqs-popup-icon__button--quote {
       @extend %animation-button;
 
       position: absolute;
@@ -88,50 +89,64 @@
       z-index: 1;
     }
 
-    .qqs-options-button {
-      @extend %button;
+    .qqs-popup-icon__button--options {
       @extend %animation-button;
 
-      .qqs-options-icon {
-        transition: all 0.3s;
-      }
-
-      &:hover {
-        .qqs-options-icon {
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
-
-  &.qqs-popup-icon:hover {
-    %animation-button {
-      opacity: 1;
-      transform: rotate(0);
+      position: relative;
     }
 
-    &:not(.qqs-editable) {
-      &.qqs-show-options-button {
-        .qqs-options-button {
-          margin-left: $button-size;
+    &:not(.qqs-popup-icon--show-tooltip) {
+      .qqs-popup-icon__button {
+        .qqs-popup-icon__tooltip {
+          display: none;
         }
       }
     }
 
-    &.qqs-editable {
-      .qqs-quote-button {
-        left: calc($popup-icon-padding-size + $button-size);
-      }
+    &:hover {
+      %animation-button {
+        opacity: 1;
 
-      &.qqs-show-options-button {
-        .qqs-options-button {
-          margin-left: calc($button-size * 2);
+        .qqs-popup-icon__image {
+          transform: rotate(0);
         }
       }
 
-      &:not(.qqs-show-options-button) {
-        .qqs-options-button {
-          margin-left: $button-size;
+      .qqs-popup-icon__button--options {
+        .qqs-popup-icon__image--options {
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          .qqs-popup-icon__image--options {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      &:not(.qqs-popup-icon--editable) {
+        &.qqs-popup-icon--show-options-button {
+          .qqs-popup-icon__button--options {
+            margin-left: $button-size;
+          }
+        }
+      }
+
+      &.qqs-popup-icon--editable {
+        .qqs-popup-icon__button--quote {
+          left: calc($popup-icon-padding-size + $button-size);
+        }
+
+        &.qqs-popup-icon--show-options-button {
+          .qqs-popup-icon__button--options {
+            margin-left: calc($button-size * 2);
+          }
+        }
+
+        &:not(.qqs-popup-icon--show-options-button) {
+          .qqs-popup-icon__button--options {
+            margin-left: $button-size;
+          }
         }
       }
     }

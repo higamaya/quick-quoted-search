@@ -120,7 +120,10 @@ import { PopupIcon } from "./modules/popup_icon.js";
     contentId.initialize(message.identity.tab.id, message.identity.frameId);
     qqs.logger.setId(contentId.toString());
     qqs.logger.state("Update content identifier", { contentId });
+
     notifySelectionUpdated("contentId.initialize");
+
+    popupIcon.updateShortcuts(message.extensionCommands);
   }
 
   function onPutQuotes(_message, _port) {
