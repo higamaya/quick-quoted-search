@@ -20,3 +20,12 @@ Exact match search (i.e. quoted search) can be performed quickly via popup icon,
 If you're wondering why we do quoted search, the following article may help.
 
 https://blog.google/products/search/how-were-improving-search-results-when-you-use-quotes/
+
+## Change Log
+
+- [CHANGELOG.md](CHANGELOG.md)
+
+## License
+
+- [LICENSE](LICENSE)
+- [third-party-licenses.md](third-party-licenses.md)
