@@ -3,5 +3,8 @@ Exact match search (i.e. quoted search) can be performed quickly via popup icon,
 If you're wondering why we do quoted search, the following article may help.
 https://blog.google/products/search/how-were-improving-search-results-when-you-use-quotes/
 
+UPDATE(v1.1.1):
+- Fixed a bug where Quick Quoted Search does not press Enter key automatically after putting quotes around the selected text in the input field on Bing.
+
 UPDATE(v1.1.0):
 - Add a tooltip to each button in popup icon. You can choose not to display it via options.
