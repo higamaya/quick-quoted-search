@@ -397,15 +397,13 @@ import { PopupIcon } from "./modules/popup_icon.js";
     editableNode.qqs ??= {};
     if (!Object.hasOwn(editableNode.qqs, "isSearchable")) {
       editableNode.qqs.isSearchable = (() => {
-        if (editableNode instanceof HTMLInputElement) {
-          for (const searchEngine of SEARCH_ENGINES) {
-            if (
-              searchEngine.hostnamePattern.test(window.location.hostname) &&
-              searchEngine.inputName === editableNode.name &&
-              searchEngine.formActionPattern.test(editableNode.form?.getAttribute("action"))
-            ) {
-              return true;
-            }
+        for (const searchEngine of SEARCH_ENGINES) {
+          if (
+            searchEngine.hostnamePattern.test(window.location.hostname) &&
+            searchEngine.inputName === editableNode.name &&
+            searchEngine.formActionPattern.test(editableNode.form?.getAttribute("action"))
+          ) {
+            return true;
           }
         }
         return false;
