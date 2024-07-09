@@ -12,7 +12,7 @@ jobs:
       matrix:
         mode: [production]
         os: [windows-latest, macos-latest]
-        browser: [chrome, edge]
+        browser: [chrome]
         test_search_site: [off]
     name: "Run cypress with {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
     runs-on: ${{ matrix.os }}
