@@ -17,6 +17,14 @@ jobs:
     name: "Run cypress with {mode: ${{ matrix.mode }}, os: ${{ matrix.os }}, browser: ${{ matrix.browser }}, test_search_site: ${{ matrix.test_search_site }}}"
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 19
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
       - name: Clone repo
         uses: actions/checkout@v3
       - name: Run cypress
