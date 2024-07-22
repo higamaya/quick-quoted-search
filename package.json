@@ -48,7 +48,7 @@
     "terser": "^5.16.1",
     "val-loader": "^5.0.0",
     "webpack": "^5.74.0",
-    "webpack-cli": "^5.0.0"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@material/button": "^14.0.0",
