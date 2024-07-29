@@ -24,7 +24,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "cypress": "^11.2.0",
-    "cypress-real-events": "^1.7.4",
+    "cypress-real-events": "^1.13.0",
     "cz-conventional-changelog": "^3.3.0",
     "dependency-cruiser": "^12.1.0",
     "eslint": "^8.26.0",
