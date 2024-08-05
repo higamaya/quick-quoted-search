@@ -40,7 +40,7 @@
     "prettier": "^2.8.0",
     "rimraf": "^3.0.2",
     "sass": "^1.77.8",
-    "sass-loader": "^13.1.0",
+    "sass-loader": "^16.0.0",
     "standard-version": "^9.5.0",
     "stylelint": "^14.16.1",
     "stylelint-config-prettier-scss": "^0.0.1",
