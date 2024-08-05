@@ -28,7 +28,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v4
       - name: Run cypress
-        uses: cypress-io/github-action@v5.0.0
+        uses: cypress-io/github-action@v6.7.2
         with:
           build: npx webpack build --mode=${{ matrix.mode }}
           browser: ${{ matrix.browser }}
