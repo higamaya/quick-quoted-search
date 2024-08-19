@@ -14,7 +14,7 @@
     "url": "https://github.com/higamaya/quick-quoted-search/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3",
+    "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.19.4",
     "@cypress/code-coverage": "^3.10.0",
     "babel-loader": "^9.1.0",
