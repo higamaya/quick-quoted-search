@@ -17,7 +17,7 @@
     "@babel/core": "^7.26.7",
     "@babel/preset-env": "^7.26.7",
     "@cypress/code-coverage": "^3.10.0",
-    "babel-loader": "^9.2.1",
+    "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "^6.1.1",
     "bestzip": "^2.2.1",
     "commitizen": "^4.3.1",
