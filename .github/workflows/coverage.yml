@@ -44,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save videos as artifacts if failure
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-videos-development-macOS-chrome
           path: cypress/videos
