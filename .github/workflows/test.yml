@@ -41,6 +41,7 @@ jobs:
           CYPRESS_mode: ${{ matrix.mode }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ELECTRON_EXTRA_LAUNCH_ARGS: "--disable-gpu-sandbox"
       - name: Save videos as artifacts if failure
         if: failure()
         uses: actions/upload-artifact@v7
